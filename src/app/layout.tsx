@@ -59,89 +59,89 @@ const gtWalsheim = loadFont({
   src: [
     // Thin (100)
     {
-      path: "../../public/fonts/gt-walsheim/GT-Walsheim-Thin-Trial-BF651b7fc728c4c.otf",
+      path: "../../public/fonts/gt-walsheim/GT-Walsheim-Thin.otf",
       weight: "100",
       style: "normal",
     },
     {
-      path: "../../public/fonts/gt-walsheim/GT-Walsheim-Thin-Oblique-Trial-BF651b7fc66311a.otf",
+      path: "../../public/fonts/gt-walsheim/GT-Walsheim-Thin-Oblique.otf",
       weight: "100",
       style: "italic",
     },
     // Ultra Light (200)
     {
-      path: "../../public/fonts/gt-walsheim/GT-Walsheim-Ultra-Light-Trial-BF651b7fc72b236.otf",
+      path: "../../public/fonts/gt-walsheim/GT-Walsheim-Ultra-Light.otf",
       weight: "200",
       style: "normal",
     },
     {
-      path: "../../public/fonts/gt-walsheim/GT-Walsheim-Ultra-Light-Oblique-Trial-BF651b7fc635c6e.otf",
+      path: "../../public/fonts/gt-walsheim/GT-Walsheim-Ultra-Light-Oblique.otf",
       weight: "200",
       style: "italic",
     },
     // Light (300)
     {
-      path: "../../public/fonts/gt-walsheim/GT-Walsheim-Light-Trial-BF651b7fc714941.otf",
+      path: "../../public/fonts/gt-walsheim/GT-Walsheim-Light.otf",
       weight: "300",
       style: "normal",
     },
     {
-      path: "../../public/fonts/gt-walsheim/GT-Walsheim-Light-Oblique-Trial-BF651b7fc6b04a3.otf",
+      path: "../../public/fonts/gt-walsheim/GT-Walsheim-Light-Oblique.otf",
       weight: "300",
       style: "italic",
     },
     // Regular (400)
     {
-      path: "../../public/fonts/gt-walsheim/GT-Walsheim-Regular-Trial-BF651b7fc71a47d.otf",
+      path: "../../public/fonts/gt-walsheim/GT-Walsheim-Regular.otf",
       weight: "400",
       style: "normal",
     },
     {
-      path: "../../public/fonts/gt-walsheim/GT-Walsheim-Regular-Oblique-Trial-BF651b7fc67342f.otf",
+      path: "../../public/fonts/gt-walsheim/GT-Walsheim-Regular-Oblique.otf",
       weight: "400",
       style: "italic",
     },
     // Medium (500)
     {
-      path: "../../public/fonts/gt-walsheim/GT-Walsheim-Medium-Trial-BF651b7fc728fb3.otf",
+      path: "../../public/fonts/gt-walsheim/GT-Walsheim-Medium.otf",
       weight: "500",
       style: "normal",
     },
     {
-      path: "../../public/fonts/gt-walsheim/GT-Walsheim-Medium-Oblique-Trial-BF651b7fc69eff5.otf",
+      path: "../../public/fonts/gt-walsheim/GT-Walsheim-Medium-Oblique.otf",
       weight: "500",
       style: "italic",
     },
     // Bold (700)
     {
-      path: "../../public/fonts/gt-walsheim/GT-Walsheim-Bold-Trial-BF651b7fc737c57.otf",
+      path: "../../public/fonts/gt-walsheim/GT-Walsheim-Bold.otf",
       weight: "700",
       style: "normal",
     },
     {
-      path: "../../public/fonts/gt-walsheim/GT-Walsheim-Bold-Oblique-Trial-BF651b7fc5f06a0.otf",
+      path: "../../public/fonts/gt-walsheim/GT-Walsheim-Bold-Oblique.otf",
       weight: "700",
       style: "italic",
     },
     // Ultra Bold (800)
     {
-      path: "../../public/fonts/gt-walsheim/GT-Walsheim-Ultra-Bold-Trial-BF651b7fc6c21e5.otf",
+      path: "../../public/fonts/gt-walsheim/GT-Walsheim-Ultra-Bold.otf",
       weight: "800",
       style: "normal",
     },
     {
-      path: "../../public/fonts/gt-walsheim/GT-Walsheim-Ultra-Bold-Oblique-Trial-BF651b7fc60ad12.otf",
+      path: "../../public/fonts/gt-walsheim/GT-Walsheim-Ultra-Bold-Oblique.otf",
       weight: "800",
       style: "italic",
     },
     // Black (900)
     {
-      path: "../../public/fonts/gt-walsheim/GT-Walsheim-Black-Trial-BF651b7fc736a5b.otf",
+      path: "../../public/fonts/gt-walsheim/GT-Walsheim-Black.otf",
       weight: "900",
       style: "normal",
     },
     {
-      path: "../../public/fonts/gt-walsheim/GT-Walsheim-Black-Oblique-Trial-BF651b7fc5608e6.otf",
+      path: "../../public/fonts/gt-walsheim/GT-Walsheim-Black-Oblique.otf",
       weight: "900",
       style: "italic",
     },
