@@ -112,7 +112,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${gtWalsheim.variable} antialiased font-sans h-screen w-screen`}
+      className={`${gtWalsheim.variable}`}
     >
       <body className="antialiased font-sans h-screen w-screen">{children}</body>
     </html>
