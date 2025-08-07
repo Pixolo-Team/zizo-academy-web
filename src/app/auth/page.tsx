@@ -4,9 +4,13 @@ import Image from "next/image";
 export default function Auth() {
   return (
     // Main container
-    <div className="h-screen relative bg-n-50">
+    <div className="h-screen relative bg-n-50 overflow-hidden">
       {/* Left side container */}
-      <div className="fixed top-0 left-0 z-10 h-full flex w-6/10 flex-col justify-center items-center py-20 px-5 max-xl:justify-between max-xl:w-full max-md:py-11">
+      <div
+        className="h-full flex w-6/10 flex-col justify-center items-center py-20 px-5 
+      max-lg:justify-between max-lg:w-full max-lg:z-10 max-lg:relative
+      max-md:py-11"
+      >
         {/* Brand logo and text container */}
         <div className="flex flex-col gap-1 justify-start items-center mb-16">
           <Image
@@ -48,16 +52,17 @@ export default function Auth() {
       </div>
 
       {/* Right side container */}
-      <div className="fixed top-0 right-0 h-full flex w-4/10 justify-end items-end max-xl:w-full max-xl:justify-center max-xl:items-center">
+      <div
+        className="absolute flex justify-end items-end -bottom-56 right-0
+      max-lg:w-full max-lg:bottom-0 max-lg:right-0"
+      >
         {/* Player vector image */}
         <Image
           src="/assets/player-vector.svg"
           width={834}
           height={709}
           alt="Player image"
-          className="absolute -bottom-30 right-44 scale-154
-          max-lg:bottom-0 max-lg:scale-100 max-lg:right-0
-          max-md:bottom-20 max-md:scale-160 max-md:right-28"
+          className="flex-1 min-w-[600px]"
         />
       </div>
     </div>
