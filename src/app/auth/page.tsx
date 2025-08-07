@@ -54,8 +54,8 @@ export default function Auth() {
           width={834}
           height={709}
           alt="Player image"
-          className="absolute -bottom-50 right-0
-          max-lg:bottom-0
+          className="absolute -bottom-30 right-44 scale-154
+          max-lg:bottom-0 max-lg:scale-100 max-lg:right-0
           max-md:bottom-20 max-md:scale-160 max-md:right-28"
         />
       </div>
