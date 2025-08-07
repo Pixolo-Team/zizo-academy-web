@@ -36,10 +36,10 @@ export default function Auth() {
             Sign In to begin
           </Button>
           <div className="flex gap-1 justify-start items-center">
-            <p className="text-base font-normal text-slate-900 max-xl:text-slate-50">
+            <p className="text-base font-normal text-n-900 max-xl:text-slate-50">
               Not a member?
             </p>
-            <p className="text-base font-bold text-slate-900 max-xl:text-slate-50">
+            <p className="text-base font-bold text-n-900 max-xl:text-slate-50">
               Sign Up
             </p>
           </div>
