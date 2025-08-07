@@ -6,13 +6,14 @@ export default function Auth() {
     // Main container
     <div className="h-screen relative bg-n-50">
       {/* Left side container */}
-      <div className="fixed top-0 left-0 z-10 h-full flex w-6/10 flex-col justify-center items-center py-20 px-5 max-xl:justify-between max-xl:w-full max-lg:py-10">
+      <div className="fixed top-0 left-0 z-10 h-full flex w-6/10 flex-col justify-center items-center py-20 px-5 max-xl:justify-between max-xl:w-full max-md:py-11">
         {/* Brand logo and text container */}
         <div className="flex flex-col gap-1 justify-start items-center mb-16">
           <Image
             src={"assets/brand-logo.svg"}
             height={156}
             width={156}
+            className="max-md:h-[111px] max-md:w-[111px]"
             alt="zizo brand logo"
           />
           <div className="flex flex-col gap-1 justify-start items-center">
