@@ -17,7 +17,7 @@ export default function Auth() {
             alt="zizo brand logo"
           />
           <div className="flex flex-col gap-1 justify-start items-center">
-            <p className="text-4xl font-extrabold text-n-900 max-sm:text-2xl">
+            <p className="text-4xl font-bold text-n-900 max-sm:text-2xl">
               Every Kick Matters.
             </p>
             <div>
