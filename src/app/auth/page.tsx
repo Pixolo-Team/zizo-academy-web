@@ -1,4 +1,7 @@
+// COMPONENTS //
 import { Button } from "@/components/ui/button";
+
+// NEXTJS //
 import Image from "next/image";
 
 export default function Auth() {
@@ -15,15 +18,18 @@ export default function Auth() {
         <div className="flex flex-col gap-1 justify-start items-center mb-16">
           <Image
             src={"assets/brand-logo.svg"}
-            height={156}
-            width={156}
-            className="max-md:h-[111px] max-md:w-[111px]"
+            height={99}
+            width={110}
+            className="max-md:h-[70px] max-md:w-[72px] mb-8"
             alt="zizo brand logo"
           />
+          {/* Brand text */}
           <div className="flex flex-col gap-1 justify-start items-center">
+            {/* Brand title */}
             <p className="text-4xl font-bold text-n-900 max-sm:text-2xl">
               Every Kick Matters.
             </p>
+            {/* Brand subtitle */}
             <div>
               <p className="text-xl text-center font-normal text-n-700 max-sm:text-base">
                 Step into your football journey with Zizo.
@@ -35,16 +41,19 @@ export default function Auth() {
           </div>
         </div>
 
-        {/* Sign In button */}
+        {/* Sign In button container */}
         <div className="flex flex-col gap-5 justify-start items-center">
-          <Button className="px-[90px] py-[20px] bg-n-950 border border-n-600 rounded-[30px] dark:bg-n-50 text-n-50">
+          {/* Sign In button */}
+          <Button className="cursor-pointer px-[85px] py-[25px] bg-n-950 border border-n-600 rounded-[30px] dark:bg-n-50 text-n-50">
             Sign In to begin
           </Button>
+          {/* Sign Up option */}
           <div className="flex gap-1 justify-start items-center">
-            <p className="text-base font-normal text-n-900 max-xl:text-slate-50">
+            <p className="text-base font-normal text-n-900 max-lg:text-slate-50">
               Not a member?
             </p>
-            <p className="text-base font-bold text-n-900 max-xl:text-slate-50">
+            {/* Sign Up link */}
+            <p className="text-base font-bold text-n-900 max-lg:text-slate-50 cursor-pointer">
               Sign Up
             </p>
           </div>
@@ -53,8 +62,8 @@ export default function Auth() {
 
       {/* Right side container */}
       <div
-        className="absolute flex justify-end items-end -bottom-56 right-0
-      max-lg:w-full max-lg:bottom-0 max-lg:right-0"
+        className="absolute flex justify-end items-end -bottom-56 right-0 min-w-[600px]
+      max-lg:w-full max-lg:bottom-0"
       >
         {/* Player vector image */}
         <Image
@@ -62,7 +71,7 @@ export default function Auth() {
           width={834}
           height={709}
           alt="Player image"
-          className="flex-1 min-w-[600px]"
+          className="flex-1"
         />
       </div>
     </div>
