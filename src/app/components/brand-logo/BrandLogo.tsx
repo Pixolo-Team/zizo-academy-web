@@ -21,10 +21,7 @@ const BrandLogo: React.FC<BrandLogoProps> = ({
   // The path to the SVG logo image
   const imagePath = `/brand-logo/${variant}.svg`;
 
-  return (
-    // The container for the logo
-    <Image src={imagePath} alt="Brand Logo" width={size} height={size} />
-  );
+  return <Image src={imagePath} alt="Brand Logo" width={size} height={size} />;
 };
 
 export default BrandLogo;
