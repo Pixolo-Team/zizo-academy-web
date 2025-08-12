@@ -8,19 +8,15 @@ import Image from "next/image";
 interface BrandLogoProps {
   variant?: Variant;
   size?: string;
-  className?: string;
 }
 
 // Type for the variant prop
 type Variant = "color" | "white" | "color-icon" | "white-icon";
 
-/**
- * A component for rendering the Brand logo
- */
+/** Brand Logo Component */
 const BrandLogo: React.FC<BrandLogoProps> = ({
   variant = "color",
   size = "auto",
-  className = "",
 }) => {
   // The path to the SVG logo image
   const imagePath = `/brand-logo/${variant}.svg`;
@@ -30,18 +26,9 @@ const BrandLogo: React.FC<BrandLogoProps> = ({
 
   return (
     // The container for the logo
-    <div className={`relative ${sizeClasses} ${className}`}>
+    <div className={`relative ${sizeClasses}`}>
       {/* The image element */}
-      <Image
-        src={imagePath}
-        alt="Brand Logo"
-        fill
-        style={{
-          objectFit: "contain",
-          objectPosition: "center",
-        }}
-        priority
-      />
+      <Image src={imagePath} alt="Brand Logo" fill priority />
     </div>
   );
 };
