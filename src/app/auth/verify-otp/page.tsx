@@ -19,10 +19,10 @@ const VerifyOtpPage = () => {
   const [isError, setIsError] = useState(false);
 
   return (
-    <div className="h-screen flex flex-col gap-11 py-[56px] px-5 justify-start items-center">
+    <div className="h-screen bg-n-50 flex flex-col gap-11 py-[56px] px-5 justify-start items-center">
       {/* Brand logo container */}
       <div className="flex flex-col gap-1 justify-start items-center">
-        <BrandLogo variant="color-icon" size={2} />
+        <BrandLogo variant="color-icon" size={111} />
       </div>
       {/* Form container */}
       <div
@@ -68,7 +68,7 @@ const VerifyOtpPage = () => {
           {/* Form actions container */}
           <div className="w-full flex flex-col gap-12 justify-center items-center">
             {/* Submit button */}
-            <Button className="w-full h-13 rounded-full text-lg bg-n-700 text-n-50 cursor-pointer">
+            <Button className="w-full h-13 rounded-full text-lg bg-n-700 text-n-50 cursor-pointer hover:bg-n-600">
               Let&apos;s Play
             </Button>
             {/* Sign up link */}

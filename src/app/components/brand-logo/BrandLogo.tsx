@@ -23,10 +23,7 @@ const BrandLogo: React.FC<BrandLogoProps> = ({
 
   return (
     // The container for the logo
-    <div className={`size-${size}`}>
-      {/* The image element */}
-      <Image src={imagePath} alt="Brand Logo" width={188} height={188} />
-    </div>
+    <Image src={imagePath} alt="Brand Logo" width={size} height={size} />
   );
 };
 
