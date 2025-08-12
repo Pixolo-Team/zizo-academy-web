@@ -39,22 +39,23 @@ const VerifyOtpPage = () => {
             Enter it here to take the next step.
           </p>
         </div>
+
         {/* OTP input container */}
         <div className="w-full flex flex-col gap-6 justify-center items-center">
           <div className="flex flex-col gap-2 justify-center items-center">
             {/* OTP input */}
             <InputOTP maxLength={4}>
               <InputOTPGroup className="me-5">
-                <InputOTPSlot className="size-12" index={0} />
+                <InputOTPSlot className="size-12 text-n-900" index={0} />
               </InputOTPGroup>
               <InputOTPGroup className="me-5">
-                <InputOTPSlot className="size-12" index={1} />
+                <InputOTPSlot className="size-12 text-n-900" index={1} />
               </InputOTPGroup>
               <InputOTPGroup className="me-5">
-                <InputOTPSlot className="size-12" index={2} />
+                <InputOTPSlot className="size-12 text-n-900" index={2} />
               </InputOTPGroup>
               <InputOTPGroup>
-                <InputOTPSlot className="size-12" index={3} />
+                <InputOTPSlot className="size-12 text-n-900" index={3} />
               </InputOTPGroup>
             </InputOTP>
             {/* OTP error message */}
@@ -68,7 +69,7 @@ const VerifyOtpPage = () => {
           {/* Form actions container */}
           <div className="w-full flex flex-col gap-12 justify-center items-center">
             {/* Submit button */}
-            <Button className="w-full h-13 rounded-full text-lg bg-n-700 text-n-50 cursor-pointer hover:bg-n-600">
+            <Button className="w-full h-13 rounded-full text-lg bg-n-900 text-n-50 cursor-pointer hover:bg-n-800">
               Let&apos;s Play
             </Button>
             {/* Sign up link */}
