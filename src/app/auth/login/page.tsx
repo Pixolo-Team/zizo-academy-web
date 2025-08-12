@@ -18,11 +18,12 @@ export default function LoginPage() {
   return (
     // Main container
     <div
-      className="h-screen flex flex-col gap-16 pl-14 pr-14 pt-24 pb-24 justify-start items-center
+      className="h-screen bg-n-50 flex flex-col gap-16 pl-14 pr-14 pt-24 pb-24 justify-start items-center
     max-md:px-5 max-md:py-14"
     >
       {/* Logo container */}
       <div className="flex flex-col gap-16 justify-start items-center">
+        {/* TODO: Add brand logo */}
         {/* <BrandLogo /> */}
       </div>
 
