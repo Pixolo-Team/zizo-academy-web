@@ -13,18 +13,21 @@ import { useState } from "react";
 /** Login Page */
 export default function LoginPage() {
   // States
-  const [isError, setIsError] = useState<boolean>(false);
+  const [isError, setIsError] = useState<boolean>(true);
 
   return (
     // Main container
-    <div className="h-screen flex flex-col gap-16 pl-14 pr-14 pt-24 pb-24 justify-start items-center">
+    <div
+      className="h-screen flex flex-col gap-16 pl-14 pr-14 pt-24 pb-24 justify-start items-center
+    max-md:px-5 max-md:py-14"
+    >
       {/* Logo container */}
-      <div className="flex flex-col gap-0.5 justify-start items-center">
+      <div className="flex flex-col gap-16 justify-start items-center">
         {/* <BrandLogo /> */}
       </div>
 
       {/* Form container */}
-      <div className="flex flex-col gap-6 justify-center items-center">
+      <div className="w-[30%] flex flex-col gap-6 justify-center items-center max-xl:w-[60%] max-md:w-full">
         {/* Form header */}
         <div className="flex flex-col justify-center items-center">
           <span className="text-2xl font-semibold text-n-900">
@@ -43,7 +46,7 @@ export default function LoginPage() {
               id="phone"
               type="tel"
               placeholder="Enter Phone Number"
-              className={`py-6 ps-3 pe-[56px] ${
+              className={`py-6 ps-3 pe-[56px] border-n-300 ${
                 isError ? "border-red-500" : ""
               }`}
             />
@@ -57,7 +60,7 @@ export default function LoginPage() {
           <div className="w-full flex flex-col gap-10 justify-center items-center">
             {/* Lets Play button */}
             <Button
-              className="w-full h-13 rounded-full  text-lg font-medium"
+              className="w-full h-13 rounded-full text-lg font-medium bg-n-900 text-n-50 cursor-pointer hover:bg-n-700"
               type="submit"
             >
               Lets Play
