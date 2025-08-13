@@ -26,7 +26,7 @@ const VerifyOtpPage = () => {
       </div>
       {/* Form container */}
       <div
-        className="w-[28%] flex flex-col gap-8 justify-center items-center 
+        className="w-[24%] flex flex-col gap-8 justify-center items-center 
       max-xl:w-[60%] max-md:w-full"
       >
         {/* Form title and subtitle */}
@@ -69,7 +69,7 @@ const VerifyOtpPage = () => {
           {/* Form actions container */}
           <div className="w-full flex flex-col gap-12 justify-center items-center">
             {/* Submit button */}
-            <Button className="w-full h-13 rounded-full text-lg bg-n-900 text-n-50 cursor-pointer hover:bg-n-800">
+            <Button className="w-full h-15 rounded-full text-lg bg-n-900 text-n-50 cursor-pointer hover:bg-n-800">
               Let&apos;s Play
             </Button>
             {/* Sign up link */}
