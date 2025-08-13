@@ -66,22 +66,26 @@ const VerifyOtpPage = () => {
         <div className="w-full flex flex-col gap-6 justify-center items-center">
           <div className="flex flex-col gap-2 justify-center items-center">
             {/* OTP input */}
-            <InputOTP maxLength={4} onChange={(e) => setOtpValue(e)}>
-              <InputOTPGroup className="me-5">
+            <InputOTP
+              maxLength={4}
+              onChange={(e) => setOtpValue(e)}
+              containerClassName="gap-5"
+            >
+              <InputOTPGroup>
                 <InputOTPSlot
                   className="size-12 text-n-900"
                   index={0}
                   placeholder="X"
                 />
               </InputOTPGroup>
-              <InputOTPGroup className="me-5">
+              <InputOTPGroup>
                 <InputOTPSlot
                   className="size-12 text-n-900"
                   index={1}
                   placeholder="X"
                 />
               </InputOTPGroup>
-              <InputOTPGroup className="me-5">
+              <InputOTPGroup>
                 <InputOTPSlot
                   className="size-12 text-n-900"
                   index={2}
