@@ -1,6 +1,7 @@
 "use client";
 
 import BrandLogo from "@/app/components/brand-logo/BrandLogo";
+import { validatePhoneNumber } from "@/app/utils/validation";
 // COMPONENTS //
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -14,7 +15,25 @@ import { useState } from "react";
 /** Login Page */
 export default function LoginPage() {
   // States
-  const [isError, setIsError] = useState<boolean>(false);
+  const [phoneNumber, setPhoneNumber] = useState<string>("");
+  const [phoneNumberErrorMessage, setPhoneNumberErrorMessage] =
+    useState<string>("");
+
+  /** Function to handle form submission */
+  const handleSubmit = () => {
+    // Check if phone number is empty
+    if (phoneNumber === "") {
+      setPhoneNumberErrorMessage("Phone number is required");
+    }
+    // Check if phone number is invalid
+    else if (!validatePhoneNumber(phoneNumber)) {
+      setPhoneNumberErrorMessage("Phone number is invalid");
+    }
+    // Clear error message if phone number is valid
+    else {
+      setPhoneNumberErrorMessage("");
+    }
+  };
 
   return (
     // Main container
@@ -47,13 +66,13 @@ export default function LoginPage() {
               type="tel"
               placeholder="Enter Phone Number"
               className={`py-6 ps-3 pe-[56px] border-n-300 text-lg h-13 placeholder:text-n-400 ${
-                isError ? "border-red-500" : ""
+                phoneNumberErrorMessage ? "border-red-500" : ""
               }`}
+              value={phoneNumber}
+              onChange={(e) => setPhoneNumber(e.target.value)}
             />
-            {isError && (
-              <p className="text-sm text-red-500">
-                The phone number you entered is not a Zizo user
-              </p>
+            {phoneNumberErrorMessage && (
+              <p className="text-sm text-red-500">{phoneNumberErrorMessage}</p>
             )}
           </div>
           {/* Lets Play button and sign up link container */}
@@ -62,6 +81,7 @@ export default function LoginPage() {
             <Button
               className="w-full h-15 rounded-full text-lg font-medium bg-n-900 text-n-50 cursor-pointer hover:bg-n-700"
               type="submit"
+              onClick={handleSubmit}
             >
               Lets Play
             </Button>
