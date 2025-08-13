@@ -41,15 +41,15 @@ const VerifyOtpPage = () => {
   }
 
   return (
-    <div className="h-screen bg-n-50 flex flex-col gap-11 py-[56px] px-5 justify-start items-center">
+    <div className="h-screen bg-n-50 flex flex-col gap-11 py-14 px-5 justify-start items-center">
       {/* Brand logo container */}
       <div className="flex flex-col gap-1 justify-start items-center">
         <BrandLogo variant="color-icon" size={111} />
       </div>
       {/* Form container */}
       <div
-        className="w-[24%] flex flex-col gap-8 justify-center items-center 
-      max-xl:w-[60%] max-md:w-full"
+        className="w-6/25 flex flex-col gap-8 justify-center items-center 
+      max-xl:w-6/10 max-md:w-full"
       >
         {/* Form title and subtitle */}
         <div className="flex flex-col justify-center items-center">
