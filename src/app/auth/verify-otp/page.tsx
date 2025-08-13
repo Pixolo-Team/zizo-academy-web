@@ -48,16 +48,32 @@ const VerifyOtpPage = () => {
             {/* OTP input */}
             <InputOTP maxLength={4}>
               <InputOTPGroup className="me-5">
-                <InputOTPSlot className="size-12 text-n-900" index={0} />
+                <InputOTPSlot
+                  className="size-12 text-n-900"
+                  index={0}
+                  placeholder="X"
+                />
               </InputOTPGroup>
               <InputOTPGroup className="me-5">
-                <InputOTPSlot className="size-12 text-n-900" index={1} />
+                <InputOTPSlot
+                  className="size-12 text-n-900"
+                  index={1}
+                  placeholder="X"
+                />
               </InputOTPGroup>
               <InputOTPGroup className="me-5">
-                <InputOTPSlot className="size-12 text-n-900" index={2} />
+                <InputOTPSlot
+                  className="size-12 text-n-900"
+                  index={2}
+                  placeholder="X"
+                />
               </InputOTPGroup>
               <InputOTPGroup>
-                <InputOTPSlot className="size-12 text-n-900" index={3} />
+                <InputOTPSlot
+                  className="size-12 text-n-900"
+                  index={3}
+                  placeholder="X"
+                />
               </InputOTPGroup>
             </InputOTP>
             {/* OTP error message */}
