@@ -30,14 +30,14 @@ export default function Auth() {
               Every Kick Matters.
             </p>
             {/* Brand subtitle */}
-            <div>
+            <>
               <p className="text-xl text-center font-normal text-n-700 max-sm:text-base">
                 Step into your football journey with Zizo.
               </p>
               <p className="text-xl text-center font-normal text-n-700 max-sm:text-base">
                 Own your game like a pro.
               </p>
-            </div>
+            </>
           </div>
         </div>
 
