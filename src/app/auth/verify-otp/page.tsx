@@ -100,8 +100,9 @@ const VerifyOtpPage = () => {
                 />
               </InputOTPGroup>
             </InputOTP>
+
             {/* OTP error message */}
-            {otpErrorMessage && (
+            {otpErrorMessage !== "" && (
               <p className="text-base font-normal text-red-500">
                 {otpErrorMessage}
               </p>
