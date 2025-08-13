@@ -12,7 +12,7 @@ export default function Auth() {
       <div
         className="h-full flex w-6/10 flex-col justify-center items-center py-20
       max-lg:justify-between max-lg:w-full max-lg:z-10 max-lg:relative
-      max-md:py-11"
+      max-md:py-15 max-md:pb-12"
       >
         {/* Brand logo and text container */}
         <div className="flex flex-col gap-1 justify-start items-center mb-16">
@@ -30,14 +30,14 @@ export default function Auth() {
               Every Kick Matters.
             </p>
             {/* Brand subtitle */}
-            <>
+            <div className="flex flex-col gap-1 justify-start items-center max-md:gap-0">
               <p className="text-xl text-center font-normal text-n-700 max-sm:text-base">
                 Step into your football journey with Zizo.
               </p>
               <p className="text-xl text-center font-normal text-n-700 max-sm:text-base">
                 Own your game like a pro.
               </p>
-            </>
+            </div>
           </div>
         </div>
 
