@@ -10,7 +10,7 @@ export default function Auth() {
     <div className="h-screen relative bg-n-50 overflow-hidden">
       {/* Left side container */}
       <div
-        className="h-full flex w-6/10 flex-col justify-center items-center py-20 px-5 
+        className="h-full flex w-6/10 flex-col justify-center items-center py-20
       max-lg:justify-between max-lg:w-full max-lg:z-10 max-lg:relative
       max-md:py-11"
       >
@@ -20,7 +20,7 @@ export default function Auth() {
             src={"assets/brand-logo.svg"}
             height={99}
             width={110}
-            className="max-md:h-[70px] max-md:w-[72px] mb-8"
+            className="max-md:h-[70px] max-md:w-[70px] mb-8"
             alt="zizo brand logo"
           />
           {/* Brand text */}
@@ -44,7 +44,7 @@ export default function Auth() {
         {/* Sign In button container */}
         <div className="flex flex-col gap-5 justify-start items-center">
           {/* Sign In button */}
-          <Button className="cursor-pointer px-[85px] py-[25px] bg-n-950 border border-n-600 rounded-[30px] dark:bg-n-50 text-n-50">
+          <Button className="cursor-pointer px-[92px] py-[28px] bg-n-950 border border-n-600 rounded-[30px] dark:bg-n-50 text-n-50 font-medium text-lg">
             Sign In to begin
           </Button>
           {/* Sign Up option */}
