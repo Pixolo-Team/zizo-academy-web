@@ -1,18 +1,16 @@
 "use client";
 
-// UTILS //
-import { validatePhoneNumber } from "@/app/utils/validation";
+// REACT //
+import { useState } from "react";
 
 // COMPONENTS //
 import BrandLogo from "@/app/components/brand-logo/BrandLogo";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-
-// NEXT //
 import Link from "next/link";
 
-// REACT //
-import { useState } from "react";
+// UTILS //
+import { validatePhoneNumber } from "@/app/utils/validation";
 
 /** Login Page */
 export default function LoginPage() {
