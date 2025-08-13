@@ -15,10 +15,30 @@ import Link from "next/link";
 // REACT //
 import { useState } from "react";
 
+// UTILS //
+import { validateOtp } from "@/app/utils/validation";
+
 /** Verify OTP Page */
 const VerifyOtpPage = () => {
   // State
-  const [isError, setIsError] = useState(false);
+  const [otpValue, setOtpValue] = useState<string>("");
+  const [otpErrorMessage, setOtpErrorMessage] = useState<string>("");
+
+  /** Function to handle OTP submission */
+  function handleSubmit() {
+    // Check OTP length and set error message if invalid
+    if (!otpValue.length) {
+      setOtpErrorMessage("Please enter OTP");
+    }
+    // If OTP is too long, set error message
+    else if (!validateOtp(otpValue)) {
+      setOtpErrorMessage("Please enter a valid OTP");
+    }
+    // Otherwise, clear the error message
+    else {
+      setOtpErrorMessage("");
+    }
+  }
 
   return (
     <div className="h-screen bg-n-50 flex flex-col gap-11 py-[56px] px-5 justify-start items-center">
@@ -46,7 +66,7 @@ const VerifyOtpPage = () => {
         <div className="w-full flex flex-col gap-6 justify-center items-center">
           <div className="flex flex-col gap-2 justify-center items-center">
             {/* OTP input */}
-            <InputOTP maxLength={4}>
+            <InputOTP maxLength={4} onChange={(e) => setOtpValue(e)}>
               <InputOTPGroup className="me-5">
                 <InputOTPSlot
                   className="size-12 text-n-900"
@@ -77,9 +97,9 @@ const VerifyOtpPage = () => {
               </InputOTPGroup>
             </InputOTP>
             {/* OTP error message */}
-            {isError && (
+            {otpErrorMessage && (
               <p className="text-base font-normal text-red-500">
-                You have entered the wrong OTP
+                {otpErrorMessage}
               </p>
             )}
           </div>
@@ -87,7 +107,10 @@ const VerifyOtpPage = () => {
           {/* Form actions container */}
           <div className="w-full flex flex-col gap-12 justify-center items-center">
             {/* Submit button */}
-            <Button className="w-full h-15 rounded-full text-lg bg-n-900 text-n-50 cursor-pointer hover:bg-n-800">
+            <Button
+              className="w-full h-15 rounded-full text-lg bg-n-900 text-n-50 cursor-pointer hover:bg-n-800"
+              onClick={handleSubmit}
+            >
               Let&apos;s Play
             </Button>
             {/* Sign up link */}
