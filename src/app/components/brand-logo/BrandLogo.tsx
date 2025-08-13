@@ -6,7 +6,7 @@ import Image from "next/image";
 
 // Interface for the BrandLogo component */
 interface BrandLogoProps {
-  variant: Variant;
+  variant?: Variant;
   size?: number;
 }
 
@@ -16,7 +16,7 @@ type Variant = "color" | "white" | "color-icon" | "white-icon";
 /** Brand Logo Component */
 const BrandLogo: React.FC<BrandLogoProps> = ({
   variant = "color",
-  size = 20,
+  size = 120,
 }) => {
   // The path to the SVG logo image
   const imagePath = `/brand-logo/${variant}.svg`;
