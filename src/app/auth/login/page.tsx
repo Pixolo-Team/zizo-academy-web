@@ -1,8 +1,10 @@
 "use client";
 
-import BrandLogo from "@/app/components/brand-logo/BrandLogo";
+// UTILS //
 import { validatePhoneNumber } from "@/app/utils/validation";
+
 // COMPONENTS //
+import BrandLogo from "@/app/components/brand-logo/BrandLogo";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
@@ -38,8 +40,8 @@ export default function LoginPage() {
   return (
     // Main container
     <div
-      className="h-screen bg-n-50 flex flex-col gap-[58px] pl-14 pr-14 pt-24 pb-24 justify-start items-center
-    max-md:px-5 max-md:py-14 max-md:gap-[44px]"
+      className="h-screen bg-n-50 flex flex-col gap-[58px] px-14 py-24 justify-start items-center
+    max-md:px-5 max-md:py-14 max-md:gap-11"
     >
       {/* Logo container */}
       <div className="flex flex-col justify-start items-center">
@@ -48,7 +50,7 @@ export default function LoginPage() {
       </div>
 
       {/* Form container */}
-      <div className="w-[24%] flex flex-col gap-6 justify-center items-center max-xl:w-[60%] max-md:w-full">
+      <div className="w-6/25 flex flex-col gap-6 justify-center items-center max-xl:w-6/10 max-md:w-full">
         {/* Form header */}
         <div className="flex flex-col justify-center items-center">
           <p className="text-2xl font-bold text-n-900">Kick off your journey</p>
@@ -65,7 +67,7 @@ export default function LoginPage() {
               id="phone"
               type="tel"
               placeholder="Enter Phone Number"
-              className={`py-6 ps-3 pe-[56px] border-n-300 text-lg h-13 placeholder:text-n-400 ${
+              className={`py-6 pr-3 pr-14 border-n-300 text-lg h-13 placeholder:text-n-400 ${
                 phoneNumberErrorMessage ? "border-red-500" : ""
               }`}
               value={phoneNumber}
