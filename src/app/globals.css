@@ -168,19 +168,25 @@
   }
 }
 
-.week-day {
+.day-item {
   position: relative;
 }
 
-.week-day.selected::before {
+.day-item::before {
   content: "";
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 2.5rem;
-  height: 2.5rem;
-  background-color: black;
-  border-radius: 50%;
+  width: 48px;
+  height: 100%;
+  background: black;
+  border-radius: 24px;
+  opacity: 0;
   z-index: -1;
+  transition: 0.3s ease;
+}
+
+.day-item.selected::before {
+  opacity: 1; /* visible when selected */
 }

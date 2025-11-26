@@ -3,10 +3,10 @@ import React from "react";
 
 // TYPES
 interface SessionCardProps {
-  startTime: string; // "18:00"
-  endTime: string; // "19:00"
-  title: string; // "Practice Session | Under 8"
-  location: string; // "Ramji Assar, Ghatkopar East"
+  startTime: string;
+  endTime: string;
+  title: string;
+  location: string;
   status?: "upcoming" | "ongoing" | "cancelled";
 }
 
