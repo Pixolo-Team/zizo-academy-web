@@ -1,9 +1,8 @@
 "use client";
 
-// components/Calendar.tsx
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 
-interface CalendarProps {
+interface DayProps {
   date: Date;
   isToday: boolean;
   isSelected: boolean;
@@ -11,69 +10,89 @@ interface CalendarProps {
 }
 
 const Calendar: React.FC = () => {
-  const [currentDate, setCurrentDate] = useState(new Date());
-  const [week, setWeek] = useState<CalendarProps[]>([]);
-  const [selectedDate, setSelectedDate] = useState<Date>(new Date());
+  const [selectedDate, setSelectedDate] = useState(new Date());
+  const [days, setDays] = useState<DayProps[]>([]);
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  // -----------------------------
+  // Generate days but show TODAY in the visible first 6 items
+  // -----------------------------
+  const generateDays = () => {
+    const result: DayProps[] = [];
+
+    // TODAY should be the 3rd item in view (center-ish)
+    const start = new Date();
+    start.setDate(start.getDate() - 2); // 2 days before today
+
+    for (let i = 0; i < 120; i++) {
+      const d = new Date(start);
+      d.setDate(start.getDate() + i);
+
+      const isToday = d.toDateString() === new Date().toDateString();
+
+      result.push({
+        date: d,
+        isToday,
+        isSelected: isToday,
+        hasEvent: false,
+      });
+    }
+
+    setDays(result);
+  };
 
   useEffect(() => {
-    generateWeek(currentDate);
-  }, [currentDate, selectedDate]);
+    generateDays();
+  }, []);
 
-  const generateWeek = (date: Date) => {
-    const startOfWeek = new Date(date);
-    const day = date.getDay(); // Sunday = 0
-    const diff = day === 0 ? -6 : 1 - day; // adjust if Sunday
-    startOfWeek.setDate(date.getDate() + diff);
+  // -----------------------------
+  // Month title based on selected date
+  // -----------------------------
+  const monthTitle = selectedDate.toLocaleString("en-US", {
+    month: "long",
+    year: "numeric",
+  });
 
-    const days: CalendarProps[] = Array.from({ length: 7 }, (_, i) => {
-      const d = new Date(startOfWeek);
-      d.setDate(startOfWeek.getDate() + i);
-      return {
-        date: d,
-        isToday: d.toDateString() === new Date().toDateString(),
-        isSelected: d.toDateString() === selectedDate.toDateString(),
-        hasEvent: [22, 24].includes(d.getDate()), // example for green dots
-      };
-    });
+  const handleSelect = (day: DayProps) => {
+    setSelectedDate(day.date);
 
-    setWeek(days);
+    setDays((prev) =>
+      prev.map((d) => ({
+        ...d,
+        isSelected: d.date.toDateString() === day.date.toDateString(),
+      }))
+    );
   };
-
-  const handleSelect = (date: Date) => {
-    setSelectedDate(date);
-  };
-
-  const formatDay = (date: Date) =>
-    date.toLocaleDateString("en-US", { weekday: "short" });
-
-  const formatDate = (date: Date) => date.getDate();
 
   return (
     <div className="flex flex-col gap-4">
-      <h2 className="text-lg text-n-100 font-bold">
-        {currentDate.toLocaleString("en-US", {
-          month: "long",
-          year: "numeric",
-        })}
-      </h2>
-      <div className="flex justify-between items-center gap-2 overflow-x-scroll">
-        {week.map((day) => (
+      {/* Month Title */}
+      <h2 className="text-lg text-n-100 font-bold">{monthTitle}</h2>
+
+      {/* Calendar Row (No auto scroll) */}
+      <div
+        ref={scrollRef}
+        className="flex gap-2 overflow-x-scroll no-scrollbar"
+      >
+        {days.map((day, index) => (
           <div
-            key={day.date.toDateString()}
-            onClick={() => handleSelect(day.date)}
-            className={`day-item flex flex-col items-center p-3 gap-2.5 rounded-full cursor-pointer ${
-              day.isSelected
-                ? "selected text-n-900 font-medium "
-                : "text-n-50 font-normal"
-            }`}
+            key={index}
+            onClick={() => handleSelect(day)}
+            className={`flex flex-col items-center p-3 gap-2.5 rounded-full cursor-pointer min-w-[48px]
+              ${
+                day.isSelected
+                  ? "bg-n-50 text-n-900 font-medium"
+                  : "text-n-50 font-normal"
+              }
+            `}
           >
-            <span className="z-10 text-sm ">{formatDay(day.date)}</span>
-            <span className="z-10 text-base relative ">
-              {formatDate(day.date)}
-              {day.hasEvent && (
-                <span className="absolute size-1 bg-green-500 rounded-full"></span>
-              )}
+            {/* Day Name */}
+            <span className="text-sm">
+              {day.date.toLocaleDateString("en-US", { weekday: "short" })}
             </span>
+
+            {/* Date */}
+            <span className="text-base relative">{day.date.getDate()}</span>
           </div>
         ))}
       </div>
