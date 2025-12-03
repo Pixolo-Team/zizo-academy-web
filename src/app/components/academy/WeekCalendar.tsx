@@ -15,20 +15,22 @@ const Calendar: React.FC = () => {
   const scrollRef = useRef<HTMLDivElement>(null);
 
   // -----------------------------
-  // Generate days but show TODAY in the visible first 6 items
+  // Generate last 15 days, today, and next 15 days
   // -----------------------------
   const generateDays = () => {
     const result: DayProps[] = [];
+    const today = new Date();
 
-    // TODAY should be the 3rd item in view (center-ish)
-    const start = new Date();
-    start.setDate(start.getDate() - 2); // 2 days before today
+    // Start from 15 days ago
+    const start = new Date(today);
+    start.setDate(today.getDate() - 15);
 
-    for (let i = 0; i < 120; i++) {
+    // Generate 31 days total (15 past + today + 15 future)
+    for (let i = 0; i < 31; i++) {
       const d = new Date(start);
       d.setDate(start.getDate() + i);
 
-      const isToday = d.toDateString() === new Date().toDateString();
+      const isToday = d.toDateString() === today.toDateString();
 
       result.push({
         date: d,
@@ -43,6 +45,20 @@ const Calendar: React.FC = () => {
 
   useEffect(() => {
     generateDays();
+
+    // Scroll to today's date (15th item, index 14)
+    setTimeout(() => {
+      if (scrollRef.current) {
+        const todayElement = scrollRef.current.children[16] as HTMLElement;
+        if (todayElement) {
+          todayElement.scrollIntoView({
+            behavior: "smooth",
+            block: "nearest",
+            inline: "center",
+          });
+        }
+      }
+    }, 0);
   }, []);
 
   // -----------------------------

@@ -4,17 +4,17 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  --color-n-50: #ffffff;
-  --color-n-100: var(--color-slate-100);
-  --color-n-200: var(--color-slate-200);
-  --color-n-300: var(--color-slate-300);
-  --color-n-400: var(--color-slate-400);
-  --color-n-500: var(--color-slate-500);
-  --color-n-600: var(--color-slate-600);
-  --color-n-700: var(--color-slate-700);
-  --color-n-800: var(--color-slate-800);
-  --color-n-900: var(--color-slate-900);
-  --color-n-950: var(--color-slate-950);
+ --color-n-50: #FFFFFF;
+  --color-n-100: #F1F5F9;
+  --color-n-200: #E2E8F1;
+  --color-n-300: #CAD5E2;
+  --color-n-400: #90A2B9;
+  --color-n-500: #62748E;
+  --color-n-600: #45556C;
+  --color-n-700: #324158;
+  --color-n-800: #1D283D;
+  --color-n-900: #0E172B;
+  --color-n-950: #020617;
   --primary: oklch(0.205 0 0);
   --secondary: oklch(0.97 0 0);
   --radius: 0.625rem;

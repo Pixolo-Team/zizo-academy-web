@@ -40,6 +40,7 @@ export default function Page() {
       <ProfileHeader
         imageUrl="/profile-image.jpg"
         onBack={() => router.back()}
+        iconColor="text-slate-950"
       />
       <div className="px-6 pb-6 container mx-auto flex flex-col gap-7">
         <WeekCalendar />
