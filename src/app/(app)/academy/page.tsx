@@ -1,46 +1,83 @@
 "use client";
 
-import AcademyBackground from "@/../public/academy-background.jpg";
-import ProfileHeader from "@/app/components/academy/ProfileHeader";
+// REACT //
 import { useRouter } from "next/navigation";
+
+// COMPONENTS //
+import ProfileHeader from "@/app/components/academy/ProfileHeader";
 import { PlayerAttendance } from "@/app/components/academy/PlayerAttendance";
-import { Button } from "@/components/ui/button";
+import AttendanceSummary from "@/app/components/academy/AttendanceSummary";
+
+// IMAGES //
+import AcademyBackground from "@/../public/academy-background.jpg";
+import React from "react";
 
 const playerDetails = [
   {
     name: "Ritesh Kumar Sigham",
     id: "SUFA 0032",
-    imageUrl: "/profile-image.jpg",
+    imageUrl: "/player-photo.png",
+    status: "present",
   },
   {
     name: "Amit Solanki",
     id: "SUFA 0045",
-    imageUrl: "/profile-image.jpg",
+    imageUrl: "/player-photo.png",
+    status: "present",
   },
   {
     name: "Jay Patel",
     id: "SUFA 0021",
-    imageUrl: "/profile-image.jpg",
+    imageUrl: "/player-photo.png",
+    status: "absent",
+  },
+  {
+    name: "Jay Patel",
+    id: "SUFA 0021",
+    imageUrl: "/player-photo.png",
+    status: "pending",
+  },
+  {
+    name: "Jay Patel",
+    id: "SUFA 0021",
+    imageUrl: "/player-photo.png",
+    status: "pending",
   },
 ];
 
+const attendanceSummary = [
+  { label: "Present", count: 2 },
+  { label: "Absent", count: 1 },
+  { label: "Pending", count: 2 },
+  { label: "Total", count: 5 },
+];
+
 export default function Academy() {
+  // Define Navigation
   const router = useRouter();
+
+  // Define States
+
+  // Helper Functions
+
+  // Define Use Effects
+
   return (
-    <section>
+    <section className="min-h-screen relative">
+      {/* Top Background Section with ProfileHeader */}
       <div
-        className="relative w-full h-44 bg-cover bg-center z-1"
+        className="fixed top-0 w-full bg-cover bg-center z-1 pb-5"
         style={{
           backgroundImage: `url(${AcademyBackground.src})`,
         }}
       >
         <ProfileHeader
           iconColor="text-slate-50"
-          imageUrl="/profile-image.jpg"
+          imageUrl="/player-photo.png"
           onBack={() => router.back()}
         />
         {/* Overlay */}
-        <div className="absolute top-0 w-full h-44 -z-1 bg-slate-900/90" />
+        <div className="absolute top-0 w-full h-full -z-1 bg-slate-900/90" />
 
         <div className="flex flex-col gap-5 z-2 px-5">
           <div className="flex flex-col gap-1">
@@ -71,64 +108,28 @@ export default function Academy() {
       </div>
 
       {/* Attendance card content  */}
-      <div className="flex flex-col justify-between p-5">
-        <div>
-          {playerDetails.map((playerItem, index) => (
+      <div className="flex flex-col justify-between px-5 pt-50 pb-40">
+        {playerDetails.map((playerItem, index) => (
+          <React.Fragment key={index}>
             <PlayerAttendance
-              key={index}
               name={playerItem.name}
               id={playerItem.id}
               imageUrl={playerItem.imageUrl}
               onPresent={() => console.log(`${playerItem.name} marked Present`)}
               onAbsent={() => console.log(`${playerItem.name} marked Absent`)}
             />
-          ))}
-        </div>
-
-        <div className="flex flex-col gap-1.5">
-          <div className="flex justify-between px-4">
-            {/* Present */}
-            <div className="flex flex-col items-center gap-1">
-              <p className="text-xs text-n-300 font-normal">Present</p>
-              <p className="text-xl font-medium text-n-50">12</p>
-            </div>
-
-            {/* Absent */}
-            <div className="flex flex-col items-center gap-1">
-              <p className="text-xs text-n-300 font-normal">Absent</p>
-
-              <p className="text-xl font-medium text-n-50">03</p>
-            </div>
-
-            {/* Pending */}
-            <div className="flex flex-col items-center gap-1">
-              <p className="text-xs text-n-300 font-normal">Pending</p>
-
-              <p className="text-xl font-medium text-n-50">05</p>
-            </div>
-
-            {/* Total */}
-            <div className="flex flex-col items-center gap-1">
-              <p className="text-xs text-n-300 font-normal">Total</p>
-
-              <p className="text-xl font-medium text-n-50">20</p>
-            </div>
-          </div>
-
-          {/* Confirm Button */}
-          <div className="h-14">
-            <Button
-              className={
-                "bg-n-100 rounded-full w-full h-full text-n-950 font-medium text-base z-2"
-              }
-              variant="default"
-              size="lg"
-            >
-              Confirm Attendance
-            </Button>
-          </div>
-        </div>
+            {index < playerDetails.length - 1 && (
+              <div className="border-n-300 border-[0.5px] border-dashed" />
+            )}
+          </React.Fragment>
+        ))}
       </div>
+
+      {/* Attendance Summary & Confirm Button */}
+      <AttendanceSummary
+        attendanceSummary={attendanceSummary}
+        onConfirm={() => console.log("Confirmed attendance")}
+      />
     </section>
   );
 }
