@@ -1,49 +1,22 @@
 "use client";
 
 // REACT //
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
+import React, { useCallback, useEffect, useState } from "react";
+
+// TYPES //
+import { AttendancePlayerData } from "@/types/attendance";
 
 // COMPONENTS //
 import ProfileHeader from "@/app/components/academy/ProfileHeader";
 import { PlayerAttendance } from "@/app/components/academy/PlayerAttendance";
 import AttendanceSummary from "@/app/components/academy/AttendanceSummary";
 
+// API SERVICES //
+import { getPlayersForAttendance } from "@/services/api/attendance.api.service";
+
 // IMAGES //
 import AcademyBackground from "@/../public/academy-background.jpg";
-import React from "react";
-
-const playerDetails = [
-  {
-    name: "Ritesh Kumar Sigham",
-    id: "SUFA 0032",
-    imageUrl: "/player-photo.png",
-    status: "present",
-  },
-  {
-    name: "Amit Solanki",
-    id: "SUFA 0045",
-    imageUrl: "/player-photo.png",
-    status: "present",
-  },
-  {
-    name: "Jay Patel",
-    id: "SUFA 0021",
-    imageUrl: "/player-photo.png",
-    status: "absent",
-  },
-  {
-    name: "Jay Patel",
-    id: "SUFA 0021",
-    imageUrl: "/player-photo.png",
-    status: "pending",
-  },
-  {
-    name: "Jay Patel",
-    id: "SUFA 0021",
-    imageUrl: "/player-photo.png",
-    status: "pending",
-  },
-];
 
 const attendanceSummary = [
   { label: "Present", count: 2 },
@@ -55,12 +28,39 @@ const attendanceSummary = [
 export default function Academy() {
   // Define Navigation
   const router = useRouter();
+  const searchParams = useSearchParams();
+
+  const date = searchParams.get("date"); // "05/12/2025"
+  const batch = searchParams.get("batch");
 
   // Define States
+  const [playerDetails, setPlayerDetails] = useState<AttendancePlayerData[]>(
+    []
+  );
+  const [loading, setLoading] = useState<boolean>(false);
 
   // Helper Functions
+  const fetchAttendancePlayers = useCallback(async () => {
+    if (!date || !batch) return;
+
+    try {
+      setLoading(true);
+      const response = await getPlayersForAttendance(date, batch);
+      const attendanceData = response.data; // <-- single object
+      console.log(response);
+
+      setPlayerDetails(attendanceData.eligible);
+    } catch (err) {
+      console.error("Error fetching attendance:", err);
+    } finally {
+      setLoading(false);
+    }
+  }, [date, batch]);
 
   // Define Use Effects
+  useEffect(() => {
+    fetchAttendancePlayers();
+  }, [fetchAttendancePlayers]);
 
   return (
     <section className="min-h-screen relative">
@@ -83,7 +83,7 @@ export default function Academy() {
           <div className="flex flex-col gap-1">
             {/* Session Title */}
             <p className="text-xl font-medium text-n-950">
-              Practice Session | Under 8
+              {batch || "Skorost Batch"}
             </p>
 
             {/* Location */}
@@ -108,21 +108,33 @@ export default function Academy() {
       </div>
 
       {/* Attendance card content  */}
-      <div className="flex flex-col justify-between px-5 pt-50 pb-40">
-        {playerDetails.map((playerItem, index) => (
-          <React.Fragment key={index}>
-            <PlayerAttendance
-              name={playerItem.name}
-              id={playerItem.id}
-              imageUrl={playerItem.imageUrl}
-              onPresent={() => console.log(`${playerItem.name} marked Present`)}
-              onAbsent={() => console.log(`${playerItem.name} marked Absent`)}
-            />
-            {index < playerDetails.length - 1 && (
-              <div className="border-n-300 border-[0.5px] border-dashed" />
-            )}
-          </React.Fragment>
-        ))}
+      <div className="flex flex-col justify-between px-5 pt-50 pb-20">
+        {playerDetails && playerDetails.length > 0 ? (
+          playerDetails.map((playerItem, index) => (
+            <React.Fragment key={index}>
+              <PlayerAttendance
+                name={playerItem.playerName}
+                id={playerItem.skorostId}
+                imageUrl={"/player-photo.png"}
+                onPresent={() =>
+                  console.log(`${playerItem.skorostId} marked Present`)
+                }
+                onAbsent={() =>
+                  console.log(`${playerItem.skorostId} marked Absent`)
+                }
+              />
+              {index < playerDetails.length - 1 && (
+                <div className="border-n-300 border-[0.5px] border-dashed" />
+              )}
+            </React.Fragment>
+          ))
+        ) : (
+          <p className="text-center text-n-500 pt-5">
+            {loading
+              ? "Loading players..."
+              : "No players found for attendance."}
+          </p>
+        )}
       </div>
 
       {/* Attendance Summary & Confirm Button */}
