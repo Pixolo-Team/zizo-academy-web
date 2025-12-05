@@ -2,69 +2,81 @@
 
 // REACT //
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 // TYPES //
 import { SessionItemData } from "@/types/schedule";
 
 // COMPONENTS //
 import ScrollingCalendar from "@/app/components/academy/ScrollingCalendar";
-import SessionCard from "../../components/academy/SessionCard";
+import SessionCard from "@/app/components/academy/SessionCard";
 import ProfileHeader from "@/app/components/academy/ProfileHeader";
 
-const sessions: SessionItemData[] = [
-  {
-    id: 1,
-    startTime: "18:00",
-    endTime: "19:00",
-    title: "Practice Session | Under 8",
-    location: "Ramji Assar, Ghatkopar East",
-    status: "ongoing",
-  },
-  {
-    id: 2,
-    startTime: "18:00",
-    endTime: "19:00",
-    title: "Practice Session | Under 12",
-    location: "Ramji Assar, Ghatkopar East",
-    status: "cancelled",
-  },
-  {
-    id: 3,
-    startTime: "18:00",
-    endTime: "19:00",
-    title: "Practice Session | Under 14",
-    location: "Ramji Assar, Ghatkopar East",
-    status: "upcoming",
-  },
-];
+// API SERVICES //
+import { getSessionsRequest } from "@/services/api/schedule.api.service";
 
 export default function Page() {
   const router = useRouter();
 
+  // Define States
+  const [sessions, setSessions] = useState<SessionItemData[]>([]);
+  const [selectedDate, setSelectedDate] = useState<string>("");
+
+  // Define Helper Functions
+  /** Fetch Sessions for Selected Date */
+  const fetchSessions = async (date: string) => {
+    try {
+      const response = await getSessionsRequest(date);
+      setSessions(response.data);
+    } catch (error) {
+      console.error("Error fetching sessions:", error);
+    }
+  };
+
+  // Define Effects
+  // Fetch sessions when selectedDate changes
+  useEffect(() => {
+    fetchSessions(selectedDate);
+  }, [selectedDate]);
+
   return (
     <section>
       <div className="fixed top-0 bg-n-950  w-full z-10">
+        {/* Profile Header */}
         <ProfileHeader
           imageUrl="/profile-image.jpg"
           onBack={() => router.back()}
           iconColor="n-50"
         />
+
+        {/* Scrolling Calendar */}
         <div className="px-6 container mx-auto mt-4 mb-7">
-          <ScrollingCalendar />
+          <ScrollingCalendar
+            onDateSelect={(dateString: string) => {
+              setSelectedDate(dateString);
+            }}
+          />
         </div>
       </div>
 
+      {/* Sessions List */}
       <div className="flex flex-col gap-3 px-6 pb-6 container pt-60 mx-auto">
-        {sessions.map((sessionItem: SessionItemData) => (
-          <SessionCard
-            key={sessionItem.id}
-            startTime={sessionItem.startTime}
-            endTime={sessionItem.endTime}
-            title={sessionItem.title}
-            location={sessionItem.location}
-            status={sessionItem.status}
-          />
-        ))}
+        {sessions && sessions.length > 0 ? (
+          sessions.map((sessionItem: SessionItemData, sessionItemIndex) => (
+            <SessionCard
+              key={sessionItemIndex}
+              startTime={sessionItem.from}
+              endTime={sessionItem.to}
+              title={sessionItem.batch}
+              location={sessionItem.venue}
+              status={sessionItem.status}
+            />
+          ))
+        ) : (
+          <p className="text-center text-n-500">
+            No sessions scheduled for this date.
+          </p>
+        )}
       </div>
     </section>
   );

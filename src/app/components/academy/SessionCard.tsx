@@ -24,7 +24,7 @@ const SessionCard: React.FC<SessionCardProps> = ({
   endTime,
   title,
   location,
-  status = SessionStatus.UPCOMING,
+  status = SessionStatus.ONGOING,
 }) => {
   return (
     <div className="w-full rounded-xl border border-n-800 p-4 flex flex-col gap-2 relative">

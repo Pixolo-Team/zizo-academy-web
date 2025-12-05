@@ -1,138 +1,163 @@
 "use client";
 
-import React, {
-  useState,
-  useEffect,
-  useRef,
-  useCallback,
-  useMemo,
-} from "react";
+import { formatDate } from "@/app/utils/date";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 
-/**
- * Represents a single day item in the calendar.
- */
-interface DayProps {
+export interface DayProps {
   date: Date;
   isToday: boolean;
-  isSelected: boolean;
   hasEvent?: boolean;
 }
 
-const ScrollingCalendar: React.FC = () => {
+export interface ScrollingCalendarProps {
+  onDateSelect?: (dateString: string) => void;
+  selectedDate?: string;
+}
+
+// Scrolling Calendar Components
+const ScrollingCalendar: React.FC<ScrollingCalendarProps> = ({
+  onDateSelect,
+  selectedDate: externalSelectedDate,
+}) => {
   // Define States
-  const [selectedDate, setSelectedDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState<Date>(
+    externalSelectedDate
+      ? new Date(
+          externalSelectedDate.split("/").reverse().join("-") // Convert DD/MM/YYYY → YYYY-MM-DD
+        )
+      : new Date()
+  );
   const [days, setDays] = useState<DayProps[]>([]);
+
+  // Define Refs
   const scrollRef = useRef<HTMLDivElement>(null);
+  const todayRef = useRef(new Date());
 
-  // Memoize today so it's not recalculated on every render
-  const today = useMemo(() => new Date(), []);
+  // Define Helper Functions
+  /**
+   * Generates 31 days:
+   * - 15 days before today
+   * - today
+   * - 15 days after today
+   */
+  const generateDays = useCallback(() => {
+    const today = todayRef.current;
 
-  // Format the month title based on selected date
+    // Start 15 days before today
+    const start = new Date(today);
+    start.setDate(start.getDate() - 15);
+
+    // Generate days array
+    const generated = Array.from({ length: 31 }, (_, i) => {
+      const date = new Date(start);
+      date.setDate(start.getDate() + i);
+
+      // Return DayProps
+      return {
+        date,
+        isToday: date.toDateString() === today.toDateString(),
+        hasEvent: false,
+      };
+    });
+
+    // Update state
+    setDays(generated);
+  }, []);
+
+  /**
+   * Handles selecting a date in the calendar.
+   * Updates state and notifies parent.
+   */
+  const handleSelect = (day: DayProps) => {
+    setSelectedDate(day.date);
+
+    const dateString = formatDate(day.date);
+
+    // Send formatted date to parent
+    onDateSelect?.(dateString);
+  };
+
+  /** Month title displayed above the calendar */
   const monthTitle = selectedDate.toLocaleString("en-US", {
     month: "long",
     year: "numeric",
   });
 
-  // Define Helper Functions
-  /** Handles selecting a date */
-  const handleSelect = (day: DayProps) => {
-    setSelectedDate(day.date); // Update selected date
-
-    // Update selected state inside the days array
-    setDays((prev) =>
-      prev.map((d) => ({
-        ...d,
-        isSelected: d.date.toDateString() === day.date.toDateString(),
-      }))
-    );
-  };
-
-  /** Generates 31 days (15 past → today → 15 future) */
-  const generateDays = useCallback(() => {
-    // Start from 15 days before today
-    const start = new Date(today);
-    start.setDate(start.getDate() - 15);
-
-    // Create array of 31 day objects
-    const generated: DayProps[] = Array.from({ length: 31 }, (_, i) => {
-      const d = new Date(start);
-      d.setDate(start.getDate() + i); // Move forward day by day
-
-      const isToday = d.toDateString() === today.toDateString();
-
-      return {
-        date: d,
-        isToday,
-        isSelected: isToday, // Select today initially
-        hasEvent: false,
-      };
-    });
-
-    setDays(generated);
-  }, [today]);
-
-  // Generate days on component mount
+  // Define Effects
   useEffect(() => {
     generateDays();
   }, [generateDays]);
 
-  /** Scroll to today's date only if selected date is today */
+  /**
+   * On first render, after days are generated,
+   * notify the parent of the initial selected date.
+   */
   useEffect(() => {
-    if (!scrollRef.current) return;
+    if (!onDateSelect) return;
 
-    // Check if selected date is today
-    const isTodaySelected =
-      selectedDate.toDateString() === today.toDateString();
+    // Format date as DD/MM/YYYY
+    const dateString = formatDate(selectedDate);
 
-    if (!isTodaySelected) return;
+    onDateSelect(dateString);
+  }, [days, onDateSelect, selectedDate, externalSelectedDate]); // Runs once because days only updates once on mount
 
-    // Today is always index 15 (middle of 31 days)
-    const todayIndex = 15;
-    const el = scrollRef.current.children[todayIndex] as
-      | HTMLElement
-      | undefined;
+  /**
+   * Scrolls the currently selected date into center view.
+   */
+  useEffect(() => {
+    if (!scrollRef.current || days.length === 0) return;
 
-    // Scroll into view if element exists
-    if (el) {
-      el.scrollIntoView({
-        behavior: "smooth",
-        inline: "center",
-        block: "nearest",
-      });
-    }
-  }, [selectedDate, today, days]);
+    // Find index of selected date in days array
+    const index = days.findIndex(
+      (dayItem) => dayItem.date.toDateString() === selectedDate.toDateString()
+    );
+
+    if (index === -1) return;
+
+    const element = scrollRef.current.children[index] as HTMLElement;
+    element?.scrollIntoView({
+      behavior: "smooth",
+      inline: "center",
+      block: "nearest",
+    });
+  }, [selectedDate, days]);
 
   return (
     <div className="flex flex-col gap-4">
       {/* Month Title */}
       <h2 className="text-lg text-n-100 font-bold">{monthTitle}</h2>
 
-      {/* Scrollable calendar row */}
+      {/* Scrollable days */}
       <div
         ref={scrollRef}
         className="flex gap-2 overflow-x-scroll no-scrollbar"
       >
-        {days.map((day, index) => (
-          <div
-            key={index}
-            onClick={() => handleSelect(day)} // Handle clicking a day
-            className={`flex flex-col items-center p-3 gap-2.5 rounded-full cursor-pointer min-w-[48px]
-              ${
-                day.isSelected
-                  ? "bg-n-50 text-n-900 font-medium"
-                  : "text-n-50 font-normal"
-              }
-            `}
-          >
-            {/* Weekday Name */}
-            <p className="text-sm">
-              {day.date.toLocaleDateString("en-US", { weekday: "short" })}
-            </p>
+        {days.map((day, index) => {
+          const isSelected =
+            day.date.toDateString() === selectedDate.toDateString();
 
-            {/* Day Number */}
-            <p className="text-base">{day.date.getDate()}</p>
-          </div>
-        ))}
+          return (
+            <div
+              key={index}
+              onClick={() => handleSelect(day)}
+              className={`flex flex-col items-center p-3 gap-2.5 rounded-full cursor-pointer min-w-[48px]
+                ${
+                  isSelected
+                    ? "bg-n-50 text-n-900 font-medium"
+                    : "text-n-50 font-normal"
+                }
+              `}
+            >
+              {/* Weekday (Mon, Tue...) */}
+              <p className="text-sm">
+                {day.date.toLocaleDateString("en-US", { weekday: "short" })}
+              </p>
+
+              {/* Day Number */}
+              <p className="text-base">{day.date.getDate()}</p>
+            </div>
+          );
+        })}
       </div>
     </div>
   );
