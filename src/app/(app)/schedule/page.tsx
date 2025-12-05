@@ -26,11 +26,12 @@ export default function Page() {
   // Define Helper Functions
   /** Fetch Sessions for Selected Date */
   const fetchSessions = async (date: string) => {
-    console.log(date);
-
     setIsLoading(true);
     try {
+      // Make API Request
       const response = await getSessionsRequest(date);
+
+      // Update State
       setSessions(response.data);
       console.log("Fetched sessions:", response.data);
     } catch (error) {
