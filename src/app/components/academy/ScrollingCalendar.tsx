@@ -125,12 +125,12 @@ const ScrollingCalendar: React.FC = () => {
             `}
           >
             {/* Weekday Name */}
-            <span className="text-sm">
+            <p className="text-sm">
               {day.date.toLocaleDateString("en-US", { weekday: "short" })}
-            </span>
+            </p>
 
             {/* Day Number */}
-            <span className="text-base">{day.date.getDate()}</span>
+            <p className="text-base">{day.date.getDate()}</p>
           </div>
         ))}
       </div>

@@ -54,11 +54,11 @@ const SessionCard: React.FC<SessionCardProps> = ({
         </div>
 
         {/* Menu */}
-        <div className="flex gap-0.5">
+        {/* <div className="flex gap-0.5">
           <span className="size-1 rounded-full bg-[#8F9BB3]" />
           <span className="size-1 rounded-full bg-[#8F9BB3]" />
           <span className="size-1 rounded-full bg-[#8F9BB3]" />
-        </div>
+        </div> */}
       </div>
 
       {/* Title */}

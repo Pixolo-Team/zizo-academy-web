@@ -20,7 +20,7 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({
       {/* Back Button */}
       <button
         onClick={onBack}
-        className={`px-2 py-2.5  border  rounded-full`}
+        className={`px-2 py-2.5  border-[1.7px]  rounded-full`}
         style={{
           borderColor: `var(--color-${iconColor})`,
         }}
