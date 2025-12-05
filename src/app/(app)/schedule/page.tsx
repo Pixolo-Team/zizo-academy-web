@@ -1,9 +1,12 @@
 "use client";
 
-import WeekCalendar from "@/app/components/academy/WeekCalendar";
+// REACT //
+import { useRouter } from "next/navigation";
+
+// COMPONENTS //
+import ScrollingCalendar from "@/app/components/academy/ScrollingCalendar";
 import SessionCard from "../../components/academy/SessionCard";
 import ProfileHeader from "@/app/components/academy/ProfileHeader";
-import { useRouter } from "next/navigation";
 
 const sessions = [
   {
@@ -43,7 +46,7 @@ export default function Page() {
         iconColor="text-slate-950"
       />
       <div className="px-6 pb-6 container mx-auto flex flex-col gap-7">
-        <WeekCalendar />
+        <ScrollingCalendar />
 
         <div className="flex flex-col gap-3">
           {sessions.map((sessionItem) => (
