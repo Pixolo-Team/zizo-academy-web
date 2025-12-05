@@ -1,27 +1,30 @@
-// REACT
+// REACT //
 import React from "react";
 
-// TYPES
-interface SessionCardProps {
-  startTime: string;
-  endTime: string;
-  title: string;
-  location: string;
-  status?: "upcoming" | "ongoing" | "cancelled";
-}
+// ENUMS //
+import { SessionStatus } from "@/enums/schedule.enum";
 
+// TYPES
 const statusColors = {
   upcoming: "#F5A623", // Yellow
   ongoing: "#29C36A", // Green
   cancelled: "#FF4D4F", // Red
 };
 
+interface SessionCardProps {
+  startTime: string;
+  endTime: string;
+  title: string;
+  location: string;
+  status?: SessionStatus;
+}
+
 const SessionCard: React.FC<SessionCardProps> = ({
   startTime,
   endTime,
   title,
   location,
-  status = "upcoming",
+  status = SessionStatus.UPCOMING,
 }) => {
   return (
     <div className="w-full rounded-xl border border-n-800 p-4 flex flex-col gap-2 relative">

@@ -3,12 +3,15 @@
 // REACT //
 import { useRouter } from "next/navigation";
 
+// TYPES //
+import { SessionItemData } from "@/types/schedule";
+
 // COMPONENTS //
 import ScrollingCalendar from "@/app/components/academy/ScrollingCalendar";
 import SessionCard from "../../components/academy/SessionCard";
 import ProfileHeader from "@/app/components/academy/ProfileHeader";
 
-const sessions = [
+const sessions: SessionItemData[] = [
   {
     id: 1,
     startTime: "18:00",
@@ -43,7 +46,7 @@ export default function Page() {
       <ProfileHeader
         imageUrl="/profile-image.jpg"
         onBack={() => router.back()}
-        iconColor="text-slate-950"
+        iconColor="n-50"
       />
       <div className="px-6 pb-6 container mx-auto flex flex-col gap-7">
         <ScrollingCalendar />

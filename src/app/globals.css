@@ -4,16 +4,16 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
- --color-n-50: #FFFFFF;
-  --color-n-100: #F1F5F9;
-  --color-n-200: #E2E8F1;
-  --color-n-300: #CAD5E2;
-  --color-n-400: #90A2B9;
-  --color-n-500: #62748E;
-  --color-n-600: #45556C;
+  --color-n-50: #ffffff;
+  --color-n-100: #f1f5f9;
+  --color-n-200: #e2e8f1;
+  --color-n-300: #cad5e2;
+  --color-n-400: #90a2b9;
+  --color-n-500: #62748e;
+  --color-n-600: #45556c;
   --color-n-700: #324158;
-  --color-n-800: #1D283D;
-  --color-n-900: #0E172B;
+  --color-n-800: #1d283d;
+  --color-n-900: #0e172b;
   --color-n-950: #020617;
   --primary: oklch(0.205 0 0);
   --secondary: oklch(0.97 0 0);
@@ -189,4 +189,14 @@
 
 .day-item.selected::before {
   opacity: 1; /* visible when selected */
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+/* Hide scrollbar for IE, Edge and Firefox */
+.no-scrollbar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
 }

@@ -13,20 +13,24 @@ interface ProfileHeaderProps {
 const ProfileHeader: React.FC<ProfileHeaderProps> = ({
   imageUrl,
   onBack,
-  iconColor,
+  iconColor = "currentColor",
 }) => {
   return (
     <header className="w-full flex items-center justify-between py-3.5 px-5 bg-transparent">
       {/* Back Button */}
       <button
         onClick={onBack}
-        className={`px-2 py-2.5 text-${iconColor} border border-${iconColor}  rounded-full`}
+        className={`px-2 py-2.5  border  rounded-full`}
+        style={{
+          borderColor: `var(--color-${iconColor})`,
+        }}
       >
         <svg
           width="16"
           height="11"
           viewBox="0 0 16 11"
-          fill="none"
+          className={`text-${iconColor}`}
+          // style={{ color: iconColor || "currentColor" }}
           xmlns="http://www.w3.org/2000/svg"
         >
           <path
