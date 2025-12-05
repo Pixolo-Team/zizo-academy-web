@@ -3,6 +3,7 @@ import React from "react";
 
 // ENUMS //
 import { SessionStatus } from "@/enums/schedule.enum";
+import { on } from "events";
 
 // TYPES
 const statusColors = {
@@ -17,6 +18,7 @@ interface SessionCardProps {
   title: string;
   location: string;
   status?: SessionStatus;
+  onClick?: () => void;
 }
 
 const SessionCard: React.FC<SessionCardProps> = ({
@@ -25,9 +27,13 @@ const SessionCard: React.FC<SessionCardProps> = ({
   title,
   location,
   status = SessionStatus.ONGOING,
+  onClick,
 }) => {
   return (
-    <div className="w-full rounded-xl border border-n-800 p-4 flex flex-col gap-2 relative">
+    <div
+      className="w-full rounded-xl border border-n-800 p-4 flex flex-col gap-2 relative"
+      onClick={onClick}
+    >
       {/* Time */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-1">

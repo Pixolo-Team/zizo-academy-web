@@ -21,22 +21,40 @@ export default function Page() {
   // Define States
   const [sessions, setSessions] = useState<SessionItemData[]>([]);
   const [selectedDate, setSelectedDate] = useState<string>("");
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   // Define Helper Functions
   /** Fetch Sessions for Selected Date */
   const fetchSessions = async (date: string) => {
+    console.log(date);
+
+    setIsLoading(true);
     try {
       const response = await getSessionsRequest(date);
       setSessions(response.data);
+      console.log("Fetched sessions:", response.data);
     } catch (error) {
       console.error("Error fetching sessions:", error);
+    } finally {
+      setIsLoading(false);
     }
+  };
+
+  /** Handle Session Card Tap */
+  const handleSessionCardTap = (batchName: string) => {
+    router.push(
+      `/attendance?date=${encodeURIComponent(
+        selectedDate
+      )}&batch=${encodeURIComponent(batchName)}`
+    );
   };
 
   // Define Effects
   // Fetch sessions when selectedDate changes
   useEffect(() => {
-    fetchSessions(selectedDate);
+    if (selectedDate) {
+      fetchSessions(selectedDate);
+    }
   }, [selectedDate]);
 
   return (
@@ -70,11 +88,14 @@ export default function Page() {
               title={sessionItem.batch}
               location={sessionItem.venue}
               status={sessionItem.status}
+              onClick={() => handleSessionCardTap(sessionItem.batch)}
             />
           ))
         ) : (
           <p className="text-center text-n-500">
-            No sessions scheduled for this date.
+            {isLoading
+              ? "Loading sessions..."
+              : "No sessions scheduled for this date."}
           </p>
         )}
       </div>
