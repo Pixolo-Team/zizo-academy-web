@@ -72,7 +72,7 @@ export default function Academy() {
         }}
       >
         <ProfileHeader
-          iconColor="text-slate-50"
+          iconColor="n-900"
           imageUrl="/player-photo.png"
           onBack={() => router.back()}
         />

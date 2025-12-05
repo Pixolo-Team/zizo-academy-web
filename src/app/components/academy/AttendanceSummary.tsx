@@ -4,7 +4,6 @@
 import React from "react";
 
 // COMPONENTS //
-import { Button } from "@/components/ui/button";
 
 type Props = {
   attendanceSummary: { label: string; count: number }[];
@@ -13,7 +12,6 @@ type Props = {
 
 export default function AttendanceSummary({
   attendanceSummary: attendanceSummary,
-  onConfirm,
 }: Props) {
   return (
     <div className="flex flex-col gap-1.5 fixed w-full bottom-0 bg-n-950 p-5">
@@ -33,7 +31,7 @@ export default function AttendanceSummary({
       </div>
 
       {/* Confirm Button */}
-      <div className="h-14">
+      {/* <div className="h-14">
         <Button
           className={
             "bg-n-100 rounded-full w-full h-full text-n-950 font-medium text-base z-2"
@@ -44,7 +42,7 @@ export default function AttendanceSummary({
         >
           Confirm Attendance
         </Button>
-      </div>
+      </div> */}
     </div>
   );
 }
