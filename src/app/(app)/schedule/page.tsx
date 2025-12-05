@@ -43,26 +43,28 @@ export default function Page() {
 
   return (
     <section>
-      <ProfileHeader
-        imageUrl="/profile-image.jpg"
-        onBack={() => router.back()}
-        iconColor="n-50"
-      />
-      <div className="px-6 pb-6 container mx-auto flex flex-col gap-7">
-        <ScrollingCalendar />
-
-        <div className="flex flex-col gap-3">
-          {sessions.map((sessionItem) => (
-            <SessionCard
-              key={sessionItem.id}
-              startTime={sessionItem.startTime}
-              endTime={sessionItem.endTime}
-              title={sessionItem.title}
-              location={sessionItem.location}
-              status={sessionItem.status}
-            />
-          ))}
+      <div className="fixed top-0 bg-n-950  w-full z-10">
+        <ProfileHeader
+          imageUrl="/profile-image.jpg"
+          onBack={() => router.back()}
+          iconColor="n-50"
+        />
+        <div className="px-6 container mx-auto mt-4 mb-7">
+          <ScrollingCalendar />
         </div>
+      </div>
+
+      <div className="flex flex-col gap-3 px-6 pb-6 container pt-60 mx-auto">
+        {sessions.map((sessionItem: SessionItemData) => (
+          <SessionCard
+            key={sessionItem.id}
+            startTime={sessionItem.startTime}
+            endTime={sessionItem.endTime}
+            title={sessionItem.title}
+            location={sessionItem.location}
+            status={sessionItem.status}
+          />
+        ))}
       </div>
     </section>
   );
