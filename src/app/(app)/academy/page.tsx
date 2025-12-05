@@ -30,7 +30,7 @@ export default function Academy() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  const date = searchParams.get("date"); // "05/12/2025"
+  const date = searchParams.get("date");
   const batch = searchParams.get("batch");
 
   // Define States
@@ -115,7 +115,7 @@ export default function Academy() {
               <PlayerAttendance
                 name={playerItem.playerName}
                 id={playerItem.skorostId}
-                imageUrl={"/player-photo.png"}
+                imageUrl={`http://pixoloproductions.com/static/zizo-academy/skorost-united-football-school/players/${playerItem.skorostId}.png`}
                 onPresent={() =>
                   console.log(`${playerItem.skorostId} marked Present`)
                 }
