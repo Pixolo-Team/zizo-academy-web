@@ -7,9 +7,12 @@ import React, { useCallback, useEffect, useState } from "react";
 // TYPES //
 import { AttendancePlayerData } from "@/types/attendance";
 
+// ENUMS //
+import { AttendanceStatus } from "@/enums/attendance.enum";
+
 // COMPONENTS //
 import ProfileHeader from "@/app/components/academy/ProfileHeader";
-import { PlayerAttendance } from "@/app/components/academy/PlayerAttendance";
+import { PlayerAttendanceCard } from "@/app/components/academy/PlayerAttendanceCard";
 import AttendanceSummary from "@/app/components/academy/AttendanceSummary";
 
 // API SERVICES //
@@ -23,7 +26,6 @@ import { useAttendance } from "@/contexts/AttendanceContext";
 
 // IMAGES //
 import AcademyBackground from "@/../public/academy-background.jpg";
-import { AttendanceStatus } from "@/enums/attendance.enum";
 
 export default function Academy() {
   // Define Navigation
@@ -193,7 +195,7 @@ export default function Academy() {
           playerDetails.map((playerItem, index) => (
             <React.Fragment key={index}>
               {/* Player Attendance Card  */}
-              <PlayerAttendance
+              <PlayerAttendanceCard
                 name={playerItem.playerName}
                 id={playerItem.skorostId}
                 imageUrl={
@@ -201,7 +203,9 @@ export default function Academy() {
                     ? `http://pixoloproductions.com/static/zizo-academy/skorost-united-football-school/players/${playerItem.skorostId}.png`
                     : "/images/defaults/default-player.png"
                 }
-                status={playerItem.attendance ?? AttendanceStatus.ELIGIBLE}
+                attendanceStatus={
+                  playerItem.attendance ?? AttendanceStatus.ELIGIBLE
+                }
                 onPresent={() =>
                   handleMarkAttendance(
                     index,

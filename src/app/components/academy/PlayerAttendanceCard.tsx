@@ -12,7 +12,7 @@ type PlayerAttendanceProps = {
   imageUrl: string;
 
   /** current status from parent */
-  status: AttendanceStatus | null;
+  attendanceStatus: AttendanceStatus | null;
 
   /** click handlers passed from parent */
   onPresent?: () => void;
@@ -23,11 +23,11 @@ type PlayerAttendanceProps = {
  * Stateless attendance UI item.
  * Parent is responsible for managing the state.
  */
-export const PlayerAttendance: React.FC<PlayerAttendanceProps> = ({
+export const PlayerAttendanceCard: React.FC<PlayerAttendanceProps> = ({
   name,
   id,
   imageUrl,
-  status,
+  attendanceStatus,
   onPresent,
   onAbsent,
 }) => {
@@ -59,9 +59,9 @@ export const PlayerAttendance: React.FC<PlayerAttendanceProps> = ({
           className={`
             w-1/2 h-11 rounded-full text-base font-normal
              ${
-               status === AttendanceStatus.ABSENT
+               attendanceStatus === AttendanceStatus.ABSENT
                  ? "bg-red-500 text-n-950" // ABSENT
-                 : status === AttendanceStatus.PRESENT
+                 : attendanceStatus === AttendanceStatus.PRESENT
                  ? "border-n-400 text-n-400" // PRESENT
                  : "border border-red-500 text-red-500" // ELIGIBLE
              }
@@ -78,9 +78,9 @@ export const PlayerAttendance: React.FC<PlayerAttendanceProps> = ({
           className={`
             w-1/2 h-11 rounded-full text-base font-normal
             ${
-              status === AttendanceStatus.PRESENT
+              attendanceStatus === AttendanceStatus.PRESENT
                 ? "bg-green-500 text-n-950"
-                : status === AttendanceStatus.ABSENT
+                : attendanceStatus === AttendanceStatus.ABSENT
                 ? "border-n-400 text-n-400"
                 : "border border-green-500 text-green-500"
             }

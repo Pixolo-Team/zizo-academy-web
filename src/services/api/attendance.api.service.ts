@@ -13,12 +13,14 @@ export const getPlayersForAttendanceRequest = async (
   date: string,
   batch: string
 ): Promise<ApiResponseData<AttendanceData>> => {
+  // Prepare the API Call
   const config: AxiosRequestConfig = {
     method: "get",
     url: `${CONSTANTS.API_URL}get-players-for-attendance.php?date=${date}&team=${batch}`,
     headers: { "Content-Type": "application/json" },
   };
 
+  // Make the API Call and return Data
   const response = await axios.request<ApiResponseData<AttendanceData>>(config);
   return response.data;
 };
@@ -32,6 +34,7 @@ export const updateAttendanceRequest = async (
   status: "P" | "A" | "E",
   team: string
 ): Promise<ApiResponseData<UpdateAttendanceData>> => {
+  // Prepare the API Call
   const config: AxiosRequestConfig = {
     method: "get",
     url: `${
@@ -44,6 +47,7 @@ export const updateAttendanceRequest = async (
     headers: { "Content-Type": "application/json" },
   };
 
+  // Make the API Call and return Data
   const response = await axios.request<ApiResponseData<UpdateAttendanceData>>(
     config
   );

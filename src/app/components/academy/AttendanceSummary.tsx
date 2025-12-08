@@ -5,14 +5,14 @@ import React from "react";
 
 // COMPONENTS //
 
-type Props = {
+type AttendanceSummaryProps = {
   attendanceSummary: { label: string; count: number }[];
   onConfirm?: () => void;
 };
 
 export default function AttendanceSummary({
   attendanceSummary: attendanceSummary,
-}: Props) {
+}: AttendanceSummaryProps) {
   return (
     <div className="flex flex-col gap-1.5 fixed w-full bottom-0 bg-n-950 p-5">
       {/* Attendance Summary */}
