@@ -13,13 +13,17 @@ import { PlayerAttendance } from "@/app/components/academy/PlayerAttendance";
 import AttendanceSummary from "@/app/components/academy/AttendanceSummary";
 
 // API SERVICES //
-import { getPlayersForAttendanceRequest } from "@/services/api/attendance.api.service";
+import {
+  getPlayersForAttendanceRequest,
+  updateAttendanceRequest,
+} from "@/services/api/attendance.api.service";
 
 // CONTEXTS //
 import { useAttendance } from "@/contexts/AttendanceContext";
 
 // IMAGES //
 import AcademyBackground from "@/../public/academy-background.jpg";
+import { AttendanceStatus } from "@/enums/attendance.enum";
 
 export default function Academy() {
   // Define Navigation
@@ -86,6 +90,46 @@ export default function Academy() {
       { label: "Pending", count: pending },
       { label: "Total", count: total },
     ];
+  };
+
+  /** Handle Marking Attendance */
+  const handleMarkAttendance = async (
+    index: number,
+    skorostId: string,
+    newStatus: AttendanceStatus
+  ) => {
+    // Optimistic UI update
+    setPlayerDetails((prev) => {
+      const updated = [...prev];
+      updated[index] = {
+        ...updated[index],
+        attendance: newStatus,
+      };
+      return updated;
+    });
+
+    if (!session || !session.date) return;
+
+    try {
+      await updateAttendanceRequest(
+        skorostId,
+        session.date,
+        newStatus === "Present" ? "P" : "A",
+        session.batch
+      );
+    } catch (error) {
+      console.error("Failed to update attendance:", error);
+
+      // Rollback optimistic update
+      setPlayerDetails((prev) => {
+        const updated = [...prev];
+        updated[index] = {
+          ...updated[index],
+          attendance: AttendanceStatus.ELIGIBLE, // reset since API failed
+        };
+        return updated;
+      });
+    }
   };
 
   // Define Use Effects
@@ -157,11 +201,20 @@ export default function Academy() {
                     ? `http://pixoloproductions.com/static/zizo-academy/skorost-united-football-school/players/${playerItem.skorostId}.png`
                     : "/images/defaults/default-player.png"
                 }
+                status={playerItem.attendance ?? AttendanceStatus.ELIGIBLE}
                 onPresent={() =>
-                  console.log(`${playerItem.skorostId} marked Present`)
+                  handleMarkAttendance(
+                    index,
+                    playerItem.skorostId,
+                    AttendanceStatus.PRESENT
+                  )
                 }
                 onAbsent={() =>
-                  console.log(`${playerItem.skorostId} marked Absent`)
+                  handleMarkAttendance(
+                    index,
+                    playerItem.skorostId,
+                    AttendanceStatus.ABSENT
+                  )
                 }
               />
 

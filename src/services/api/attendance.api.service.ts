@@ -3,7 +3,7 @@ import axios, { AxiosRequestConfig } from "axios";
 
 // TYPES //
 import { ApiResponseData } from "@/types/api";
-import { AttendanceData } from "@/types/attendance";
+import { AttendanceData, UpdateAttendanceData } from "@/types/attendance";
 
 // CONSTANTS //
 import { CONSTANTS } from "@/constants";
@@ -20,5 +20,32 @@ export const getPlayersForAttendanceRequest = async (
   };
 
   const response = await axios.request<ApiResponseData<AttendanceData>>(config);
+  return response.data;
+};
+
+/**
+ * Update attendance for a player.
+ */
+export const updateAttendanceRequest = async (
+  skorostId: string,
+  date: string,
+  status: "P" | "A" | "E",
+  team: string
+): Promise<ApiResponseData<UpdateAttendanceData>> => {
+  const config: AxiosRequestConfig = {
+    method: "get",
+    url: `${
+      CONSTANTS.API_URL
+    }update-attendance.php?skorostId=${encodeURIComponent(
+      skorostId
+    )}&date=${encodeURIComponent(date)}&status=${encodeURIComponent(
+      status
+    )}&team=${encodeURIComponent(team)}`,
+    headers: { "Content-Type": "application/json" },
+  };
+
+  const response = await axios.request<ApiResponseData<UpdateAttendanceData>>(
+    config
+  );
   return response.data;
 };
