@@ -5,4 +5,5 @@ export type SessionItemData = {
   batch: string;
   venue: string;
   status?: SessionStatus;
+  date?: string;
 };
