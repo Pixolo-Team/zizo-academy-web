@@ -15,8 +15,14 @@ import ProfileHeader from "@/app/components/academy/ProfileHeader";
 // API SERVICES //
 import { getSessionsRequest } from "@/services/api/schedule.api.service";
 
+// CONTEXTS //
+import { useAttendance } from "@/contexts/AttendanceContext";
+
 export default function Page() {
   const router = useRouter();
+
+  // Define Contexts
+  const { setSession } = useAttendance();
 
   // Define States
   const [sessions, setSessions] = useState<SessionItemData[]>([]);
@@ -42,12 +48,12 @@ export default function Page() {
   };
 
   /** Handle Session Card Tap */
-  const handleSessionCardTap = (batchName: string) => {
-    router.push(
-      `/academy?date=${encodeURIComponent(
-        selectedDate
-      )}&batch=${encodeURIComponent(batchName)}`
-    );
+  const handleSessionCardTap = (selectedSession: SessionItemData) => {
+    setSession({
+      date: selectedDate,
+      ...selectedSession,
+    });
+    router.push("/academy");
   };
 
   // Define Effects
@@ -63,7 +69,7 @@ export default function Page() {
       <div className="fixed top-0 bg-n-950  w-full z-10">
         {/* Profile Header */}
         <ProfileHeader
-          imageUrl="/profile-image.jpg"
+          imageUrl="/images/defaults/default-player.png"
           onBack={() => router.back()}
           iconColor="n-50"
         />
@@ -89,7 +95,7 @@ export default function Page() {
               title={sessionItem.batch}
               location={sessionItem.venue}
               status={sessionItem.status}
-              onClick={() => handleSessionCardTap(sessionItem.batch)}
+              onClick={() => handleSessionCardTap(sessionItem)}
             />
           ))
         ) : (

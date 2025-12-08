@@ -9,7 +9,7 @@ import { AttendanceData } from "@/types/attendance";
 import { CONSTANTS } from "@/constants";
 
 /** Get Players for Attendance by Date and batch */
-export const getPlayersForAttendance = async (
+export const getPlayersForAttendanceRequest = async (
   date: string,
   batch: string
 ): Promise<ApiResponseData<AttendanceData>> => {

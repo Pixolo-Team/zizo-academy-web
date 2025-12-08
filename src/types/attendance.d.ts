@@ -4,7 +4,7 @@
 export interface AttendancePlayerData {
   playerName: string;
   skorostId: string; // can be empty string
-  attendance: "Eligible" | "Present" | "Not Eligible";
+  attendance: "Eligible" | "Present" | "Absent" | "Not Eligible";
 }
 
 /**

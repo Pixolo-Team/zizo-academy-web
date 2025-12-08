@@ -1,11 +1,13 @@
 // STYLES //
 import "./globals.css";
 
-// FONTS //
+// CONTEXTS //
+import { AttendanceProvider } from "@/contexts/AttendanceContext";
 
 // DATA //
 import type { Metadata } from "next";
-import localFont from "next/font/local";
+
+// FONTS //
 
 // Fetch Fonts
 // const gtWalsheim = localFont({
@@ -117,7 +119,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="antialiased font-sans">{children}</body>
+      <body className="antialiased font-sans">
+        <AttendanceProvider>{children}</AttendanceProvider>
+      </body>
     </html>
   );
 }

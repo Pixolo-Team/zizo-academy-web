@@ -1,7 +1,7 @@
 "use client";
 
 // REACT //
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import React, { useCallback, useEffect, useState } from "react";
 
 // TYPES //
@@ -13,25 +13,20 @@ import { PlayerAttendance } from "@/app/components/academy/PlayerAttendance";
 import AttendanceSummary from "@/app/components/academy/AttendanceSummary";
 
 // API SERVICES //
-import { getPlayersForAttendance } from "@/services/api/attendance.api.service";
+import { getPlayersForAttendanceRequest } from "@/services/api/attendance.api.service";
+
+// CONTEXTS //
+import { useAttendance } from "@/contexts/AttendanceContext";
 
 // IMAGES //
 import AcademyBackground from "@/../public/academy-background.jpg";
 
-const attendanceSummary = [
-  { label: "Present", count: 2 },
-  { label: "Absent", count: 1 },
-  { label: "Pending", count: 2 },
-  { label: "Total", count: 5 },
-];
-
 export default function Academy() {
   // Define Navigation
   const router = useRouter();
-  const searchParams = useSearchParams();
 
-  const date = searchParams.get("date");
-  const batch = searchParams.get("batch");
+  // Define Contexts
+  const { session } = useAttendance();
 
   // Define States
   const [playerDetails, setPlayerDetails] = useState<AttendancePlayerData[]>(
@@ -41,21 +36,57 @@ export default function Academy() {
 
   // Helper Functions
   const fetchAttendancePlayers = useCallback(async () => {
-    if (!date || !batch) return;
+    if (!session || !session.date || !session.batch) return;
 
     try {
       setLoading(true);
-      const response = await getPlayersForAttendance(date, batch);
-      const attendanceData = response.data; // <-- single object
-      console.log(response);
 
+      // Make an API call
+      const response = await getPlayersForAttendanceRequest(
+        session.date,
+        session.batch
+      );
+      const attendanceData = response.data; // <-- single object
+
+      // Update the state
       setPlayerDetails(attendanceData.eligible);
     } catch (err) {
       console.error("Error fetching attendance:", err);
     } finally {
       setLoading(false);
     }
-  }, [date, batch]);
+  }, [session]);
+
+  /**
+   * Calculates attendance summary based on player list.
+   */
+  const calculateSummary = (players: AttendancePlayerData[]) => {
+    const eligiblePlayers = players.filter(
+      (p) => p.attendance !== "Not Eligible"
+    );
+
+    const present = eligiblePlayers.filter(
+      (p) => p.attendance === "Present"
+    ).length;
+
+    const absent = eligiblePlayers.filter(
+      (p) => p.attendance === "Absent"
+    ).length;
+
+    const pending = eligiblePlayers.filter(
+      (p) => p.attendance === "Eligible"
+    ).length;
+
+    const total = eligiblePlayers.length;
+
+    // Return Attendance Summary
+    return [
+      { label: "Present", count: present },
+      { label: "Absent", count: absent },
+      { label: "Pending", count: pending },
+      { label: "Total", count: total },
+    ];
+  };
 
   // Define Use Effects
   useEffect(() => {
@@ -73,7 +104,7 @@ export default function Academy() {
       >
         <ProfileHeader
           iconColor="n-900"
-          imageUrl="/player-photo.png"
+          imageUrl="/images/defaults/default-player.png"
           onBack={() => router.back()}
         />
         {/* Overlay */}
@@ -83,18 +114,20 @@ export default function Academy() {
           <div className="flex flex-col gap-1">
             {/* Session Title */}
             <p className="text-xl font-medium text-n-950">
-              {batch || "Skorost Batch"}
+              {session?.batch ?? "Skorost Batch"}
             </p>
 
             {/* Location */}
             <p className="text-sm font-normal text-n-500">
-              Ramji Assar, Ghatkopar East
+              {session?.venue ?? "Ramji Assar, Ghatkopar East"}
             </p>
           </div>
 
           <div className="flex justify-between z-2 items-center">
             {/* Start Time */}
-            <p className="text-base text-n-950 font-normal">18:00</p>
+            <p className="text-base text-n-950 font-normal">
+              {session?.from ?? "18:00"}
+            </p>
 
             {/* Total Time  */}
             <div className="bg-n-400 px-3.5 py-1.5 rounded-xl">
@@ -102,7 +135,9 @@ export default function Academy() {
             </div>
 
             {/* End Time */}
-            <p className="text-base text-n-950 font-normal">19:00</p>
+            <p className="text-base text-n-950 font-normal">
+              {session?.to ?? "19:00"}
+            </p>
           </div>
         </div>
       </div>
@@ -110,12 +145,18 @@ export default function Academy() {
       {/* Attendance card content  */}
       <div className="flex flex-col justify-between px-5 pt-50 pb-20">
         {playerDetails && playerDetails.length > 0 ? (
+          // Player Attendance List
           playerDetails.map((playerItem, index) => (
             <React.Fragment key={index}>
+              {/* Player Attendance Card  */}
               <PlayerAttendance
                 name={playerItem.playerName}
                 id={playerItem.skorostId}
-                imageUrl={`http://pixoloproductions.com/static/zizo-academy/skorost-united-football-school/players/${playerItem.skorostId}.png`}
+                imageUrl={
+                  playerItem.skorostId
+                    ? `http://pixoloproductions.com/static/zizo-academy/skorost-united-football-school/players/${playerItem.skorostId}.png`
+                    : "/images/defaults/default-player.png"
+                }
                 onPresent={() =>
                   console.log(`${playerItem.skorostId} marked Present`)
                 }
@@ -123,12 +164,15 @@ export default function Academy() {
                   console.log(`${playerItem.skorostId} marked Absent`)
                 }
               />
+
+              {/* Border */}
               {index < playerDetails.length - 1 && (
                 <div className="border-n-300 border-[0.5px] border-dashed" />
               )}
             </React.Fragment>
           ))
         ) : (
+          // Empty State
           <p className="text-center text-n-500 pt-5">
             {loading
               ? "Loading players..."
@@ -138,10 +182,12 @@ export default function Academy() {
       </div>
 
       {/* Attendance Summary & Confirm Button */}
-      <AttendanceSummary
-        attendanceSummary={attendanceSummary}
-        onConfirm={() => console.log("Confirmed attendance")}
-      />
+      {playerDetails && (
+        <AttendanceSummary
+          attendanceSummary={calculateSummary(playerDetails)}
+          onConfirm={() => console.log("Confirmed attendance")}
+        />
+      )}
     </section>
   );
 }
