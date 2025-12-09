@@ -107,20 +107,20 @@ const ScrollingCalendar: React.FC<ScrollingCalendarProps> = ({
   useEffect(() => {
     if (!scrollRef.current || days.length === 0) return;
 
-    // Find index of selected date in days array
-    const index = days.findIndex(
-      (dayItem) => dayItem.date.toDateString() === selectedDate.toDateString()
-    );
+    // // Find index of selected date in days array
+    // const index = days.findIndex(
+    //   (dayItem) => dayItem.date.toDateString() === selectedDate.toDateString()
+    // );
 
-    if (index === -1) return;
+    // if (index === -1) return;
 
-    const element = scrollRef.current.children[index] as HTMLElement;
+    const element = scrollRef.current.children[15] as HTMLElement;
     element?.scrollIntoView({
       behavior: "smooth",
       inline: "center",
       block: "nearest",
     });
-  }, [selectedDate, days]);
+  }, [days]);
 
   return (
     <div className="flex flex-col gap-4">

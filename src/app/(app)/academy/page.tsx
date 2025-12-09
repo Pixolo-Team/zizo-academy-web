@@ -14,6 +14,7 @@ import { AttendanceStatus } from "@/enums/attendance.enum";
 import ProfileHeader from "@/app/components/academy/ProfileHeader";
 import { PlayerAttendanceCard } from "@/app/components/academy/PlayerAttendanceCard";
 import AttendanceSummary from "@/app/components/academy/AttendanceSummary";
+import SearchInput from "@/components/ui/SearchInput";
 
 // API SERVICES //
 import {
@@ -39,8 +40,19 @@ export default function Academy() {
     []
   );
   const [loading, setLoading] = useState<boolean>(false);
+  const [playerSearchInput, setPlayerSearchInput] = useState<string>("");
 
   // Helper Functions
+  // Filtered players based on search input
+  const filteredPlayers = playerDetails.filter((player) => {
+    const query = playerSearchInput.toLowerCase();
+
+    return (
+      player.playerName.toLowerCase().includes(query) ||
+      player.skorostId.toLowerCase().includes(query)
+    );
+  });
+
   const fetchAttendancePlayers = useCallback(async () => {
     if (!session || !session.date || !session.batch) return;
 
@@ -190,9 +202,16 @@ export default function Academy() {
 
       {/* Attendance card content  */}
       <div className="flex flex-col justify-between px-5 pt-50 pb-20">
-        {playerDetails && playerDetails.length > 0 ? (
+        <div className="my-4">
+          <SearchInput
+            value={playerSearchInput}
+            placeholder="Player name or ID"
+            onChange={(value) => setPlayerSearchInput(value)}
+          />
+        </div>
+        {filteredPlayers && filteredPlayers.length > 0 ? (
           // Player Attendance List
-          playerDetails.map((playerItem, index) => (
+          filteredPlayers.map((playerItem, index) => (
             <React.Fragment key={index}>
               {/* Player Attendance Card  */}
               <PlayerAttendanceCard

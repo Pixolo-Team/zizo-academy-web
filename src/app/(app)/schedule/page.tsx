@@ -32,6 +32,8 @@ export default function Page() {
   // Define Helper Functions
   /** Fetch Sessions for Selected Date */
   const fetchSessions = async (date: string) => {
+    // Empty the prev data
+    setSessions([]);
     setIsLoading(true);
     try {
       // Make API Request
@@ -78,7 +80,9 @@ export default function Page() {
         <div className="px-6 container mx-auto mt-4 mb-7">
           <ScrollingCalendar
             onDateSelect={(dateString: string) => {
-              setSelectedDate(dateString);
+              if (selectedDate !== dateString) {
+                setSelectedDate(dateString);
+              }
             }}
           />
         </div>
