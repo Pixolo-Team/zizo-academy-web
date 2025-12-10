@@ -209,9 +209,9 @@ export default function Academy() {
             onChange={(value) => setPlayerSearchInput(value)}
           />
         </div>
-        {filteredPlayers && filteredPlayers.length > 0 ? (
+        {playerDetails && playerDetails.length > 0 ? (
           // Player Attendance List
-          filteredPlayers.map((playerItem, index) => (
+          playerDetails.map((playerItem, index) => (
             <React.Fragment key={index}>
               {/* Player Attendance Card  */}
               <PlayerAttendanceCard
