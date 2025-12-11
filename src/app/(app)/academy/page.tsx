@@ -27,6 +27,8 @@ import { useAttendance } from "@/contexts/AttendanceContext";
 
 // IMAGES //
 import AcademyBackground from "@/../public/academy-background.jpg";
+import { fadeIn, shrinkIn, slideIn, slideIndown } from "@/lib/animations";
+import Motion from "@/components/animations/Motion";
 
 export default function Academy() {
   // Define Navigation
@@ -154,115 +156,139 @@ export default function Academy() {
   return (
     <section className="min-h-screen relative">
       {/* Top Background Section with ProfileHeader */}
-      <div
-        className="fixed top-0 w-full bg-cover bg-center z-1 pb-5"
-        style={{
-          backgroundImage: `url(${AcademyBackground.src})`,
-        }}
-      >
-        <ProfileHeader
-          iconColor="n-900"
-          imageUrl="/images/defaults/default-player.png"
-          onBack={() => router.back()}
-        />
-        {/* Overlay */}
-        <div className="absolute top-0 w-full h-full -z-1 bg-slate-900/90" />
+      <Motion variants={slideIndown} delay={0} isFixed>
+        <div
+          className="fixed top-0 w-full bg-cover bg-center z-1 pb-5"
+          style={{
+            backgroundImage: `url(${AcademyBackground.src})`,
+          }}
+        >
+          <Motion variants={slideIndown} delay={0.1} isFixed>
+            <ProfileHeader
+              iconColor="n-900"
+              imageUrl="/images/defaults/default-player.png"
+              onBack={() => router.back()}
+            />
+          </Motion>
+          {/* Overlay */}
+          <Motion variants={fadeIn} delay={0}>
+            <div className="absolute top-0 w-full h-full -z-1 bg-slate-900/90" />
+          </Motion>
 
-        <div className="flex flex-col gap-5 z-2 px-5">
-          <div className="flex flex-col gap-1">
-            {/* Session Title */}
-            <p className="text-xl font-medium text-n-950">
-              {session?.batch ?? "Skorost Batch"}
-            </p>
+          <div className="flex flex-col gap-5 z-2 px-5">
+            <div className="flex flex-col gap-1">
+              <Motion variants={shrinkIn} delay={0.1}>
+                {/* Session Title */}
+                <p className="text-xl font-medium text-n-950">
+                  {session?.batch ?? "Skorost Batch"}
+                </p>
+              </Motion>
 
-            {/* Location */}
-            <p className="text-sm font-normal text-n-500">
-              {session?.venue ?? "Ramji Assar, Ghatkopar East"}
-            </p>
-          </div>
-
-          <div className="flex justify-between z-2 items-center">
-            {/* Start Time */}
-            <p className="text-base text-n-950 font-normal">
-              {session?.from ?? "18:00"}
-            </p>
-
-            {/* Total Time  */}
-            <div className="bg-n-400 px-3.5 py-1.5 rounded-xl">
-              <span className="text-n-700">1h</span>
+              {/* Location */}
+              <Motion variants={shrinkIn} delay={0.1}>
+                <p className="text-sm font-normal text-n-500">
+                  {session?.venue ?? "Ramji Assar, Ghatkopar East"}
+                </p>
+              </Motion>
             </div>
 
-            {/* End Time */}
-            <p className="text-base text-n-950 font-normal">
-              {session?.to ?? "19:00"}
-            </p>
+            <div className="flex justify-between z-2 items-center">
+              {/* Start Time */}
+              <Motion variants={shrinkIn} delay={0.1}>
+                <p className="text-base text-n-950 font-normal">
+                  {session?.from ?? "18:00"}
+                </p>
+              </Motion>
+
+              {/* Total Time  */}
+              <div className="bg-n-400 px-3.5 py-1.5 rounded-xl">
+                <span className="text-n-700">1h</span>
+              </div>
+
+              {/* End Time */}
+              <Motion variants={shrinkIn} delay={0.1}>
+                <p className="text-base text-n-950 font-normal">
+                  {session?.to ?? "19:00"}
+                </p>
+              </Motion>
+            </div>
           </div>
         </div>
-      </div>
+      </Motion>
 
       {/* Attendance card content  */}
       <div className="flex flex-col justify-between px-5 pt-50 pb-20">
-        <div className="my-4">
-          <SearchInput
-            value={playerSearchInput}
-            placeholder="Player name or ID"
-            onChange={(value) => setPlayerSearchInput(value)}
-          />
-        </div>
+        <Motion variants={slideIn} delay={0.3} isFixed>
+          <div className="my-4">
+            <SearchInput
+              value={playerSearchInput}
+              placeholder="Player name or ID"
+              onChange={(value) => setPlayerSearchInput(value)}
+            />
+          </div>
+        </Motion>
         {playerDetails && playerDetails.length > 0 ? (
           // Player Attendance List
           playerDetails.map((playerItem, index) => (
             <React.Fragment key={index}>
-              {/* Player Attendance Card  */}
-              <PlayerAttendanceCard
-                name={playerItem.playerName}
-                id={playerItem.skorostId}
-                imageUrl={
-                  playerItem.skorostId
-                    ? `http://pixoloproductions.com/static/zizo-academy/skorost-united-football-school/players/${playerItem.skorostId}.png`
-                    : "/images/defaults/default-player.png"
-                }
-                attendanceStatus={
-                  playerItem.attendance ?? AttendanceStatus.ELIGIBLE
-                }
-                onPresent={() =>
-                  handleMarkAttendance(
-                    index,
-                    playerItem.skorostId,
-                    AttendanceStatus.PRESENT
-                  )
-                }
-                onAbsent={() =>
-                  handleMarkAttendance(
-                    index,
-                    playerItem.skorostId,
-                    AttendanceStatus.ABSENT
-                  )
-                }
-              />
+              <Motion variants={slideIn} delay={0.3} isFixed>
+                {/* Player Attendance Card  */}
+                <PlayerAttendanceCard
+                  name={playerItem.playerName}
+                  id={playerItem.skorostId}
+                  imageUrl={
+                    playerItem.skorostId
+                      ? `http://pixoloproductions.com/static/zizo-academy/skorost-united-football-school/players/${playerItem.skorostId}.png`
+                      : "/images/defaults/default-player.png"
+                  }
+                  attendanceStatus={
+                    playerItem.attendance ?? AttendanceStatus.ELIGIBLE
+                  }
+                  onPresent={() =>
+                    handleMarkAttendance(
+                      index,
+                      playerItem.skorostId,
+                      AttendanceStatus.PRESENT
+                    )
+                  }
+                  onAbsent={() =>
+                    handleMarkAttendance(
+                      index,
+                      playerItem.skorostId,
+                      AttendanceStatus.ABSENT
+                    )
+                  }
+                />
+              </Motion>
 
               {/* Border */}
-              {index < playerDetails.length - 1 && (
-                <div className="border-n-300 border-[0.5px] border-dashed" />
-              )}
+              <Motion variants={slideIn} delay={0.3} isFixed>
+                {index < playerDetails.length - 1 && (
+                  <div className="border-n-300 border-[0.5px] border-dashed" />
+                )}
+              </Motion>
             </React.Fragment>
           ))
         ) : (
           // Empty State
-          <p className="text-center text-n-500 pt-5">
-            {loading
-              ? "Loading players..."
-              : "No players found for attendance."}
-          </p>
+          <Motion variants={slideIn} delay={0.3}>
+            <p className="text-center text-n-500 pt-5">
+              {loading
+                ? "Loading players..."
+                : "No players found for attendance."}
+            </p>
+          </Motion>
         )}
       </div>
 
       {/* Attendance Summary & Confirm Button */}
       {playerDetails && (
-        <AttendanceSummary
-          attendanceSummary={calculateSummary(playerDetails)}
-          onConfirm={() => console.log("Confirmed attendance")}
-        />
+        <Motion variants={fadeIn} delay={0.6} isFixed>
+          <AttendanceSummary
+            attendanceSummary={calculateSummary(playerDetails)}
+            onConfirm={() => console.log("Confirmed attendance")}
+          />
+        </Motion>
       )}
     </section>
   );

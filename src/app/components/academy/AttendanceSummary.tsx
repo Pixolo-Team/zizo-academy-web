@@ -1,5 +1,7 @@
 "use client";
 
+import Motion from "@/components/animations/Motion";
+import { shrinkIn } from "@/lib/animations";
 // REACT //
 import React from "react";
 
@@ -18,15 +20,19 @@ export default function AttendanceSummary({
       {/* Attendance Summary */}
       <div className="flex justify-between px-4">
         {/* Map through attendance summary items */}
-        {attendanceSummary.map(({ label, count }) => (
-          <div key={label} className="flex flex-col items-center gap-1">
-            {/* Label */}
-            <p className="text-xs text-n-300 font-normal">{label}</p>
-            {/* Count */}
-            <p className="text-xl font-medium text-n-50">
-              {String(count).padStart(2, "0")}
-            </p>
-          </div>
+        {attendanceSummary.map(({ label, count }, index) => (
+          <Motion variants={shrinkIn} delay={index * 0.4} key={label}>
+            <div className="flex flex-col items-center gap-1">
+              {/* Label */}
+              <p className="text-xs text-n-300 font-normal">{label}</p>
+              {/* Count */}
+              <Motion variants={shrinkIn} delay={index * 0.4}>
+                <p className="text-xl font-medium text-n-50">
+                  {String(count).padStart(2, "0")}
+                </p>
+              </Motion>
+            </div>
+          </Motion>
         ))}
       </div>
 

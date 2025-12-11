@@ -2,6 +2,8 @@
 
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import Motion from "../animations/Motion";
+import { fadeIn } from "@/lib/animations";
 
 type Props = {
   value: string;
@@ -41,6 +43,7 @@ export default function SearchInput({
           />
         </svg>
       </div>
+
       <Input
         type="search"
         value={value}

@@ -17,6 +17,8 @@ import { getSessionsRequest } from "@/services/api/schedule.api.service";
 
 // CONTEXTS //
 import { useAttendance } from "@/contexts/AttendanceContext";
+import { fadeIn, slideIn, slideIndown } from "@/lib/animations";
+import Motion from "@/components/animations/Motion";
 
 export default function Page() {
   const router = useRouter();
@@ -70,37 +72,46 @@ export default function Page() {
     <section>
       <div className="fixed top-0 bg-n-950  w-full z-10">
         {/* Profile Header */}
-        <ProfileHeader
-          imageUrl="/images/defaults/default-player.png"
-          onBack={() => router.back()}
-          iconColor="n-50"
-        />
+        <Motion variants={slideIndown} delay={0.1} isFixed>
+          <ProfileHeader
+            imageUrl="/images/defaults/default-player.png"
+            onBack={() => router.back()}
+            iconColor="n-50"
+          />
+        </Motion>
 
         {/* Scrolling Calendar */}
-        <div className="px-6 container mx-auto mt-4 mb-7">
-          <ScrollingCalendar
-            onDateSelect={(dateString: string) => {
-              if (selectedDate !== dateString) {
-                setSelectedDate(dateString);
-              }
-            }}
-          />
-        </div>
+        <Motion variants={fadeIn} delay={0.2} isFixed>
+          <div className="px-6 container mx-auto mt-4 mb-7">
+            <ScrollingCalendar
+              onDateSelect={(dateString: string) => {
+                if (selectedDate !== dateString) {
+                  setSelectedDate(dateString);
+                }
+              }}
+            />
+          </div>
+        </Motion>
       </div>
 
       {/* Sessions List */}
       <div className="flex flex-col gap-3 px-6 pb-6 container pt-60 mx-auto">
         {sessions && sessions.length > 0 ? (
           sessions.map((sessionItem: SessionItemData, sessionItemIndex) => (
-            <SessionCard
+            <Motion
+              variants={slideIn}
+              delay={sessionItemIndex * 0.2}
               key={sessionItemIndex}
-              startTime={sessionItem.from}
-              endTime={sessionItem.to}
-              title={sessionItem.batch}
-              location={sessionItem.venue}
-              status={sessionItem.status}
-              onClick={() => handleSessionCardTap(sessionItem)}
-            />
+            >
+              <SessionCard
+                startTime={sessionItem.from}
+                endTime={sessionItem.to}
+                title={sessionItem.batch}
+                location={sessionItem.venue}
+                status={sessionItem.status}
+                onClick={() => handleSessionCardTap(sessionItem)}
+              />
+            </Motion>
           ))
         ) : (
           <p className="text-center text-n-500">
