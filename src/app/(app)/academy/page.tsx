@@ -284,8 +284,8 @@ export default function Academy() {
       </div>
 
       {/* Attendance Summary & Confirm Button */}
-      {playerDetails && (
-        <Motion variants={fadeIn} delay={0.6} isFixed>
+      {playerDetails && playerDetails.length > 0 && (
+        <Motion variants={fadeIn} delay={0.6}>
           <AttendanceSummary
             attendanceSummary={calculateSummary(playerDetails)}
             onConfirm={() => console.log("Confirmed attendance")}
