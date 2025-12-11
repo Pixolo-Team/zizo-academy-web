@@ -18,7 +18,7 @@ export const slideIndown = {
   },
 };
 
-export const slideIn = {
+export const slideInUp = {
   hidden: { opacity: 0, y: 40 },
   show: {
     opacity: 1,

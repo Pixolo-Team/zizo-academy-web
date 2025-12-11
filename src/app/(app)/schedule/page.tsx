@@ -17,7 +17,7 @@ import { getSessionsRequest } from "@/services/api/schedule.api.service";
 
 // CONTEXTS //
 import { useAttendance } from "@/contexts/AttendanceContext";
-import { fadeIn, slideIn, slideIndown } from "@/lib/animations";
+import { fadeIn, slideInUp, slideIndown } from "@/lib/animations";
 import Motion from "@/components/animations/Motion";
 
 export default function Page() {
@@ -99,7 +99,7 @@ export default function Page() {
         {sessions && sessions.length > 0 ? (
           sessions.map((sessionItem: SessionItemData, sessionItemIndex) => (
             <Motion
-              variants={slideIn}
+              variants={slideInUp}
               delay={sessionItemIndex * 0.2}
               key={sessionItemIndex}
             >

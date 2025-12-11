@@ -15,6 +15,7 @@ import ProfileHeader from "@/app/components/academy/ProfileHeader";
 import { PlayerAttendanceCard } from "@/app/components/academy/PlayerAttendanceCard";
 import AttendanceSummary from "@/app/components/academy/AttendanceSummary";
 import SearchInput from "@/components/ui/SearchInput";
+import Motion from "@/components/animations/Motion";
 
 // API SERVICES //
 import {
@@ -25,10 +26,11 @@ import {
 // CONTEXTS //
 import { useAttendance } from "@/contexts/AttendanceContext";
 
+// OTHERS //
+import { fadeIn, shrinkIn, slideInUp, slideIndown } from "@/lib/animations";
+
 // IMAGES //
 import AcademyBackground from "@/../public/academy-background.jpg";
-import { fadeIn, shrinkIn, slideIn, slideIndown } from "@/lib/animations";
-import Motion from "@/components/animations/Motion";
 
 export default function Academy() {
   // Define Navigation
@@ -218,7 +220,7 @@ export default function Academy() {
 
       {/* Attendance card content  */}
       <div className="flex flex-col justify-between px-5 pt-50 pb-20">
-        <Motion variants={slideIn} delay={0.3} isFixed>
+        <Motion variants={slideInUp} delay={0.3} isFixed>
           <div className="my-4">
             <SearchInput
               value={playerSearchInput}
@@ -231,7 +233,7 @@ export default function Academy() {
           // Player Attendance List
           playerDetails.map((playerItem, index) => (
             <React.Fragment key={index}>
-              <Motion variants={slideIn} delay={0.3} isFixed>
+              <Motion variants={slideInUp} delay={0.3} isFixed>
                 {/* Player Attendance Card  */}
                 <PlayerAttendanceCard
                   name={playerItem.playerName}
@@ -262,7 +264,7 @@ export default function Academy() {
               </Motion>
 
               {/* Border */}
-              <Motion variants={slideIn} delay={0.3} isFixed>
+              <Motion variants={slideInUp} delay={0.3} isFixed>
                 {index < playerDetails.length - 1 && (
                   <div className="border-n-300 border-[0.5px] border-dashed" />
                 )}
@@ -271,7 +273,7 @@ export default function Academy() {
           ))
         ) : (
           // Empty State
-          <Motion variants={slideIn} delay={0.3}>
+          <Motion variants={slideInUp} delay={0.3}>
             <p className="text-center text-n-500 pt-5">
               {loading
                 ? "Loading players..."
