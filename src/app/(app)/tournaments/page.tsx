@@ -1,5 +1,8 @@
 "use client";
 
+// COMPONENTS //
+import PageHeader from "@/components/ui/PageHeader";
+
 /** Tournaments Page */
 export default function Tournaments() {
   // Define Navigation
@@ -14,8 +17,12 @@ export default function Tournaments() {
 
   // Use Effects
   return (
-    <div className=" flex flex-col items-center justify-center gap-4 mt-18">
-      <h1 className="text-2xl font-bold">Tournaments</h1>
-    </div>
+    // Tournaments Listing Page
+    <section>
+      <div className="container mx-auto px-6 py-7">
+        {/* PageHeader component */}
+        <PageHeader title="Find local football tournaments near you." />
+      </div>
+    </section>
   );
 }

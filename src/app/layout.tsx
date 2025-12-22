@@ -3,6 +3,7 @@ import "./globals.css";
 
 // COMPONENTS //
 import Script from "next/script";
+import localFont from "next/font/local";
 
 // CONTEXTS //
 import { AttendanceProvider } from "@/contexts/AttendanceContext";
@@ -10,103 +11,53 @@ import { AttendanceProvider } from "@/contexts/AttendanceContext";
 // DATA //
 import type { Metadata } from "next";
 
-// FONTS //
-
-// Fetch Fonts
-// const gtWalsheim = localFont({
-//   src: [
-//     // Thin (100)
-//     {
-//       path: "./fonts/gt-walsheim/GT-Walsheim-Thin.otf",
-//       weight: "100",
-//       style: "normal",
-//     },
-//     {
-//       path: "./fonts/gt-walsheim/GT-Walsheim-Thin-Oblique.otf",
-//       weight: "100",
-//       style: "italic",
-//     },
-//     // Ultra Light (200)
-//     {
-//       path: "./fonts/gt-walsheim/GT-Walsheim-Ultra-Light.otf",
-//       weight: "200",
-//       style: "normal",
-//     },
-//     {
-//       path: "./fonts/gt-walsheim/GT-Walsheim-Ultra-Light-Oblique.otf",
-//       weight: "200",
-//       style: "italic",
-//     },
-//     // Light (300)
-//     {
-//       path: "./fonts/gt-walsheim/GT-Walsheim-Light.otf",
-//       weight: "300",
-//       style: "normal",
-//     },
-//     {
-//       path: "./fonts/gt-walsheim/GT-Walsheim-Light-Oblique.otf",
-//       weight: "300",
-//       style: "italic",
-//     },
-//     // Regular (400)
-//     {
-//       path: "./fonts/gt-walsheim/GT-Walsheim-Regular.otf",
-//       weight: "400",
-//       style: "normal",
-//     },
-//     {
-//       path: "./fonts/gt-walsheim/GT-Walsheim-Regular-Oblique.otf",
-//       weight: "400",
-//       style: "italic",
-//     },
-//     // Medium (500)
-//     {
-//       path: "./fonts/gt-walsheim/GT-Walsheim-Medium.otf",
-//       weight: "500",
-//       style: "normal",
-//     },
-//     {
-//       path: "./fonts/gt-walsheim/GT-Walsheim-Medium-Oblique.otf",
-//       weight: "500",
-//       style: "italic",
-//     },
-//     // Bold (700)
-//     {
-//       path: "./fonts/gt-walsheim/GT-Walsheim-Bold.otf",
-//       weight: "700",
-//       style: "normal",
-//     },
-//     {
-//       path: "./fonts/gt-walsheim/GT-Walsheim-Bold-Oblique.otf",
-//       weight: "700",
-//       style: "italic",
-//     },
-//     // Ultra Bold (800)
-//     {
-//       path: "./fonts/gt-walsheim/GT-Walsheim-Ultra-Bold.otf",
-//       weight: "800",
-//       style: "normal",
-//     },
-//     {
-//       path: "./fonts/gt-walsheim/GT-Walsheim-Ultra-Bold-Oblique.otf",
-//       weight: "800",
-//       style: "italic",
-//     },
-//     // Black (900)
-//     {
-//       path: "./fonts/gt-walsheim/GT-Walsheim-Black.otf",
-//       weight: "900",
-//       style: "normal",
-//     },
-//     {
-//       path: "./fonts/gt-walsheim/GT-Walsheim-Black-Oblique.otf",
-//       weight: "900",
-//       style: "italic",
-//     },
-//   ],
-//   variable: "--font-gt-walsheim",
-//   display: "swap",
-// });
+/* GT Walsheim Font */
+const gtWalsheimFont = localFont({
+  src: [
+    {
+      path: "../../public/fonts/gt-walsheim/gt-walsheim-thin.otf",
+      weight: "100",
+      style: "thin",
+    },
+    {
+      path: "../../public/fonts/gt-walsheim/gt-walsheim-ultra-light.otf",
+      weight: "200",
+      style: "ultra-light",
+    },
+    {
+      path: "../../public/fonts/gt-walsheim/gt-walsheim-light.otf",
+      weight: "300",
+      style: "light",
+    },
+    {
+      path: "../../public/fonts/gt-walsheim/gt-walsheim-regular.otf",
+      weight: "400",
+      style: "regular",
+    },
+    {
+      path: "../../public/fonts/gt-walsheim/gt-walsheim-medium.otf",
+      weight: "500",
+      style: "medium",
+    },
+    {
+      path: "../../public/fonts/gt-walsheim/gt-walsheim-bold.otf",
+      weight: "700",
+      style: "bold",
+    },
+    {
+      path: "../../public/fonts/gt-walsheim/gt-walsheim-ultra-bold.otf",
+      weight: "800",
+      style: "ultra-bold",
+    },
+    {
+      path: "../../public/fonts/gt-walsheim/gt-walsheim-black.otf",
+      weight: "900",
+      style: "black",
+    },
+  ],
+  variable: "--font-gtwalsheim",
+  display: "swap",
+});
 
 // Metadata
 export const metadata: Metadata = {
@@ -121,7 +72,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className={gtWalsheimFont.className}>
       <head>
         {/* Favicon for light mode */}
         <link
