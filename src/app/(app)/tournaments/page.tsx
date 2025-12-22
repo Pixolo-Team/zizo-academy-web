@@ -1,5 +1,8 @@
 "use client";
 
+// REACT //
+import { useRouter } from "next/navigation";
+
 // COMPONENTS //
 import Motion from "@/components/animations/Motion";
 import TournamentCard from "@/components/tournaments/TournamentCard";
@@ -11,6 +14,7 @@ import { shrinkIn } from "@/lib/animations";
 /** Tournaments Page */
 export default function Tournaments() {
   // Define Navigation
+  const router = useRouter();
 
   // Define Context
 
@@ -39,6 +43,12 @@ export default function Tournaments() {
               location="Ghatkopar, Mumbai"
               price="₹2,500"
               btnText="View Tournament"
+              shareBtnClick={() => {
+                console.log("Share button clicked");
+              }}
+              btnClick={() => {
+                router.push("/tournaments/1");
+              }}
               badgeItems={[
                 "Prize Pool",
                 "1st Hello team",

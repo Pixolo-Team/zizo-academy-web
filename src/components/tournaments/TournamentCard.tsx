@@ -2,6 +2,7 @@
 
 // REACT //
 import { TrophyIcon } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 // COMPONENTS //
 import Image from "next/image";
@@ -17,8 +18,9 @@ interface TournamentCardProps {
   location: string;
   price: string;
   badgeItems: string[];
-
+  shareBtnClick: () => void;
   btnText: string;
+  btnClick: () => void;
 }
 
 export default function TournamentCard({
@@ -27,9 +29,12 @@ export default function TournamentCard({
   location,
   price,
   badgeItems,
+  shareBtnClick,
   btnText,
+  btnClick,
 }: TournamentCardProps) {
   // Define Navigation
+  const router = useRouter();
 
   // Define Context
 
@@ -57,6 +62,7 @@ export default function TournamentCard({
         <Button
           className="absolute top-5 right-5  text-n-50"
           variant={"default"}
+          onClick={shareBtnClick}
         >
           {/* Share Icon */}
           <svg
@@ -168,6 +174,7 @@ export default function TournamentCard({
                 "h-11 rounded-full text-sm font-normal bg-n-900 text-n-50"
               }
               variant="default"
+              onClick={btnClick}
             >
               {btnText}
             </Button>
