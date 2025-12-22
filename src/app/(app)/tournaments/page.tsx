@@ -1,7 +1,11 @@
 "use client";
 
 // COMPONENTS //
+import Motion from "@/components/animations/Motion";
 import PageHeader from "@/components/ui/PageHeader";
+
+// OTHERS //
+import { shrinkIn } from "@/lib/animations";
 
 /** Tournaments Page */
 export default function Tournaments() {
@@ -20,8 +24,10 @@ export default function Tournaments() {
     // Tournaments Listing Page
     <section>
       <div className="container mx-auto px-6 py-7">
-        {/* PageHeader component */}
-        <PageHeader title="Find local football tournaments near you." />
+        <Motion as="div" variants={shrinkIn} delay={0.1}>
+          {/* PageHeader component */}
+          <PageHeader title="Find local football tournaments near you." />
+        </Motion>
       </div>
     </section>
   );
