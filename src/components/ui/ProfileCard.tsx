@@ -1,12 +1,12 @@
 "use client";
 
 // Interface Props
-interface ProfileProps {
+interface ProfileCardProps {
   text: string;
 }
 
-/** Profile Component */
-export default function Profile({ text = "" }: ProfileProps) {
+/** Profile Card Component */
+export default function ProfileCard({ text = "" }: ProfileCardProps) {
   // Define Navigation
 
   // Define Context

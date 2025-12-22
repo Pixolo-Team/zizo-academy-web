@@ -1,12 +1,12 @@
 "use client";
 
 // Interface Props
-interface InfoListItemProps {
+interface InfoStatCardProps {
   text: string;
 }
 
-/** InfoListItem Component */
-export default function InfoListItem({ text = "" }: InfoListItemProps) {
+/** Info Stat Card Component */
+export default function InfoStatCard({ text = "" }: InfoStatCardProps) {
   // Define Navigation
 
   // Define Context
