@@ -1,6 +1,9 @@
 // STYLES //
 import "./globals.css";
 
+// COMPONENTS //
+import Script from "next/script";
+
 // CONTEXTS //
 import { AttendanceProvider } from "@/contexts/AttendanceContext";
 
@@ -119,6 +122,23 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        {/* Google Analytics */}
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-SW05KZD0XF"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-SW05KZD0XF', {
+              page_path: window.location.pathname,
+            });
+          `}
+        </Script>
+      </head>
       <body className="antialiased font-sans">
         <AttendanceProvider>{children}</AttendanceProvider>
       </body>
