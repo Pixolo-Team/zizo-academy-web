@@ -117,16 +117,16 @@ export default function TournamentsFilterDrawer({
             <div className="grid grid-cols-2 items-center">
               {/* From Date */}
               <DatePicker
-                value={filters.from_date}
-                onChange={(date) => updateFilter("from_date", date)}
+                value={filters.start_date}
+                onChange={(date) => updateFilter("start_date", date)}
                 placeholder="From"
                 className="rounded-l-full h-11 rounded-r-none border-r-0 border-n-200 bg-n-50"
               />
 
               {/* To Date */}
               <DatePicker
-                value={filters.to_date}
-                onChange={(date) => updateFilter("to_date", date)}
+                value={filters.end_date}
+                onChange={(date) => updateFilter("end_date", date)}
                 placeholder="To"
                 className="rounded-r-full h-11 rounded-l-none border-n-200 bg-n-50"
               />

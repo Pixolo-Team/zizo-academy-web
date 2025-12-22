@@ -26,8 +26,8 @@ export default function Tournaments() {
     tournament_type: "",
     age: "",
     gender: "",
-    from_date: "",
-    to_date: "",
+    start_date: "",
+    end_date: "",
   });
 
   // Define Refs
@@ -47,8 +47,8 @@ export default function Tournaments() {
       tournament_type: "",
       age: "",
       gender: "",
-      from_date: "",
-      to_date: "",
+      start_date: "",
+      end_date: "",
     });
   };
 

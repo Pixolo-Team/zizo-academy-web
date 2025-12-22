@@ -5,6 +5,6 @@ export interface TournamentFilterData {
   tournament_type: string;
   age: string;
   gender: string;
-  from_date: string;
-  to_date: string;
+  start_date: string;
+  end_date: string;
 }
