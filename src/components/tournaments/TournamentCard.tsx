@@ -41,7 +41,7 @@ export default function TournamentCard({
 
   // Use Effects
   return (
-    <div className="rounded-4xl bg-n-50 overflow-hidden max-w-[450px]">
+    <div className="rounded-4xl bg-n-50 overflow-hidden w-full">
       {/* Image part */}
       <div className="relative rounded-3xl overflow-hidden">
         {/* Card Image */}
