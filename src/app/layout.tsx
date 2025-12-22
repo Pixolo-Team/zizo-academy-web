@@ -123,6 +123,20 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
+        {/* Favicon for light mode */}
+        <link
+          rel="icon"
+          href="/favicon-light.svg"
+          media="(prefers-color-scheme: light)"
+        />
+
+        {/* Favicon for dark mode */}
+        <link
+          rel="icon"
+          href="/favicon-dark.svg"
+          media="(prefers-color-scheme: dark)"
+        />
+
         {/* Google Analytics */}
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-SW05KZD0XF"
