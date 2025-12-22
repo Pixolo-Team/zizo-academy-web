@@ -7,5 +7,16 @@ interface ImageCardProps {
 
 /** ImageCard Component */
 export default function ImageCard({ text = "" }: ImageCardProps) {
+  // Define Navigation
+
+  // Define Context
+
+  // Define States
+
+  // Define Refs
+
+  // Helper Functions
+
+  // Use Effects
   return <div>{text}</div>;
 }

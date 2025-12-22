@@ -7,5 +7,16 @@ interface InfoListItemProps {
 
 /** InfoListItem Component */
 export default function InfoListItem({ text = "" }: InfoListItemProps) {
+  // Define Navigation
+
+  // Define Context
+
+  // Define States
+
+  // Define Refs
+
+  // Helper Functions
+
+  // Use Effects
   return <div>{text}</div>;
 }
