@@ -2,6 +2,7 @@
 
 // REACT //
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 // TYPES //
 import { TournamentListingItemData } from "@/types/tournament";
@@ -11,11 +12,10 @@ import Motion from "@/components/animations/Motion";
 import TournamentCard from "@/components/tournaments/TournamentCard";
 import PageHeader from "@/components/ui/PageHeader";
 import BrandLogo from "@/app/components/brand-logo/BrandLogo";
+import SearchInput from "@/components/ui/SearchInput";
 
 // OTHERS //
 import { fadeIn, shrinkIn } from "@/lib/animations";
-import SearchInput from "@/components/ui/SearchInput";
-import { useState } from "react";
 
 //TODO: Remove after API call
 // Dummy data
@@ -85,6 +85,8 @@ export default function Tournaments() {
             }}
           />
         </Motion>
+
+        {/* TODO: Add Primary filters when ready */}
 
         {/* Tournaments Listing */}
         <Motion as="div" variants={shrinkIn} delay={0.2}>
