@@ -84,7 +84,7 @@ export default function Tournaments() {
       </Motion>
 
       {/* Page Container */}
-      <div className="container relative mx-auto h-full  px-6 py-7 flex flex-col gap-5 z-2">
+      <div className="container relative mx-auto h-full  px-6 py-7 flex flex-col gap-5 z-4">
         <Motion as="div" variants={shrinkIn} delay={0.1}>
           {/* PageHeader component */}
           <PageHeader title="Find local football tournaments near you." />
