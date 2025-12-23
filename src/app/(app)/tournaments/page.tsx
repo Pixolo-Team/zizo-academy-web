@@ -22,9 +22,9 @@ export default function Tournaments() {
   const [filters, setFilters] = useState<TournamentFiltersData>({
     city: "",
     area: "",
-    match_format: "",
-    tournament_type: "",
-    age: "",
+    format: "",
+    tournament_format: "",
+    age_category: "",
     gender: "",
     start_date: "",
     end_date: "",
@@ -43,9 +43,9 @@ export default function Tournaments() {
     setFilters({
       city: "",
       area: "",
-      match_format: "",
-      tournament_type: "",
-      age: "",
+      format: "",
+      tournament_format: "",
+      age_category: "",
       gender: "",
       start_date: "",
       end_date: "",
@@ -62,7 +62,7 @@ export default function Tournaments() {
   // Use Effects
   useEffect(() => {
     searchTournaments();
-  }, [filters.city, filters.match_format]);
+  }, [filters.city, filters.format]);
 
   return (
     <div className="flex flex-col items-center bg-n-100 min-h-screen gap-4 pt-18">

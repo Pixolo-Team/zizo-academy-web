@@ -27,14 +27,14 @@ export default function PrimaryFilters({
         <FilterDropdown
           title="City"
           options={Object.values(CityFilter)}
-          selectedOption={filters.city}
+          selectedOption={filters.city || ""}
           onChange={(value) => updateFilter("city", value)}
         />
         <FilterDropdown
           title="Match Format"
           options={Object.values(MatchFormatFilter)}
-          selectedOption={filters.match_format}
-          onChange={(value) => updateFilter("match_format", value)}
+          selectedOption={filters.format || ""}
+          onChange={(value) => updateFilter("format", value)}
         />
       </div>
 

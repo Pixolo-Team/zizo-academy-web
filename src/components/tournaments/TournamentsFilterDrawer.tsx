@@ -48,14 +48,14 @@ export default function TournamentsFilterDrawer({
               <FilterDropdown
                 title="City"
                 options={Object.values(CityFilter)}
-                selectedOption={filters.city}
+                selectedOption={filters.city || ""}
                 onChange={(value) => updateFilter("city", value)}
                 className="border border-n-200"
               />
               <FilterDropdown
                 title="Area"
                 options={Object.values(AreaFilter)}
-                selectedOption={filters.area}
+                selectedOption={filters.area || ""}
                 onChange={(value) => updateFilter("area", value)}
                 className="border border-n-200"
               />
@@ -71,14 +71,14 @@ export default function TournamentsFilterDrawer({
               <FilterDropdown
                 title="Age"
                 options={Object.values(Age)}
-                selectedOption={filters.age}
-                onChange={(value) => updateFilter("age", value)}
+                selectedOption={filters.age_category || ""}
+                onChange={(value) => updateFilter("age_category", value)}
                 className="border border-n-200"
               />
               <FilterDropdown
                 title="Gender"
                 options={Object.values(Gender)}
-                selectedOption={filters.gender}
+                selectedOption={filters.gender || ""}
                 onChange={(value) => updateFilter("gender", value)}
                 className="border border-n-200"
               />
@@ -94,15 +94,15 @@ export default function TournamentsFilterDrawer({
               <FilterDropdown
                 title="Tournament Type"
                 options={Object.values(TournamentFilter)}
-                selectedOption={filters.tournament_type}
-                onChange={(value) => updateFilter("tournament_type", value)}
+                selectedOption={filters.tournament_format || ""}
+                onChange={(value) => updateFilter("tournament_format", value)}
                 className="border border-n-200"
               />
               <FilterDropdown
                 title="Match Format"
                 options={Object.values(MatchFormatFilter)}
-                selectedOption={filters.match_format}
-                onChange={(value) => updateFilter("match_format", value)}
+                selectedOption={filters.format || ""}
+                onChange={(value) => updateFilter("format", value)}
                 className="border border-n-200"
               />
             </div>
