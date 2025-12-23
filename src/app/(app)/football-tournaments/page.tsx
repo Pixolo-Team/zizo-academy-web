@@ -14,7 +14,11 @@ import BrandLogo from "@/app/components/brand-logo/BrandLogo";
 
 // OTHERS //
 import { fadeIn, shrinkIn } from "@/lib/animations";
+import SearchInput from "@/components/ui/SearchInput";
+import { useState } from "react";
 
+//TODO: Remove after API call
+// Dummy data
 const tournament: TournamentListingItemData = {
   tournament_id: "1",
   tournament_name: "Mumbai Super League",
@@ -42,6 +46,7 @@ export default function Tournaments() {
   // Define Context
 
   // Define States
+  const [searchInput, setSearchInput] = useState("");
 
   // Define Refs
 
@@ -63,6 +68,22 @@ export default function Tournaments() {
         <Motion as="div" variants={shrinkIn} delay={0.1}>
           {/* PageHeader component */}
           <PageHeader title="Find local football tournaments near you." />
+        </Motion>
+
+        {/* Search Input */}
+        <Motion as="div" variants={shrinkIn} delay={0.2}>
+          <SearchInput
+            className="rounded-3xl bg-n-50"
+            value={searchInput}
+            onChange={(value) => {
+              console.log("Search input:", value);
+              setSearchInput(value);
+            }}
+            rightIcon
+            onRightIconClick={() => {
+              console.log("Right icon clicked");
+            }}
+          />
         </Motion>
 
         {/* Tournaments Listing */}
