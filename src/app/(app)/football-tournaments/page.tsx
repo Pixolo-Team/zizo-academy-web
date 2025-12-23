@@ -163,29 +163,32 @@ export default function Tournaments() {
         <Motion as="div" variants={shrinkIn} delay={0.4}>
           <div className="flex flex-col gap-5">
             {/* Tournament Card component */}
-            {(isTournamentsLoading ? Array(3).fill({}) : tournamentItems).map(
-              (tournamentItem, index) => (
-                <TournamentCard
-                  key={
-                    isTournamentsLoading
-                      ? `skeleton-${index}`
-                      : tournamentItem.tournament_id
+            {(isTournamentsLoading
+              ? Array<TournamentListingItemData>(3).fill(
+                  {} as TournamentListingItemData
+                )
+              : tournamentItems
+            ).map((tournamentItem, index) => (
+              <TournamentCard
+                key={
+                  isTournamentsLoading
+                    ? `skeleton-${index}`
+                    : tournamentItem.tournament_id
+                }
+                isLoading={isTournamentsLoading}
+                tournamentListingItem={tournamentItem}
+                onShareBtnClick={() => {
+                  setIsShareDialogOpen(true);
+                }}
+                onRightArrowClick={() => {
+                  if (!isTournamentsLoading) {
+                    router.push(
+                      `/football-tournaments/${tournamentItem.tournament_id}`
+                    );
                   }
-                  isLoading={isTournamentsLoading}
-                  tournamentListingItem={tournamentItem}
-                  onShareBtnClick={() => {
-                    setIsShareDialogOpen(true);
-                  }}
-                  onRightArrowClick={() => {
-                    if (!isTournamentsLoading) {
-                      router.push(
-                        `/football-tournaments/${tournamentItem.tournament_id}`
-                      );
-                    }
-                  }}
-                />
-              )
-            )}
+                }}
+              />
+            ))}
           </div>
         </Motion>
 
@@ -195,7 +198,7 @@ export default function Tournaments() {
             {/* Empty State Image */}
             <Image
               src="/images/field-image.png"
-              alt=""
+              alt="Field Image"
               width={1200}
               height={120}
               priority

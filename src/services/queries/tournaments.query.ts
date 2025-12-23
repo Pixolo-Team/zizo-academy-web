@@ -126,8 +126,6 @@ export const getTournaments = async (
       });
     }
 
-    console.log(query);
-
     // Execute the Query
     const { data: tournamentItems, error } = await query;
 
