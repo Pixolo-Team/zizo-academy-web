@@ -1,9 +1,11 @@
 "use client";
 
+// REACT //
+import { SlidersHorizontal } from "lucide-react";
+
+// COMPONENTS //
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import Motion from "../animations/Motion";
-import { fadeIn } from "@/lib/animations";
 
 type Props = {
   value: string;
@@ -11,6 +13,8 @@ type Props = {
   placeholder?: string;
   onClear?: () => void;
   className?: string;
+  rightIcon?: boolean;
+  onRightIconClick?: () => void;
 };
 
 export default function SearchInput({
@@ -19,14 +23,26 @@ export default function SearchInput({
   placeholder = "Search...",
   onClear,
   className,
+  rightIcon,
+  onRightIconClick,
 }: Props) {
+  // Define Context
+
+  // Define States
+
+  // Define Refs
+
+  // Helper Functions
   const handleClear = () => {
     onClear?.();
     onChange && onChange("");
   };
 
+  // Use Effects
+
   return (
     <div className={`flex relative items-center gap-2 ${className ?? ""}`}>
+      {/* Left Search Icon */}
       <div className="absolute top-1/2 -translate-y-1/2 left-5">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -44,6 +60,7 @@ export default function SearchInput({
         </svg>
       </div>
 
+      {/* Input */}
       <Input
         type="search"
         value={value}
@@ -52,8 +69,21 @@ export default function SearchInput({
         }}
         placeholder={placeholder}
         aria-label={placeholder}
-        className="pl-12 h-[50px]"
+        className={`pl-12 ${rightIcon ? "pr-12" : ""} h-[50px] ${className}`}
       />
+
+      {/* Right Icon */}
+      {rightIcon && (
+        <Button
+          type="button"
+          size="icon"
+          variant="ghost"
+          onClick={onRightIconClick}
+          className="absolute right-5 size-5 rounded-full hover:bg-n-100"
+        >
+          <SlidersHorizontal className="h-4 w-4 text-n-500" />
+        </Button>
+      )}
     </div>
   );
 }

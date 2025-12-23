@@ -43,7 +43,6 @@ export default function Page() {
 
       // Update State
       setSessions(response.data);
-      console.log("Fetched sessions:", response.data);
     } catch (error) {
       console.error("Error fetching sessions:", error);
     } finally {

@@ -41,7 +41,7 @@ export const getTournaments = async (
         start_date,
         end_date,
 
-        tournament_series (
+        tournament_series!inner (
           name,
           city,
           area,
@@ -119,15 +119,12 @@ export const getTournaments = async (
 
     // Check for Search Text
     if (filters.search_text) {
-      console.log("Search Text:", filters.search_text);
-      query = query.or(`
-        tournament_series.name.ilike.%${filters.search_text}%,
-        tournament_series.city.ilike.%${filters.search_text}%,
-        tournament_series.area.ilike.%${filters.search_text}%
-      `);
-    }
+      const search = filters.search_text.trim();
 
-    console.log(query);
+      query = query.or(`name.ilike.%${search}%`, {
+        foreignTable: "tournament_series",
+      });
+    }
 
     // Execute the Query
     const { data: tournamentItems, error } = await query;
@@ -143,7 +140,7 @@ export const getTournaments = async (
     ).map((tournamentItem) => ({
       tournament_id: tournamentItem.id,
 
-      tournament_name: tournamentItem.tournament_series.name,
+      tournament_name: tournamentItem.tournament_series?.name ?? null,
       age_category: tournamentItem.age_category,
       format: tournamentItem.format,
       gender: tournamentItem.gender,
@@ -156,12 +153,13 @@ export const getTournaments = async (
       start_date: tournamentItem.start_date,
       end_date: tournamentItem.end_date,
 
-      city: tournamentItem.tournament_series.city,
-      area: tournamentItem.tournament_series.area,
-      ground_type: tournamentItem.tournament_series.ground_type,
+      city: tournamentItem.tournament_series?.city ?? null,
+      area: tournamentItem.tournament_series?.area ?? null,
+      ground_type: tournamentItem.tournament_series?.ground_type ?? null,
 
-      poster_url: tournamentItem.tournament_series.poster_url,
-      organizer_name: tournamentItem.tournament_series.organizers?.name ?? null,
+      poster_url: tournamentItem.tournament_series?.poster_url ?? null,
+      organizer_name:
+        tournamentItem.tournament_series?.organizers?.name ?? null,
     }));
 
     return { data: tournaments, error: null };

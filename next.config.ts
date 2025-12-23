@@ -9,6 +9,11 @@ const nextConfig: NextConfig = {
         hostname: "pixoloproductions.com",
         port: "",
       },
+      {
+        protocol: "https",
+        hostname: "picsum.photos",
+        port: "",
+      },
     ],
   },
 };

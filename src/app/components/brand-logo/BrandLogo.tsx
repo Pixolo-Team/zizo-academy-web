@@ -11,7 +11,13 @@ interface BrandLogoProps {
 }
 
 // Type for the variant prop
-type Variant = "color" | "white" | "color-icon" | "white-icon";
+type Variant =
+  | "color"
+  | "white"
+  | "color-icon"
+  | "white-icon"
+  | "text-logo"
+  | "text-logo-white";
 
 /** Brand Logo Component */
 const BrandLogo: React.FC<BrandLogoProps> = ({
