@@ -9,9 +9,12 @@ import { TournamentFiltersData } from "@/types/tournament";
 // COMPONENTS //
 import PrimaryFilters from "@/components/tournaments/PrimaryFilters";
 import TournamentsFilterDrawer from "@/components/tournaments/TournamentsFilterDrawer";
+import ShareDialog from "@/components/ui/ShareDialog";
 
 // API SERVICES //
 import { getTournamentsByFiltersRequest } from "@/services/api/tournament.api.service";
+
+// SERVICES //
 import { getTournaments } from "@/services/queries/tournaments.query";
 
 export default function Tournaments() {
@@ -32,6 +35,7 @@ export default function Tournaments() {
   });
   const [isMoreFiltersDrawerOpen, setIsMoreFiltersDrawerOpen] =
     useState<boolean>(false);
+  const [isShareDialogOpen, setIsShareDialogOpen] = useState<boolean>(false);
 
   // Define Refs
 
@@ -86,6 +90,14 @@ export default function Tournaments() {
         More Filters
       </button>
 
+      {/* Share Button */}
+      <button
+        className="bg-n-50 text-n-950 rounded-2xl border-none px-4 py-2 whitespace-nowrap"
+        onClick={() => setIsShareDialogOpen(true)}
+      >
+        Share
+      </button>
+
       {/* MORE FILTERS DRAWER */}
       <TournamentsFilterDrawer
         filters={filters}
@@ -94,6 +106,13 @@ export default function Tournaments() {
         onSearch={searchTournaments}
         isOpen={isMoreFiltersDrawerOpen}
         onOpenChange={setIsMoreFiltersDrawerOpen}
+      />
+
+      {/* SHARE DIALOG */}
+      <ShareDialog
+        isOpen={isShareDialogOpen}
+        onOpenChange={setIsShareDialogOpen}
+        copyLink="https://somelink.com"
       />
     </div>
   );
