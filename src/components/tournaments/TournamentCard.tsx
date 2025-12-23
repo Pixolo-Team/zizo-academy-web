@@ -49,7 +49,10 @@ export default function TournamentCard({
           <>
             {/* Card Image */}
             <Image
-              src={tournamentListingItem.poster_url}
+              src={
+                tournamentListingItem.poster_url ??
+                "/public/images/defaults/tournament-card-dummy.jpg"
+              }
               alt="Brand Logo"
               width={200}
               height={200}

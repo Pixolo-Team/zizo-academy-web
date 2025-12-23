@@ -58,13 +58,13 @@ export default function Tournaments() {
     <section className="relative bg-n-100 h-screen overflow-x-hidden">
       {/* Backdrop Image */}
       <Motion as="div" variants={fadeIn} delay={0.1}>
-        <div className="absolute -top-[80px] -right-[140px] opacity-20 ">
+        <div className="fixed -top-[80px] -right-[140px] opacity-20">
           <BrandLogo variant="color-icon" size={380} />
         </div>
       </Motion>
 
       {/* Page Container */}
-      <div className="container mx-auto px-6 py-7 flex flex-col gap-5 z-1">
+      <div className="relative h-full container mx-auto px-6 py-7 flex flex-col gap-5 z-1">
         <Motion as="div" variants={shrinkIn} delay={0.1}>
           {/* PageHeader component */}
           <PageHeader title="Find local football tournaments near you." />
