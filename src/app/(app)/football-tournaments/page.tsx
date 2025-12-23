@@ -24,7 +24,11 @@ import ShareDialog from "@/components/ui/ShareDialog";
 // SERVICES //
 import { getTournaments } from "@/services/queries/tournaments.query";
 
+// HOOKS //
+import { useDebounce } from "@/hooks/useDebounce";
+
 // OTHERS //
+import { format } from "date-fns";
 import { fadeIn, shrinkIn } from "@/lib/animations";
 
 /** Tournaments Page */
@@ -47,8 +51,8 @@ export default function Tournaments() {
     tournament_format: "",
     age_category: "",
     gender: "",
-    start_date: "",
-    end_date: "",
+    start_date: format(new Date(), "yyyy-MM-dd"),
+    end_date: format(new Date(), "yyyy-MM-dd"),
   });
   const [isMoreFiltersDrawerOpen, setIsMoreFiltersDrawerOpen] =
     useState<boolean>(false);
@@ -113,9 +117,11 @@ export default function Tournaments() {
   };
 
   // Use Effects
+  const debouncedSearchInput = useDebounce(searchInput, 500);
+
   useEffect(() => {
     getAllTournaments();
-  }, [searchInput, filters.city, filters.format, shouldRefresh]);
+  }, [debouncedSearchInput, filters.city, filters.format, shouldRefresh]);
 
   return (
     // Tournaments Listing Page
@@ -140,7 +146,6 @@ export default function Tournaments() {
             className="rounded-3xl bg-n-50"
             value={searchInput}
             onChange={(value) => {
-              console.log("Search input:", value);
               setSearchInput(value);
             }}
             rightIcon

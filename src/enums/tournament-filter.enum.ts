@@ -8,7 +8,7 @@ export enum MatchFormatFilter {
 export enum TournamentFilter {
   LEAGUE = "League",
   KNOCKOUT = "Knockout",
-  LEAUGE_AND_KNOCKOUT = "League Knockout",
+  LEAGUE_AND_KNOCKOUT = "League Knockout",
 }
 
 export enum CityFilter {

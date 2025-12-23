@@ -208,7 +208,15 @@ export default function TournamentCard({
           {isLoading ? (
             <Skeleton className="h-3.5 w-6" />
           ) : (
-            <ChevronRight onClick={onRightArrowClick} />
+            <Button
+              type="button"
+              variant="ghost"
+              size="icon"
+              aria-label="View tournament details"
+              onClick={onRightArrowClick}
+            >
+              <ChevronRight />
+            </Button>
           )}
         </div>
       </div>

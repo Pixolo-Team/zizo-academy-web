@@ -8,7 +8,6 @@ import {
   DrawerDescription,
   DrawerHeader,
   DrawerTitle,
-  DrawerTrigger,
 } from "@/components/ui/drawer";
 
 /** Filter Drawer Props */

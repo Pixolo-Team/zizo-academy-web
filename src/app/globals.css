@@ -117,7 +117,7 @@
     --color-n-500: var(--color-n-500);
     --color-n-600: var(--color-n-400);
     --color-n-700: var(--color-n-300);
-    --color-n-800: var(--color-m-200);
+    --color-n-800: var(--color-n-200);
     --color-n-900: var(--color-n-100);
     --color-n-950: var(--color-n-50);
     --primary: var(--color-lime-500);

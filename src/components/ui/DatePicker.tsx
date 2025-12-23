@@ -12,7 +12,6 @@ import {
 // OTHERS //
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
-import { ChevronDown } from "lucide-react";
 
 interface DatePickerProps {
   value: string | undefined;
