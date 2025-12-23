@@ -1,8 +1,8 @@
-// MODULES //
-import { supabase } from "@/services/supabase";
-
 // TYPES //
 import { QueryResponseData } from "@/types/query";
+
+// SERVICES //
+import { supabase } from "@/services/supabase";
 
 /**
  * Create a new identity

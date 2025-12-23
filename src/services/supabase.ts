@@ -1,4 +1,4 @@
-// MODULES //
+// OTHERS //
 import { createClient } from "@supabase/supabase-js";
 
 // Set Up Supabase

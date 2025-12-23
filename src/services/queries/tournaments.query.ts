@@ -1,7 +1,3 @@
-// MODULES //
-// MODULES //
-import { supabase } from "@/services/supabase";
-
 // TYPES //
 import { QueryResponseData } from "@/types/query";
 import {
@@ -12,6 +8,9 @@ import {
   LeadData,
   TournamentContactData,
 } from "@/types/tournament";
+
+// SERVICES //
+import { supabase } from "@/services/supabase";
 
 /**
  * Get a list of tournaments (with filters)
