@@ -53,7 +53,7 @@ export default function Tournaments() {
     age_category: "",
     gender: "",
     start_date: format(new Date(), "yyyy-MM-dd"),
-    end_date: format(new Date(), "yyyy-MM-dd"),
+    end_date: "",
   });
   const [isMoreFiltersDrawerOpen, setIsMoreFiltersDrawerOpen] =
     useState<boolean>(false);

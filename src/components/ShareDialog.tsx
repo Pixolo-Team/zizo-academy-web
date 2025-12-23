@@ -98,7 +98,7 @@ export default function ShareDialog({
         </div>
         {/* Copy Link Button */}
         <div className="py-2 rounded-[99px] pl-4 pr-2 flex items-center justify-between border border-n-200">
-          <p className="text-sm text-n-500">{copyLink}</p>
+          <p className="text-sm text-n-500 w-2/3">{copyLink}</p>
           <Button
             className="size-8 flex justify-center items-center bg-n-100"
             onClick={copyToClipboard}
