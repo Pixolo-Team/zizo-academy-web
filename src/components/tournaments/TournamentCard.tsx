@@ -53,7 +53,7 @@ export default function TournamentCard({
               alt="Brand Logo"
               width={200}
               height={200}
-              className="h-[195px] w-full object-contain"
+              className="h-[195px] w-full object-cover"
             />
             {/* Share button */}
             <Button

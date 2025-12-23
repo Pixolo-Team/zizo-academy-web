@@ -58,7 +58,7 @@ export default function Tournaments() {
     <section className="relative bg-n-100 h-screen">
       {/* Backdrop Image */}
       <Motion as="div" variants={fadeIn} delay={0.1}>
-        <div className="absolute -top-[15%] -right-[32%] opacity-20 ">
+        <div className="absolute -top-[80px] -right-[140px] opacity-20 ">
           <BrandLogo variant="color-icon" size={380} />
         </div>
       </Motion>
