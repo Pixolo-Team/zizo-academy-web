@@ -2,10 +2,13 @@
 
 // REACT //
 import { useRouter } from "next/navigation";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 // TYPES //
-import { TournamentListingItemData } from "@/types/tournament";
+import {
+  TournamentFiltersData,
+  TournamentListingItemData,
+} from "@/types/tournament";
 
 // COMPONENTS //
 import Motion from "@/components/animations/Motion";
@@ -14,6 +17,9 @@ import PageHeader from "@/components/ui/PageHeader";
 import BrandLogo from "@/app/components/brand-logo/BrandLogo";
 import SearchInput from "@/components/ui/SearchInput";
 import Image from "next/image";
+import PrimaryFilters from "@/components/tournaments/PrimaryFilters";
+import TournamentsFilterDrawer from "@/components/tournaments/TournamentsFilterDrawer";
+import ShareDialog from "@/components/ui/ShareDialog";
 
 // SERVICES //
 import { getTournaments } from "@/services/queries/tournaments.query";
@@ -34,25 +40,39 @@ export default function Tournaments() {
     TournamentListingItemData[]
   >([]);
   const [isTournamentsLoading, setIsTournamentsLoading] = useState(true);
+  const [filters, setFilters] = useState<TournamentFiltersData>({
+    city: "",
+    area: "",
+    format: "",
+    tournament_format: "",
+    age_category: "",
+    gender: "",
+    start_date: "",
+    end_date: "",
+  });
+  const [isMoreFiltersDrawerOpen, setIsMoreFiltersDrawerOpen] =
+    useState<boolean>(false);
+  const [isShareDialogOpen, setIsShareDialogOpen] = useState<boolean>(false);
+  const [shouldRefresh, setshouldRefresh] = useState<boolean>(false);
 
   // Define Refs
 
   // Helper Functions
   /** Function to get all tournaments */
-  const getAllTournaments = useCallback(async () => {
+  const getAllTournaments = async () => {
+    // Set loading state
+    setIsTournamentsLoading(true);
+
     const { data, error } = await getTournaments({
-      city: "",
-      area: "",
-      age_category: "",
-      gender: "",
-      tournament_format: "",
-      format: "",
+      ...filters,
+      // age_category: filters.age_category?.toLowerCase() || "",
+      gender: filters.gender?.toLowerCase() || "",
+      tournament_format:
+        filters.tournament_format?.toLowerCase().replace(" ", "_") || "",
       ground_type: "",
       entry_fee_min: undefined,
       entry_fee_max: undefined,
       has_cash_prize: false,
-      start_date: "",
-      end_date: "",
       search_text: searchInput,
       page: 1,
       page_size: 10,
@@ -65,17 +85,41 @@ export default function Tournaments() {
       setTournamentItems(data ?? []);
     }
     setIsTournamentsLoading(false);
-    // setTournamentItems([]);
-  }, [searchInput]);
+  };
+
+  /** Update Filter */
+  const updateFilter = (key: keyof TournamentFiltersData, value: string) => {
+    setFilters((prev) => ({ ...prev, [key]: value }));
+  };
+
+  /** Reset Filters */
+  const resetFilters = (primary?: boolean) => {
+    // Reset Filters
+    setFilters({
+      city: "",
+      area: "",
+      format: "",
+      tournament_format: "",
+      age_category: "",
+      gender: "",
+      start_date: "",
+      end_date: "",
+    });
+
+    // Refresh Data
+    if (primary) {
+      setshouldRefresh((prev) => !prev);
+    }
+  };
 
   // Use Effects
   useEffect(() => {
     getAllTournaments();
-  }, [getAllTournaments]);
+  }, [searchInput, filters.city, filters.format, shouldRefresh]);
 
   return (
     // Tournaments Listing Page
-    <section className="relative bg-n-100 h-screen overflow-x-hidden">
+    <section className="relative bg-n-100 min-h-screen overflow-x-hidden">
       {/* Backdrop Image */}
       <Motion as="div" variants={fadeIn} delay={0.1}>
         <div className="fixed -top-[80px] -right-[140px] opacity-20 ">
@@ -101,12 +145,17 @@ export default function Tournaments() {
             }}
             rightIcon
             onRightIconClick={() => {
-              console.log("Right icon clicked");
+              setIsMoreFiltersDrawerOpen(true);
             }}
           />
         </Motion>
 
-        {/* TODO: Add Primary filters when ready */}
+        {/* FILTER BAR */}
+        <PrimaryFilters
+          filters={filters}
+          updateFilter={updateFilter}
+          resetFilters={() => resetFilters(true)}
+        />
 
         {/* Tournaments Listing */}
         <div className="flex flex-col gap-5">
@@ -122,7 +171,7 @@ export default function Tournaments() {
                 isLoading={isTournamentsLoading}
                 tournamentListingItem={tournamentItem}
                 onShareBtnClick={() => {
-                  console.log("Share button clicked");
+                  setIsShareDialogOpen(true);
                 }}
                 onRightArrowClick={() => {
                   if (!isTournamentsLoading) {
@@ -163,6 +212,25 @@ export default function Tournaments() {
           </div>
         )}
       </div>
+      {/* MORE FILTERS DRAWER */}
+      <TournamentsFilterDrawer
+        filters={filters}
+        updateFilter={updateFilter}
+        resetFilters={() => resetFilters(false)}
+        onSearch={() => {
+          getAllTournaments();
+          setIsMoreFiltersDrawerOpen(false);
+        }}
+        isOpen={isMoreFiltersDrawerOpen}
+        onOpenChange={setIsMoreFiltersDrawerOpen}
+      />
+
+      {/* SHARE DIALOG */}
+      <ShareDialog
+        isOpen={isShareDialogOpen}
+        onOpenChange={setIsShareDialogOpen}
+        copyLink="https://somelink.com"
+      />
     </section>
   );
 }

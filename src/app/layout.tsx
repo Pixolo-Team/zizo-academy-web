@@ -8,6 +8,9 @@ import localFont from "next/font/local";
 // CONTEXTS //
 import { AttendanceProvider } from "@/contexts/AttendanceContext";
 
+// OTHERS //
+import { Toaster } from "@/components/ui/sonner";
+
 // DATA //
 import type { Metadata } from "next";
 
@@ -106,6 +109,7 @@ export default function RootLayout({
       </head>
       <body className="antialiased font-sans">
         <AttendanceProvider>{children}</AttendanceProvider>
+        <Toaster duration={2000} />
       </body>
     </html>
   );
