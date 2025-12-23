@@ -29,6 +29,8 @@ export default function Tournaments() {
     start_date: "",
     end_date: "",
   });
+  const [isMoreFiltersDrawerOpen, setIsMoreFiltersDrawerOpen] =
+    useState<boolean>(false);
 
   // Define Refs
 
@@ -75,12 +77,22 @@ export default function Tournaments() {
         resetFilters={resetFilters}
       />
 
+      {/* More Filters Button */}
+      <button
+        className="bg-n-50 text-n-950 rounded-2xl border-none px-4 py-2 whitespace-nowrap"
+        onClick={() => setIsMoreFiltersDrawerOpen(true)}
+      >
+        More Filters
+      </button>
+
       {/* MORE FILTERS DRAWER */}
       <TournamentsFilterDrawer
         filters={filters}
         updateFilter={updateFilter}
         resetFilters={resetFilters}
         onSearch={searchTournaments}
+        isOpen={isMoreFiltersDrawerOpen}
+        onOpenChange={setIsMoreFiltersDrawerOpen}
       />
     </div>
   );

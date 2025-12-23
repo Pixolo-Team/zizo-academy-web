@@ -18,6 +18,8 @@ import FilterDrawer from "@/components/ui/FilterDrawer";
 import FilterDropdown from "@/components/ui/FilterDropdown";
 import { DatePicker } from "@/components/ui/DatePicker";
 import { Button } from "@/components/ui/button";
+
+// OTHERS //
 import Motion from "../animations/Motion";
 import { shrinkIn, slideInUp } from "@/lib/animations";
 
@@ -26,6 +28,8 @@ interface TournamentsFilterDrawerProps {
   updateFilter: (key: keyof TournamentFiltersData, value: string) => void;
   resetFilters: () => void;
   onSearch: () => void;
+  isOpen?: boolean;
+  onOpenChange?: (open: boolean) => void;
 }
 
 export default function TournamentsFilterDrawer({
@@ -33,11 +37,15 @@ export default function TournamentsFilterDrawer({
   updateFilter,
   resetFilters,
   onSearch,
+  isOpen,
+  onOpenChange,
 }: TournamentsFilterDrawerProps) {
   return (
     <FilterDrawer
       title="Matchday Starts here"
       description="Find tournaments made for you"
+      isOpen={isOpen}
+      onOpenChange={onOpenChange}
     >
       <div className="flex flex-col gap-7">
         {/* Location */}
