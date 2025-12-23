@@ -74,7 +74,7 @@ export default function FilterDrawer({
         </DrawerHeader>
 
         {/* Drawer Body */}
-        <div className="px-3 pt-3 pb-8 overflow-y-auto">{children}</div>
+        <div className="px-3 pt-3 pb-20 overflow-y-auto">{children}</div>
       </DrawerContent>
     </Drawer>
   );

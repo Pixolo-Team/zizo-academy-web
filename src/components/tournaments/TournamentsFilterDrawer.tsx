@@ -141,34 +141,33 @@ export default function TournamentsFilterDrawer({
             </div>
           </div>
         </Motion>
-
-        {/* Reset and Search Button */}
-        <Motion variants={slideInUp} delay={0.5}>
-          <div className="grid grid-cols-2 gap-2 w-full">
-            {/* Reset Button */}
-            <Motion variants={shrinkIn} delay={0.6}>
-              <Button
-                type="button"
-                onClick={resetFilters}
-                className="bg-n-50 text-n-950 border border-n-200 h-11 w-full rounded-3xl"
-              >
-                Reset
-              </Button>
-            </Motion>
-
-            {/* Search Button */}
-            <Motion variants={shrinkIn} delay={0.7}>
-              <Button
-                type="button"
-                onClick={onSearch}
-                className="h-11 w-full rounded-3xl"
-              >
-                Search
-              </Button>
-            </Motion>
-          </div>
-        </Motion>
       </div>
+      {/* Reset and Search Button */}
+      <Motion variants={slideInUp} delay={0.5}>
+        <div className="grid grid-cols-2 gap-2 w-full fixed bottom-0 left-0 p-3 bg-n-50">
+          {/* Reset Button */}
+          <Motion variants={shrinkIn} delay={0.6}>
+            <Button
+              type="button"
+              onClick={resetFilters}
+              className="bg-n-50 text-n-950 border border-n-200 h-11 w-full rounded-3xl"
+            >
+              Reset
+            </Button>
+          </Motion>
+
+          {/* Search Button */}
+          <Motion variants={shrinkIn} delay={0.7}>
+            <Button
+              type="button"
+              onClick={onSearch}
+              className="h-11 w-full rounded-3xl"
+            >
+              Search
+            </Button>
+          </Motion>
+        </div>
+      </Motion>
     </FilterDrawer>
   );
 }
