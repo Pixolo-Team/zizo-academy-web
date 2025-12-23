@@ -18,42 +18,42 @@ import type { Metadata } from "next";
 const gtWalsheimFont = localFont({
   src: [
     {
-      path: "../../public/fonts/gt-walsheim/gt-walsheim-thin.otf",
+      path: "../../public/fonts/GT-walsheim/GT-Walsheim-Thin.otf",
       weight: "100",
       style: "thin",
     },
     {
-      path: "../../public/fonts/gt-walsheim/gt-walsheim-ultra-light.otf",
+      path: "../../public/fonts/GT-walsheim/GT-Walsheim-Ultra-Light.otf",
       weight: "200",
       style: "ultra-light",
     },
     {
-      path: "../../public/fonts/gt-walsheim/gt-walsheim-light.otf",
+      path: "../../public/fonts/GT-walsheim/GT-Walsheim-Light.otf",
       weight: "300",
       style: "light",
     },
     {
-      path: "../../public/fonts/gt-walsheim/gt-walsheim-regular.otf",
+      path: "../../public/fonts/GT-walsheim/GT-Walsheim-Regular.otf",
       weight: "400",
       style: "regular",
     },
     {
-      path: "../../public/fonts/gt-walsheim/gt-walsheim-medium.otf",
+      path: "../../public/fonts/GT-walsheim/GT-Walsheim-Medium.otf",
       weight: "500",
       style: "medium",
     },
     {
-      path: "../../public/fonts/gt-walsheim/gt-walsheim-bold.otf",
+      path: "../../public/fonts/GT-walsheim/GT-Walsheim-Bold.otf",
       weight: "700",
       style: "bold",
     },
     {
-      path: "../../public/fonts/gt-walsheim/gt-walsheim-ultra-bold.otf",
+      path: "../../public/fonts/GT-walsheim/GT-Walsheim-Ultra-Bold.otf",
       weight: "800",
       style: "ultra-bold",
     },
     {
-      path: "../../public/fonts/gt-walsheim/gt-walsheim-black.otf",
+      path: "../../public/fonts/GT-walsheim/GT-Walsheim-Black.otf",
       weight: "900",
       style: "black",
     },
