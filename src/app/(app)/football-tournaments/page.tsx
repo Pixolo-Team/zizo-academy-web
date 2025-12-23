@@ -43,7 +43,8 @@ export default function Tournaments() {
   const [tournamentItems, setTournamentItems] = useState<
     TournamentListingItemData[]
   >([]);
-  const [isTournamentsLoading, setIsTournamentsLoading] = useState(true);
+  const [isTournamentsLoading, setIsTournamentsLoading] =
+    useState<boolean>(true);
   const [filters, setFilters] = useState<TournamentFiltersData>({
     city: "",
     area: "",
@@ -57,7 +58,8 @@ export default function Tournaments() {
   const [isMoreFiltersDrawerOpen, setIsMoreFiltersDrawerOpen] =
     useState<boolean>(false);
   const [isShareDialogOpen, setIsShareDialogOpen] = useState<boolean>(false);
-  const [shouldRefresh, setshouldRefresh] = useState<boolean>(false);
+  const [shouldRefresh, setShouldRefresh] = useState<boolean>(false);
+  const [selectedTournamentId, setSelectedTournamentId] = useState<string>("");
 
   // Define Refs
 
@@ -85,7 +87,6 @@ export default function Tournaments() {
     if (error) {
       console.error("Error getting tournaments:", error);
     } else {
-      console.log("Tournaments fetched successfully:", data);
       setTournamentItems(data ?? []);
     }
     setIsTournamentsLoading(false);
@@ -112,13 +113,13 @@ export default function Tournaments() {
 
     // Refresh Data
     if (primary) {
-      setshouldRefresh((prev) => !prev);
+      setShouldRefresh((prev) => !prev);
     }
   };
 
-  // Use Effects
   const debouncedSearchInput = useDebounce(searchInput, 500);
 
+  // Use Effects
   useEffect(() => {
     getAllTournaments();
   }, [debouncedSearchInput, filters.city, filters.format, shouldRefresh]);
@@ -184,6 +185,7 @@ export default function Tournaments() {
                 tournamentListingItem={tournamentItem}
                 onShareBtnClick={() => {
                   setIsShareDialogOpen(true);
+                  setSelectedTournamentId(tournamentItem.tournament_id);
                 }}
                 onRightArrowClick={() => {
                   if (!isTournamentsLoading) {
@@ -224,6 +226,7 @@ export default function Tournaments() {
           </div>
         )}
       </div>
+
       {/* MORE FILTERS DRAWER */}
       <TournamentsFilterDrawer
         filters={filters}
@@ -241,7 +244,7 @@ export default function Tournaments() {
       <ShareDialog
         isOpen={isShareDialogOpen}
         onOpenChange={setIsShareDialogOpen}
-        copyLink="https://somelink.com"
+        copyLink={`${window.location.origin}/football-tournaments/${selectedTournamentId}`}
       />
     </section>
   );
