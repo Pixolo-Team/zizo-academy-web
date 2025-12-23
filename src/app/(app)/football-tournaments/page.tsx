@@ -55,7 +55,7 @@ export default function Tournaments() {
   // Use Effects
   return (
     // Tournaments Listing Page
-    <section className="relative bg-n-100 h-screen">
+    <section className="relative bg-n-100 h-screen overflow-x-hidden">
       {/* Backdrop Image */}
       <Motion as="div" variants={fadeIn} delay={0.1}>
         <div className="absolute -top-[80px] -right-[140px] opacity-20 ">
