@@ -12,6 +12,7 @@ import {
 // OTHERS //
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
+import { ChevronDown } from "lucide-react";
 
 interface DatePickerProps {
   value: string | undefined;
@@ -34,7 +35,7 @@ export function DatePicker({
         <Button
           variant={"outline"}
           className={cn(
-            "w-full justify-start text-left font-normal",
+            "w-full justify-between text-left font-normal",
             !value && "text-muted-foreground",
             className
           )}
@@ -44,9 +45,23 @@ export function DatePicker({
           ) : (
             <span>{placeholder}</span>
           )}
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="10"
+            height="6"
+            viewBox="0 0 10 6"
+            fill="none"
+            className={cn("size-3 text-n-950 mr-2")}
+          >
+            <path
+              d="M0.5 0.5L5 5L9.5 0.5"
+              stroke="currentColor"
+              strokeLinecap="round"
+            />
+          </svg>
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-auto p-0" align="start">
+      <PopoverContent className="w-auto p-4 mr-4" align="start">
         <Calendar
           mode="single"
           selected={dateValue}
