@@ -151,39 +151,43 @@ export default function Tournaments() {
         </Motion>
 
         {/* FILTER BAR */}
-        <PrimaryFilters
-          filters={filters}
-          updateFilter={updateFilter}
-          resetFilters={() => resetFilters(true)}
-        />
+        <Motion as="div" variants={shrinkIn} delay={0.3}>
+          <PrimaryFilters
+            filters={filters}
+            updateFilter={updateFilter}
+            resetFilters={() => resetFilters(true)}
+          />
+        </Motion>
 
         {/* Tournaments Listing */}
-        <div className="flex flex-col gap-5">
-          {/* Tournament Card component */}
-          {(isTournamentsLoading ? Array(3).fill({}) : tournamentItems).map(
-            (tournamentItem, index) => (
-              <TournamentCard
-                key={
-                  isTournamentsLoading
-                    ? `skeleton-${index}`
-                    : tournamentItem.tournament_id
-                }
-                isLoading={isTournamentsLoading}
-                tournamentListingItem={tournamentItem}
-                onShareBtnClick={() => {
-                  setIsShareDialogOpen(true);
-                }}
-                onRightArrowClick={() => {
-                  if (!isTournamentsLoading) {
-                    router.push(
-                      `/football-tournaments/${tournamentItem.tournament_id}`
-                    );
+        <Motion as="div" variants={shrinkIn} delay={0.4}>
+          <div className="flex flex-col gap-5">
+            {/* Tournament Card component */}
+            {(isTournamentsLoading ? Array(3).fill({}) : tournamentItems).map(
+              (tournamentItem, index) => (
+                <TournamentCard
+                  key={
+                    isTournamentsLoading
+                      ? `skeleton-${index}`
+                      : tournamentItem.tournament_id
                   }
-                }}
-              />
-            )
-          )}
-        </div>
+                  isLoading={isTournamentsLoading}
+                  tournamentListingItem={tournamentItem}
+                  onShareBtnClick={() => {
+                    setIsShareDialogOpen(true);
+                  }}
+                  onRightArrowClick={() => {
+                    if (!isTournamentsLoading) {
+                      router.push(
+                        `/football-tournaments/${tournamentItem.tournament_id}`
+                      );
+                    }
+                  }}
+                />
+              )
+            )}
+          </div>
+        </Motion>
 
         {/* Empty State */}
         {!isTournamentsLoading && tournamentItems.length === 0 && (
