@@ -174,7 +174,7 @@ export default function TournamentCard({
         </div>
 
         {/* Winning Prizes + Right Arrow Button */}
-        <div className="flex justify-between items-end ">
+        <div className="flex justify-between items-center">
           <div className="flex flex-col justify-center items-start gap-1">
             {isLoading ? (
               <Skeleton className="justify-start h-2.5 w-16" />
