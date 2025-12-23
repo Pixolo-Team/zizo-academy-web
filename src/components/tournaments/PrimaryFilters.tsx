@@ -41,7 +41,7 @@ export default function PrimaryFilters({
       {/* Reset Button */}
       <button
         type="button"
-        className="underline text-n-950 text-xs"
+        className="underline text-n-950 text-xs cursor-pointer"
         onClick={resetFilters}
       >
         Reset

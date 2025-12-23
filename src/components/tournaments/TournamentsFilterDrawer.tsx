@@ -151,6 +151,7 @@ export default function TournamentsFilterDrawer({
               type="button"
               onClick={resetFilters}
               className="bg-n-50 text-n-950 border border-n-200 h-11 w-full rounded-3xl"
+              variant={"outline"}
             >
               Reset
             </Button>
