@@ -1,7 +1,7 @@
 "use client";
 
 // TYPES //
-import { TournamentFilterData } from "@/types/tournament";
+import { TournamentFiltersData } from "@/types/tournament";
 
 // ENUMS //
 import { CityFilter, MatchFormatFilter } from "@/enums/tournament-filter.enum";
@@ -10,8 +10,8 @@ import { CityFilter, MatchFormatFilter } from "@/enums/tournament-filter.enum";
 import FilterDropdown from "@/components/ui/FilterDropdown";
 
 interface PrimaryFiltersProps {
-  filters: TournamentFilterData;
-  updateFilter: (key: keyof TournamentFilterData, value: string) => void;
+  filters: TournamentFiltersData;
+  updateFilter: (key: keyof TournamentFiltersData, value: string) => void;
   resetFilters: () => void;
 }
 

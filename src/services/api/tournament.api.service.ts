@@ -3,14 +3,14 @@ import axios, { AxiosRequestConfig } from "axios";
 
 // TYPES //
 import { ApiResponseData } from "@/types/api";
-import { TournamentFilterData } from "@/types/tournament";
+import { TournamentFiltersData } from "@/types/tournament";
 
 // CONSTANTS //
 import { CONSTANTS } from "@/constants";
 
 // Get Tournaments by Filters
 export const getTournamentsByFiltersRequest = async (
-  filters: TournamentFilterData
+  filters: TournamentFiltersData
 ): Promise<ApiResponseData<any[]>> => {
   const config: AxiosRequestConfig = {
     method: "get",

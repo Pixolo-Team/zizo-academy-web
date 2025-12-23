@@ -1,7 +1,7 @@
 "use client";
 
 // TYPES //
-import { TournamentFilterData } from "@/types/tournament";
+import { TournamentFiltersData } from "@/types/tournament";
 
 // ENUMS //
 import {
@@ -22,8 +22,8 @@ import Motion from "../animations/Motion";
 import { shrinkIn, slideInUp } from "@/lib/animations";
 
 interface TournamentsFilterDrawerProps {
-  filters: TournamentFilterData;
-  updateFilter: (key: keyof TournamentFilterData, value: string) => void;
+  filters: TournamentFiltersData;
+  updateFilter: (key: keyof TournamentFiltersData, value: string) => void;
   resetFilters: () => void;
   onSearch: () => void;
 }

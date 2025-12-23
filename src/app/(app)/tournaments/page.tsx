@@ -4,7 +4,7 @@
 import { useEffect, useState } from "react";
 
 // TYPES //
-import { TournamentFilterData } from "@/types/tournament";
+import { TournamentFiltersData } from "@/types/tournament";
 
 // COMPONENTS //
 import PrimaryFilters from "@/components/tournaments/PrimaryFilters";
@@ -19,7 +19,7 @@ export default function Tournaments() {
   // Define Context
 
   // Define States
-  const [filters, setFilters] = useState<TournamentFilterData>({
+  const [filters, setFilters] = useState<TournamentFiltersData>({
     city: "",
     area: "",
     match_format: "",
@@ -34,7 +34,7 @@ export default function Tournaments() {
 
   // Define Functions
   /** Update Filter */
-  const updateFilter = (key: keyof TournamentFilterData, value: string) => {
+  const updateFilter = (key: keyof TournamentFiltersData, value: string) => {
     setFilters((prev) => ({ ...prev, [key]: value }));
   };
 
