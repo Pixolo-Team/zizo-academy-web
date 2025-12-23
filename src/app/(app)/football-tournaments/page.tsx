@@ -19,7 +19,7 @@ import SearchInput from "@/components/ui/SearchInput";
 import Image from "next/image";
 import PrimaryFilters from "@/components/tournaments/PrimaryFilters";
 import TournamentsFilterDrawer from "@/components/tournaments/TournamentsFilterDrawer";
-import ShareDialog from "@/components/ui/ShareDialog";
+import ShareDialog from "@/components/ShareDialog";
 
 // SERVICES //
 import { getTournaments } from "@/services/queries/tournaments.query";
@@ -60,6 +60,11 @@ export default function Tournaments() {
   const [isShareDialogOpen, setIsShareDialogOpen] = useState<boolean>(false);
   const [shouldRefresh, setShouldRefresh] = useState<boolean>(false);
   const [selectedTournamentId, setSelectedTournamentId] = useState<string>("");
+  const [origin, setOrigin] = useState<string>("");
+
+  const copyLink = origin
+    ? `${origin}/football-tournaments/${selectedTournamentId}`
+    : "";
 
   // Define Refs
 
@@ -123,6 +128,10 @@ export default function Tournaments() {
   useEffect(() => {
     getAllTournaments();
   }, [debouncedSearchInput, filters.city, filters.format, shouldRefresh]);
+
+  useEffect(() => {
+    setOrigin(window.location.origin);
+  }, []);
 
   return (
     // Tournaments Listing Page
@@ -244,7 +253,7 @@ export default function Tournaments() {
       <ShareDialog
         isOpen={isShareDialogOpen}
         onOpenChange={setIsShareDialogOpen}
-        copyLink={`${window.location.origin}/football-tournaments/${selectedTournamentId}`}
+        copyLink={copyLink}
       />
     </section>
   );

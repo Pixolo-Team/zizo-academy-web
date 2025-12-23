@@ -38,6 +38,7 @@ export default function FilterDrawer({
               className="absolute  shadow-[0_0_6px_0_rgba(0,0,0,0.25)]
  -top-20 left-1/2 -translate-x-1/2 bg-n-700 hover:bg-n-700/80 size-[41px] rounded-full text-n-50 transition-colors flex justify-center items-center"
             >
+              {/* Close Icon */}
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="23"

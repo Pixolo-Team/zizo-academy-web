@@ -103,6 +103,7 @@ export default function ShareDialog({
             className="size-8 flex justify-center items-center bg-n-100"
             onClick={copyToClipboard}
           >
+            {/* Copy svg */}
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="14"

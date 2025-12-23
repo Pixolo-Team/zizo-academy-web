@@ -142,7 +142,6 @@ export default function TournamentCard({
                 variant={"secondary"}
               >
                 {/* Calendar Icon */}
-
                 <CalendarDays className="h-3 w-3" />
                 {tournamentListingItem.start_date}
               </Badge>

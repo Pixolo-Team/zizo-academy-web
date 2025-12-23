@@ -14,7 +14,7 @@ import {
 } from "@/enums/tournament-filter.enum";
 
 // COMPONENTS //
-import FilterDrawer from "@/components/ui/FilterDrawer";
+import FilterDrawer from "@/components/FilterDrawer";
 import FilterDropdown from "@/components/ui/FilterDropdown";
 import { DatePicker } from "@/components/ui/DatePicker";
 import { Button } from "@/components/ui/button";
