@@ -27,7 +27,7 @@ export default function PageHeader({ title }: PageHeaderProps) {
 
       {/* Header Text */}
       {title && (
-        <p className="text-base font-medium font-gtwalsheim w-3/5 leading-none">
+        <p className="text-base text-n-950 font-medium font-gtwalsheim w-3/5 leading-none">
           {title}
         </p>
       )}
