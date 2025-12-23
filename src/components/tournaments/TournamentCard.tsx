@@ -1,10 +1,13 @@
 "use client";
 
 // REACT //
-import { TrophyIcon } from "lucide-react";
-import { useRouter } from "next/navigation";
+import { CalendarDays, ChevronRight, Contact, Users } from "lucide-react";
+
+// TYPES //
+import { TournamentListingItemData } from "@/types/tournament";
 
 // COMPONENTS //
+import { Skeleton } from "@/components/ui/skeleton";
 import Image from "next/image";
 
 // OTHERS //
@@ -13,28 +16,19 @@ import { Button } from "../ui/button";
 
 // Interface Props
 interface TournamentCardProps {
-  src: string;
-  title: string;
-  location: string;
-  price: string;
-  badgeItems: string[];
-  shareBtnClick: () => void;
-  btnText: string;
-  btnClick: () => void;
+  tournamentListingItem: TournamentListingItemData;
+  onShareBtnClick: () => void;
+  onRightArrowClick: () => void;
+  isLoading?: boolean;
 }
 
 export default function TournamentCard({
-  src,
-  title,
-  location,
-  price,
-  badgeItems,
-  shareBtnClick,
-  btnText,
-  btnClick,
+  tournamentListingItem,
+  onShareBtnClick,
+  onRightArrowClick,
+  isLoading,
 }: TournamentCardProps) {
   // Define Navigation
-  const router = useRouter();
 
   // Define Context
 
@@ -49,44 +43,50 @@ export default function TournamentCard({
     <div className="rounded-4xl bg-n-50 overflow-hidden w-full">
       {/* Image part */}
       <div className="relative rounded-3xl overflow-hidden">
-        {/* Card Image */}
-        <Image
-          src={src}
-          alt="Brand Logo"
-          width={200}
-          height={200}
-          className="h-[195px] w-full object-contain"
-        />
-
-        {/* Share button */}
-        <Button
-          className="absolute top-5 right-5  text-n-50"
-          variant={"default"}
-          onClick={shareBtnClick}
-        >
-          {/* Share Icon */}
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="17"
-            height="17"
-            viewBox="0 0 17 17"
-            fill="none"
-          >
-            <g clip-path="url(#clip0_2857_425)">
-              <path
-                fill-rule="evenodd"
-                clip-rule="evenodd"
-                d="M8.43203 0.84377C8.32476 0.860362 8.23937 0.895977 8.04149 1.00665C7.67633 1.2109 7.34442 1.441 6.99553 1.73178C6.78891 1.90399 6.26185 2.43531 6.09615 2.63843C5.78481 3.02006 5.47622 3.48576 5.3255 3.80141C5.26542 3.92723 5.26153 3.94525 5.26153 4.09691C5.26153 4.24059 5.26695 4.26946 5.31068 4.3585C5.37339 4.48624 5.46553 4.57522 5.60736 4.64504C5.70622 4.69371 5.73629 4.70037 5.85617 4.70012C5.97322 4.69986 6.00854 4.69226 6.1056 4.64653C6.26013 4.57374 6.32979 4.4971 6.46663 4.24938C6.68178 3.85988 6.91461 3.54014 7.23202 3.19834C7.40912 3.00763 7.75225 2.67921 7.84128 2.6152L7.88803 2.5816V6.22692C7.88803 8.58902 7.89402 9.90387 7.90505 9.96201C7.94066 10.1498 8.07168 10.3193 8.24503 10.4019C8.32556 10.4402 8.36094 10.4464 8.50003 10.4464C8.63913 10.4464 8.6745 10.4402 8.75503 10.4019C8.92838 10.3193 9.0594 10.1498 9.09501 9.96201C9.10605 9.90387 9.11203 8.58902 9.11203 6.22692V2.5816L9.15878 2.6152C9.24781 2.67921 9.59094 3.00763 9.76804 3.19834C10.0855 3.54014 10.3183 3.85988 10.5334 4.24938C10.6703 4.4971 10.7399 4.57374 10.8945 4.64653C10.9915 4.69226 11.0268 4.69986 11.1439 4.70012C11.2638 4.70037 11.2938 4.69371 11.3927 4.64504C11.5345 4.57522 11.6267 4.48624 11.6894 4.3585C11.7331 4.26946 11.7385 4.24059 11.7385 4.09691C11.7385 3.94943 11.7337 3.92507 11.6823 3.81641C11.5219 3.47704 11.1904 2.98045 10.8653 2.59241C10.583 2.25547 10.0708 1.77061 9.70054 1.48972C9.39277 1.25624 8.83503 0.915595 8.68703 0.870715C8.61296 0.848241 8.48827 0.835066 8.43203 0.84377ZM3.03453 4.13808C2.54996 4.24401 2.1498 4.46368 1.79339 4.81941C1.45481 5.15735 1.24715 5.53599 1.15693 5.97993C1.06836 6.41581 0.943531 7.62167 0.880223 8.65291C0.847532 9.1856 0.85304 10.7899 0.88959 11.3814C0.943004 12.2457 1.06843 13.4666 1.14865 13.9032C1.29994 14.7266 1.94838 15.4461 2.77953 15.7128C2.98419 15.7785 3.12404 15.8053 3.50427 15.8514C6.56492 16.223 9.76192 16.2494 12.8095 15.9284C13.93 15.8103 14.1406 15.7694 14.5109 15.5976C15.0852 15.3311 15.5668 14.8046 15.7651 14.2267C15.829 14.0403 15.8539 13.9203 15.9021 13.5659C16.1751 11.5571 16.2195 9.61441 16.0384 7.59041C15.9796 6.93358 15.8679 6.0651 15.8167 5.86764C15.5913 4.99753 14.854 4.32114 13.923 4.13038C13.5843 4.06097 13.4025 4.09927 13.2209 4.2783C12.9478 4.54753 13.0065 5.01741 13.3384 5.21853C13.4067 5.25988 13.4825 5.28511 13.6267 5.3144C13.9527 5.38065 14.1472 5.48069 14.3495 5.68634C14.4808 5.81982 14.5752 5.97017 14.6214 6.11965C14.69 6.34184 14.8308 7.60895 14.8846 8.48996C14.9794 10.0404 14.9231 11.609 14.714 13.2383C14.6317 13.8802 14.5898 13.9908 14.3325 14.2464C14.173 14.4048 14.0115 14.5018 13.7992 14.5669C13.5529 14.6423 11.8709 14.8087 10.693 14.8741C9.35676 14.9483 7.67109 14.9484 6.30703 14.8743C5.11593 14.8095 3.47276 14.6469 3.20453 14.5671C2.99193 14.5039 2.82875 14.4064 2.6676 14.2464C2.41026 13.9908 2.3684 13.8802 2.28606 13.2383C2.0025 11.0284 1.99995 8.96663 2.27803 6.75741C2.31504 6.46341 2.35956 6.18155 2.37876 6.11991C2.47297 5.8171 2.73871 5.53861 3.06381 5.40203C3.12798 5.37507 3.26867 5.33471 3.37647 5.31236C3.65177 5.25527 3.77908 5.17155 3.88424 4.97841C3.97047 4.82004 3.97319 4.59402 3.89082 4.43257C3.84019 4.33333 3.72038 4.21215 3.61719 4.1558C3.49108 4.08695 3.2956 4.081 3.03453 4.13808Z"
-                fill="white"
-              />
-            </g>
-            <defs>
-              <clipPath id="clip0_2857_425">
-                <rect width="17" height="17" fill="white" />
-              </clipPath>
-            </defs>
-          </svg>
-        </Button>
+        {isLoading ? (
+          <Skeleton className="bg-n-200 h-[195px] w-full" />
+        ) : (
+          <>
+            {/* Card Image */}
+            <Image
+              src={tournamentListingItem.poster_url}
+              alt="Brand Logo"
+              width={200}
+              height={200}
+              className="h-[195px] w-full object-contain"
+            />
+            {/* Share button */}
+            <Button
+              className="absolute top-5 right-5 text-n-50 bg-n-50/50 rounded-full hover:bg-n-50/70"
+              variant={"default"}
+              size={"icon"}
+              onClick={onShareBtnClick}
+            >
+              {/* Share Icon */}
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="17"
+                height="17"
+                viewBox="0 0 17 17"
+                fill="none"
+              >
+                <g clip-path="url(#clip0_2857_425)">
+                  <path
+                    fill-rule="evenodd"
+                    clip-rule="evenodd"
+                    d="M8.43203 0.84377C8.32476 0.860362 8.23937 0.895977 8.04149 1.00665C7.67633 1.2109 7.34442 1.441 6.99553 1.73178C6.78891 1.90399 6.26185 2.43531 6.09615 2.63843C5.78481 3.02006 5.47622 3.48576 5.3255 3.80141C5.26542 3.92723 5.26153 3.94525 5.26153 4.09691C5.26153 4.24059 5.26695 4.26946 5.31068 4.3585C5.37339 4.48624 5.46553 4.57522 5.60736 4.64504C5.70622 4.69371 5.73629 4.70037 5.85617 4.70012C5.97322 4.69986 6.00854 4.69226 6.1056 4.64653C6.26013 4.57374 6.32979 4.4971 6.46663 4.24938C6.68178 3.85988 6.91461 3.54014 7.23202 3.19834C7.40912 3.00763 7.75225 2.67921 7.84128 2.6152L7.88803 2.5816V6.22692C7.88803 8.58902 7.89402 9.90387 7.90505 9.96201C7.94066 10.1498 8.07168 10.3193 8.24503 10.4019C8.32556 10.4402 8.36094 10.4464 8.50003 10.4464C8.63913 10.4464 8.6745 10.4402 8.75503 10.4019C8.92838 10.3193 9.0594 10.1498 9.09501 9.96201C9.10605 9.90387 9.11203 8.58902 9.11203 6.22692V2.5816L9.15878 2.6152C9.24781 2.67921 9.59094 3.00763 9.76804 3.19834C10.0855 3.54014 10.3183 3.85988 10.5334 4.24938C10.6703 4.4971 10.7399 4.57374 10.8945 4.64653C10.9915 4.69226 11.0268 4.69986 11.1439 4.70012C11.2638 4.70037 11.2938 4.69371 11.3927 4.64504C11.5345 4.57522 11.6267 4.48624 11.6894 4.3585C11.7331 4.26946 11.7385 4.24059 11.7385 4.09691C11.7385 3.94943 11.7337 3.92507 11.6823 3.81641C11.5219 3.47704 11.1904 2.98045 10.8653 2.59241C10.583 2.25547 10.0708 1.77061 9.70054 1.48972C9.39277 1.25624 8.83503 0.915595 8.68703 0.870715C8.61296 0.848241 8.48827 0.835066 8.43203 0.84377ZM3.03453 4.13808C2.54996 4.24401 2.1498 4.46368 1.79339 4.81941C1.45481 5.15735 1.24715 5.53599 1.15693 5.97993C1.06836 6.41581 0.943531 7.62167 0.880223 8.65291C0.847532 9.1856 0.85304 10.7899 0.88959 11.3814C0.943004 12.2457 1.06843 13.4666 1.14865 13.9032C1.29994 14.7266 1.94838 15.4461 2.77953 15.7128C2.98419 15.7785 3.12404 15.8053 3.50427 15.8514C6.56492 16.223 9.76192 16.2494 12.8095 15.9284C13.93 15.8103 14.1406 15.7694 14.5109 15.5976C15.0852 15.3311 15.5668 14.8046 15.7651 14.2267C15.829 14.0403 15.8539 13.9203 15.9021 13.5659C16.1751 11.5571 16.2195 9.61441 16.0384 7.59041C15.9796 6.93358 15.8679 6.0651 15.8167 5.86764C15.5913 4.99753 14.854 4.32114 13.923 4.13038C13.5843 4.06097 13.4025 4.09927 13.2209 4.2783C12.9478 4.54753 13.0065 5.01741 13.3384 5.21853C13.4067 5.25988 13.4825 5.28511 13.6267 5.3144C13.9527 5.38065 14.1472 5.48069 14.3495 5.68634C14.4808 5.81982 14.5752 5.97017 14.6214 6.11965C14.69 6.34184 14.8308 7.60895 14.8846 8.48996C14.9794 10.0404 14.9231 11.609 14.714 13.2383C14.6317 13.8802 14.5898 13.9908 14.3325 14.2464C14.173 14.4048 14.0115 14.5018 13.7992 14.5669C13.5529 14.6423 11.8709 14.8087 10.693 14.8741C9.35676 14.9483 7.67109 14.9484 6.30703 14.8743C5.11593 14.8095 3.47276 14.6469 3.20453 14.5671C2.99193 14.5039 2.82875 14.4064 2.6676 14.2464C2.41026 13.9908 2.3684 13.8802 2.28606 13.2383C2.0025 11.0284 1.99995 8.96663 2.27803 6.75741C2.31504 6.46341 2.35956 6.18155 2.37876 6.11991C2.47297 5.8171 2.73871 5.53861 3.06381 5.40203C3.12798 5.37507 3.26867 5.33471 3.37647 5.31236C3.65177 5.25527 3.77908 5.17155 3.88424 4.97841C3.97047 4.82004 3.97319 4.59402 3.89082 4.43257C3.84019 4.33333 3.72038 4.21215 3.61719 4.1558C3.49108 4.08695 3.2956 4.081 3.03453 4.13808Z"
+                    fill="white"
+                  />
+                </g>
+                <defs>
+                  <clipPath id="clip0_2857_425">
+                    <rect width="17" height="17" fill="white" />
+                  </clipPath>
+                </defs>
+              </svg>
+            </Button>
+          </>
+        )}
       </div>
       {/* Content part */}
       <div className="p-5 flex flex-col gap-5">
@@ -94,91 +94,119 @@ export default function TournamentCard({
           {/* Title + price */}
           <div className="flex justify-between items-start">
             {/* Title + location */}
-            <div className="flex flex-col justify-start items-start">
+            <div
+              className={`flex flex-col justify-start items-start ${
+                isLoading && "gap-3"
+              }`}
+            >
               {/* Title */}
-              <p className="justify-start text-n-900 text-xl font-medium font-['GT_Walsheim_Trial']">
-                {title}
-              </p>
+              {isLoading ? (
+                <Skeleton className="h-3.5 w-44" />
+              ) : (
+                <p className="justify-start text-n-900 text-xl font-medium leading-none">
+                  {tournamentListingItem.tournament_name}
+                </p>
+              )}
 
               {/* Location */}
-              <div className="flex items-center gap-1">
-                <div>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="8"
-                    height="10"
-                    viewBox="0 0 8 10"
-                    fill="none"
-                  >
-                    <path
-                      fill-rule="evenodd"
-                      clip-rule="evenodd"
-                      d="M3.72646 0.00351808C3.61057 0.0133824 3.39072 0.0413688 3.31187 0.0562991C2.60679 0.189794 1.97045 0.514877 1.42373 1.02089C1.31531 1.12124 1.0876 1.36679 0.992816 1.48556C0.487106 2.11931 0.144704 2.9441 0.0413061 3.7776C-0.000652444 4.11582 -0.0123409 4.60342 0.014093 4.91291C0.0841138 5.73267 0.302778 6.44117 0.670954 7.04122C1.03205 7.62972 1.62556 8.33895 2.19297 8.85998C2.62053 9.2526 3.26337 9.76088 3.46671 9.86713C3.8058 10.0443 4.19657 10.0443 4.53566 9.86713C4.7379 9.76146 5.38111 9.25283 5.8094 8.8599C6.34742 8.3663 6.8819 7.73553 7.27981 7.12461C7.67419 6.51912 7.92002 5.74972 7.98821 4.90755C8.00396 4.71304 8.00392 4.21942 7.98815 4.03465C7.90592 3.07166 7.59551 2.25227 7.03464 1.5177C6.92463 1.37361 6.60628 1.03975 6.45922 0.914227C5.87451 0.415174 5.21132 0.117938 4.47072 0.0230004C4.34196 0.00649558 3.84451 -0.00652832 3.72646 0.00351808ZM3.72646 0.774145C3.70997 0.776491 3.64928 0.783763 3.59159 0.790296C3.45077 0.806255 3.26391 0.846002 3.11206 0.892303C2.1193 1.19498 1.31686 2.00336 0.939019 3.08142C0.574589 4.12122 0.657657 5.44376 1.14758 6.40208C1.2321 6.56738 1.30235 6.6811 1.44505 6.88363C2.01052 7.68616 2.60647 8.29291 3.50998 8.98596C3.78692 9.19839 3.84872 9.22896 4.00118 9.22896C4.15008 9.22896 4.21839 9.19579 4.4776 8.99767C5.33356 8.34341 5.94745 7.72814 6.48326 6.98749C6.80293 6.54562 6.94949 6.26522 7.08342 5.83936C7.3376 5.03108 7.35596 4.09 7.13293 3.30116C7.03518 2.95539 6.8952 2.63805 6.70294 2.32633C6.57455 2.11817 6.4593 1.96777 6.2841 1.77978C6.00658 1.48199 5.74392 1.28014 5.4048 1.10403C5.09702 0.944206 4.79906 0.847083 4.45219 0.79352C4.35174 0.778012 3.8023 0.763338 3.72646 0.774145ZM3.72219 2.89492C3.10779 2.9908 2.69474 3.39849 2.5727 4.02952C2.51285 4.33892 2.52723 4.72409 2.60965 5.02001C2.73913 5.48487 3.07906 5.83223 3.52644 5.95684C3.88432 6.05654 4.34766 6.02985 4.65915 5.89162C5.06615 5.71098 5.34106 5.34029 5.43344 4.84752C5.46162 4.69719 5.4728 4.46136 5.46005 4.28592C5.44195 4.03681 5.40329 3.86565 5.32377 3.68261C5.13266 3.2427 4.76663 2.96859 4.27146 2.89453C4.135 2.87413 3.85414 2.87433 3.72219 2.89492ZM3.87131 3.64952C3.45588 3.68954 3.252 3.95207 3.252 4.447C3.252 4.8938 3.4126 5.14345 3.75238 5.22482C3.88407 5.25635 4.11734 5.25658 4.24786 5.22531C4.58887 5.14361 4.7503 4.89353 4.7503 4.447C4.7503 4.0868 4.64047 3.84572 4.42577 3.73466C4.32649 3.68332 4.24822 3.66152 4.11772 3.6489C4.00425 3.63794 3.99137 3.63797 3.87131 3.64952Z"
-                      fill="#90A2B9"
-                    />
-                  </svg>
-                </div>
-                <p className="justify-start text-n-500 text-xs font-normal font-['GT_Walsheim_Trial']">
-                  {location}
+              {isLoading ? (
+                <Skeleton className="h-3.5 w-24" />
+              ) : (
+                <p className="justify-start text-n-500 text-xs font-normal ">
+                  {tournamentListingItem.area}
                 </p>
-              </div>
+              )}
             </div>
 
             {/* Price */}
-            <p className="justify-start text-green-500 text-lg font-bold font-['GT_Walsheim_Trial'] leading-6">
-              {price}
-            </p>
+            {isLoading ? (
+              <Skeleton className="h-3.5 w-16" />
+            ) : (
+              <p className="justify-start text-green-500 text-lg font-bold leading-6">
+                ₹{tournamentListingItem.entry_fee}
+              </p>
+            )}
           </div>
 
           {/* Badges */}
           <div className="flex items-center gap-1.5 flex-wrap">
-            {badgeItems.map((badgeItem, badgeIndex) => (
-              // Badge component
+            {/* Badge component */}
+            {isLoading ? (
+              <Skeleton className="h-9 w-36 rounded-3xl" />
+            ) : (
               <Badge
-                key={badgeIndex}
                 className="flex items-center gap-1 px-3 py-2.5 text-n-900 font-normal text-xs"
                 variant={"secondary"}
               >
-                {/* Badge Icon */}
-                <TrophyIcon className="h-3 w-3" />
-                {badgeItem}
+                {/* Calendar Icon */}
+
+                <CalendarDays className="h-3 w-3" />
+                {tournamentListingItem.start_date}
               </Badge>
-            ))}
+            )}
+
+            {isLoading ? (
+              <Skeleton className="h-9 w-24 rounded-3xl" />
+            ) : (
+              <Badge
+                className="flex items-center gap-1 px-3 py-2.5 text-n-900 font-normal text-xs"
+                variant={"secondary"}
+              >
+                {/* Users Icon */}
+                <Users className="h-3 w-3" />
+                {tournamentListingItem.format}
+              </Badge>
+            )}
+
+            {isLoading ? (
+              <Skeleton className="h-9 w-24 rounded-3xl" />
+            ) : (
+              <Badge
+                className="flex items-center gap-1 px-3 py-2.5 text-n-900 font-normal text-xs"
+                variant={"secondary"}
+              >
+                {/* Contact Icon */}
+                <Contact className="h-3 w-3" />
+                {tournamentListingItem.age_category}
+              </Badge>
+            )}
           </div>
         </div>
 
-        {/* Winning Prizes + View Button */}
+        {/* Winning Prizes + Right Arrow Button */}
         <div className="flex justify-between items-end ">
           <div className="flex flex-col justify-center items-start gap-1">
-            {/* Price Details */}
-            <p className="justify-start text-n-500 text-xs font-normal ">
-              Winning Prize
-            </p>
-
-            {/* Price */}
-            <div className="flex justify-start items-end gap-0.5">
-              {/* Price */}
-              <p className=" text-n-900 text-xl font-bold leading-6">{price}</p>
-
-              {/* More link/text */}
-              <p className="text-n-500 text-xs font-normal leading-5">
-                and more
+            {isLoading ? (
+              <Skeleton className="justify-start h-2.5 w-16" />
+            ) : (
+              <p className="justify-start text-n-500 text-xs font-normal ">
+                Winning Prize
               </p>
-            </div>
+            )}
+
+            {isLoading ? (
+              <Skeleton className="h-5 w-36" />
+            ) : (
+              <div className="flex justify-start items-end gap-0.5">
+                {/* Total Cash Prize */}
+                <p className="text-n-900 text-xl font-bold leading-6">
+                  ₹{tournamentListingItem.cash_prize_total}
+                </p>
+
+                {/* Extra text */}
+                <p className="text-n-500 text-xs font-normal leading-5">
+                  and more
+                </p>
+              </div>
+            )}
           </div>
 
-          {/* View Button */}
-          <div>
-            <Button
-              className={
-                "h-11 rounded-full text-sm font-normal bg-n-900 text-n-50"
-              }
-              variant="default"
-              onClick={btnClick}
-            >
-              {btnText}
-            </Button>
-          </div>
+          {/* Right Arrow Button */}
+          {isLoading ? (
+            <Skeleton className="h-3.5 w-6" />
+          ) : (
+            <ChevronRight onClick={onRightArrowClick} />
+          )}
         </div>
       </div>
     </div>
