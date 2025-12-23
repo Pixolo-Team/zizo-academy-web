@@ -12,6 +12,7 @@ import TournamentsFilterDrawer from "@/components/tournaments/TournamentsFilterD
 
 // API SERVICES //
 import { getTournamentsByFiltersRequest } from "@/services/api/tournament.api.service";
+import { getTournaments } from "@/services/queries/tournaments.query";
 
 export default function Tournaments() {
   // Define Navigation
@@ -54,11 +55,11 @@ export default function Tournaments() {
     });
   };
 
-  const searchTournaments = () => {
+  const searchTournaments = async () => {
     // Make API call to search tournaments
-    getTournamentsByFiltersRequest(filters).then((response) => {
-      console.log(response);
-    });
+    await getTournaments(filters);
+
+    // Update tournaments state
   };
 
   // Use Effects
