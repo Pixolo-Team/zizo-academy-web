@@ -77,6 +77,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={gtWalsheimFont.className}>
       <head>
+        <meta name="color-scheme" content="light dark" />
         {/* Favicon for light mode */}
         <link
           rel="icon"
