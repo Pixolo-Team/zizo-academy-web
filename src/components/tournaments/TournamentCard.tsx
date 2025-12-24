@@ -9,6 +9,7 @@ import { TournamentListingItemData } from "@/types/tournament";
 // COMPONENTS //
 import { Skeleton } from "@/components/ui/skeleton";
 import Image from "next/image";
+import TournamentCardImage from "./TournamentCardImage";
 
 // OTHERS //
 import { Badge } from "../ui/badge";
@@ -46,49 +47,10 @@ export default function TournamentCard({
         {isLoading ? (
           <Skeleton className="bg-n-200 h-[195px] w-full" />
         ) : (
-          <>
-            {/* Card Image */}
-            <Image
-              src={
-                tournamentListingItem.poster_url ??
-                "/images/defaults/tournament-card-dummy.jpg"
-              }
-              alt="Brand Logo"
-              width={200}
-              height={200}
-              className="h-[195px] w-full object-cover"
-            />
-            {/* Share button */}
-            <Button
-              className="absolute top-5 right-5 text-n-50 bg-n-50/50 rounded-full hover:bg-n-50/70"
-              variant={"default"}
-              size={"icon"}
-              onClick={onShareBtnClick}
-            >
-              {/* Share Icon */}
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="17"
-                height="17"
-                viewBox="0 0 17 17"
-                fill="none"
-              >
-                <g clipPath="url(#clip0_2857_425)">
-                  <path
-                    fillRule="evenodd"
-                    clipRule="evenodd"
-                    d="M8.43203 0.84377C8.32476 0.860362 8.23937 0.895977 8.04149 1.00665C7.67633 1.2109 7.34442 1.441 6.99553 1.73178C6.78891 1.90399 6.26185 2.43531 6.09615 2.63843C5.78481 3.02006 5.47622 3.48576 5.3255 3.80141C5.26542 3.92723 5.26153 3.94525 5.26153 4.09691C5.26153 4.24059 5.26695 4.26946 5.31068 4.3585C5.37339 4.48624 5.46553 4.57522 5.60736 4.64504C5.70622 4.69371 5.73629 4.70037 5.85617 4.70012C5.97322 4.69986 6.00854 4.69226 6.1056 4.64653C6.26013 4.57374 6.32979 4.4971 6.46663 4.24938C6.68178 3.85988 6.91461 3.54014 7.23202 3.19834C7.40912 3.00763 7.75225 2.67921 7.84128 2.6152L7.88803 2.5816V6.22692C7.88803 8.58902 7.89402 9.90387 7.90505 9.96201C7.94066 10.1498 8.07168 10.3193 8.24503 10.4019C8.32556 10.4402 8.36094 10.4464 8.50003 10.4464C8.63913 10.4464 8.6745 10.4402 8.75503 10.4019C8.92838 10.3193 9.0594 10.1498 9.09501 9.96201C9.10605 9.90387 9.11203 8.58902 9.11203 6.22692V2.5816L9.15878 2.6152C9.24781 2.67921 9.59094 3.00763 9.76804 3.19834C10.0855 3.54014 10.3183 3.85988 10.5334 4.24938C10.6703 4.4971 10.7399 4.57374 10.8945 4.64653C10.9915 4.69226 11.0268 4.69986 11.1439 4.70012C11.2638 4.70037 11.2938 4.69371 11.3927 4.64504C11.5345 4.57522 11.6267 4.48624 11.6894 4.3585C11.7331 4.26946 11.7385 4.24059 11.7385 4.09691C11.7385 3.94943 11.7337 3.92507 11.6823 3.81641C11.5219 3.47704 11.1904 2.98045 10.8653 2.59241C10.583 2.25547 10.0708 1.77061 9.70054 1.48972C9.39277 1.25624 8.83503 0.915595 8.68703 0.870715C8.61296 0.848241 8.48827 0.835066 8.43203 0.84377ZM3.03453 4.13808C2.54996 4.24401 2.1498 4.46368 1.79339 4.81941C1.45481 5.15735 1.24715 5.53599 1.15693 5.97993C1.06836 6.41581 0.943531 7.62167 0.880223 8.65291C0.847532 9.1856 0.85304 10.7899 0.88959 11.3814C0.943004 12.2457 1.06843 13.4666 1.14865 13.9032C1.29994 14.7266 1.94838 15.4461 2.77953 15.7128C2.98419 15.7785 3.12404 15.8053 3.50427 15.8514C6.56492 16.223 9.76192 16.2494 12.8095 15.9284C13.93 15.8103 14.1406 15.7694 14.5109 15.5976C15.0852 15.3311 15.5668 14.8046 15.7651 14.2267C15.829 14.0403 15.8539 13.9203 15.9021 13.5659C16.1751 11.5571 16.2195 9.61441 16.0384 7.59041C15.9796 6.93358 15.8679 6.0651 15.8167 5.86764C15.5913 4.99753 14.854 4.32114 13.923 4.13038C13.5843 4.06097 13.4025 4.09927 13.2209 4.2783C12.9478 4.54753 13.0065 5.01741 13.3384 5.21853C13.4067 5.25988 13.4825 5.28511 13.6267 5.3144C13.9527 5.38065 14.1472 5.48069 14.3495 5.68634C14.4808 5.81982 14.5752 5.97017 14.6214 6.11965C14.69 6.34184 14.8308 7.60895 14.8846 8.48996C14.9794 10.0404 14.9231 11.609 14.714 13.2383C14.6317 13.8802 14.5898 13.9908 14.3325 14.2464C14.173 14.4048 14.0115 14.5018 13.7992 14.5669C13.5529 14.6423 11.8709 14.8087 10.693 14.8741C9.35676 14.9483 7.67109 14.9484 6.30703 14.8743C5.11593 14.8095 3.47276 14.6469 3.20453 14.5671C2.99193 14.5039 2.82875 14.4064 2.6676 14.2464C2.41026 13.9908 2.3684 13.8802 2.28606 13.2383C2.0025 11.0284 1.99995 8.96663 2.27803 6.75741C2.31504 6.46341 2.35956 6.18155 2.37876 6.11991C2.47297 5.8171 2.73871 5.53861 3.06381 5.40203C3.12798 5.37507 3.26867 5.33471 3.37647 5.31236C3.65177 5.25527 3.77908 5.17155 3.88424 4.97841C3.97047 4.82004 3.97319 4.59402 3.89082 4.43257C3.84019 4.33333 3.72038 4.21215 3.61719 4.1558C3.49108 4.08695 3.2956 4.081 3.03453 4.13808Z"
-                    fill="white"
-                  />
-                </g>
-                <defs>
-                  <clipPath id="clip0_2857_425">
-                    <rect width="17" height="17" fill="white" />
-                  </clipPath>
-                </defs>
-              </svg>
-            </Button>
-          </>
+          <TournamentCardImage
+            posterUrl={tournamentListingItem?.poster_url}
+            onShareBtnClick={onShareBtnClick}
+          />
         )}
       </div>
       {/* Content part */}
@@ -176,48 +138,50 @@ export default function TournamentCard({
         </div>
 
         {/* Winning Prizes + Right Arrow Button */}
-        <div className="flex justify-between items-center">
-          <div className="flex flex-col justify-center items-start gap-1">
-            {isLoading ? (
-              <Skeleton className="justify-start h-2.5 w-16" />
-            ) : (
-              <p className="justify-start text-n-500 text-xs font-normal ">
-                Winning Prize
-              </p>
-            )}
-
-            {isLoading ? (
-              <Skeleton className="h-5 w-36" />
-            ) : (
-              <div className="flex justify-start items-end gap-0.5">
-                {/* Total Cash Prize */}
-                <p className="text-n-900 text-xl font-bold leading-6">
-                  ₹{tournamentListingItem.cash_prize_total}
+        {tournamentListingItem.cash_prize_total > 0 && (
+          <div className="flex justify-between items-center">
+            <div className="flex flex-col justify-center items-start gap-1">
+              {isLoading ? (
+                <Skeleton className="justify-start h-2.5 w-16" />
+              ) : (
+                <p className="justify-start text-n-500 text-xs font-normal ">
+                  Winning Prize
                 </p>
+              )}
 
-                {/* Extra text */}
-                <p className="text-n-500 text-xs font-normal leading-5">
-                  and more
-                </p>
-              </div>
+              {isLoading ? (
+                <Skeleton className="h-5 w-36" />
+              ) : (
+                <div className="flex justify-start items-end gap-0.5">
+                  {/* Total Cash Prize */}
+                  <p className="text-n-900 text-xl font-bold leading-6">
+                    ₹{tournamentListingItem.cash_prize_total}
+                  </p>
+
+                  {/* Extra text */}
+                  <p className="text-n-500 text-xs font-normal leading-5">
+                    and more
+                  </p>
+                </div>
+              )}
+            </div>
+
+            {/* Right Arrow Button */}
+            {isLoading ? (
+              <Skeleton className="h-3.5 w-6" />
+            ) : (
+              <Button
+                type="button"
+                variant="ghost"
+                size="icon"
+                aria-label="View tournament details"
+                onClick={onRightArrowClick}
+              >
+                <ChevronRight />
+              </Button>
             )}
           </div>
-
-          {/* Right Arrow Button */}
-          {isLoading ? (
-            <Skeleton className="h-3.5 w-6" />
-          ) : (
-            <Button
-              type="button"
-              variant="ghost"
-              size="icon"
-              aria-label="View tournament details"
-              onClick={onRightArrowClick}
-            >
-              <ChevronRight />
-            </Button>
-          )}
-        </div>
+        )}
       </div>
     </div>
   );
