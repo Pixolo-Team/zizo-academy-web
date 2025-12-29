@@ -42,8 +42,8 @@ export default function OrganizerProfile() {
       </Button>
 
       {/* Organization Cover Image */}
-      <Motion as="div" variants={fadeIn} delay={0.1}>
-        <div className="sticky top-0 h-56 w-full ">
+      <div className="sticky top-0 h-56 w-full">
+        <Motion variants={fadeIn} as="div" delay={0.1}>
           <Image
             src="/images/defaults/organizer-cover.jpg"
             alt="Organizer Cover Image"
@@ -51,8 +51,8 @@ export default function OrganizerProfile() {
             className="object-cover"
             priority
           />
-        </div>
-      </Motion>
+        </Motion>
+      </div>
 
       {/* Content Card */}
       <Motion as="div" variants={shrinkIn} delay={0.2}>
