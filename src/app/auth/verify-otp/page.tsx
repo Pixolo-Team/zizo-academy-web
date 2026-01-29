@@ -1,5 +1,8 @@
 "use client";
 
+// REACT //
+import { useEffect, useState } from "react";
+
 // COMPONENTS //
 import BrandLogo from "@/app/components/brand-logo/BrandLogo";
 import {
@@ -8,17 +11,14 @@ import {
   InputOTPSlot,
 } from "@/components/ui/input-otp";
 import { Button } from "@/components/ui/button";
-
-// NEXT //
 import Link from "next/link";
-
-// REACT //
-import { useEffect, useState } from "react";
+import Image from "next/image";
+import PageHeader from "@/app/components/layout/Header";
 
 // UTILS //
 import { validateOtp } from "@/app/utils/validation";
-import Image from "next/image";
-import PageHeader from "@/app/components/layout/Header";
+
+// NEXT //
 
 const RESEND_INTERVAL = 30; // seconds
 
@@ -45,6 +45,7 @@ const VerifyOtpPage = () => {
     }
   }
 
+  /** Resend Otp */
   function handleResendOtp() {
     // 🔁 Call resend OTP API here
     const availableAt = Date.now() + RESEND_INTERVAL * 1000;
@@ -52,6 +53,7 @@ const VerifyOtpPage = () => {
     setResendSeconds(RESEND_INTERVAL);
   }
 
+  // Use Effects
   useEffect(() => {
     if (resendSeconds <= 0) return;
 
@@ -87,7 +89,7 @@ const VerifyOtpPage = () => {
   return (
     <div className="flex flex-col gap-6 px-5 pb-6 min-h-screen relative">
       <PageHeader />
-      <div className="container flex flex-col gap-24">
+      <div className="container flex flex-col gap-20 sm:gap-24">
         {/* Brand logo container */}
         {/* Main Content */}
         <div className="flex flex-col gap-10 items-center">
@@ -157,13 +159,13 @@ const VerifyOtpPage = () => {
               </div>
 
               <div className="flex flex-col gap-5 items-center w-full">
-                {/* Login Button */}
+                {/* Confirm Button */}
                 <Button
                   onClick={handleSubmit}
                   className="w-full"
                   disabled={otpValue === ""}
                 >
-                  Get Started
+                  Confirm
                 </Button>
 
                 {resendSeconds > 0 ? (

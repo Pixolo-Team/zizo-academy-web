@@ -2,6 +2,7 @@
 
 // REACT //
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 // COMPONENTS //
 import BrandLogo from "@/app/components/brand-logo/BrandLogo";
@@ -12,7 +13,6 @@ import Image from "next/image";
 
 // UTILS //
 import { validatePhoneNumber } from "@/app/utils/validation";
-import { useRouter } from "next/navigation";
 
 /** Login Page */
 export default function LoginPage() {
@@ -44,7 +44,7 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="container min-h-screen py-16 px-5 flex flex-col gap-24 relative">
+    <div className="container min-h-screen py-16 px-5 flex flex-col gap-20 sm:gap-24 relative">
       {/* Main Content */}
       <div className="flex flex-col gap-10 items-center">
         {/* Logo */}
