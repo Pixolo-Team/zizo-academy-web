@@ -14,51 +14,57 @@ import { Toaster } from "@/components/ui/sonner";
 // DATA //
 import type { Metadata } from "next";
 
-/* GT Walsheim Font */
-const gtWalsheimFont = localFont({
+const googleSans = localFont({
   src: [
+    // Regular
     {
-      path: "../../public/fonts/GT-walsheim/GT-Walsheim-Thin.otf",
-      weight: "100",
-      style: "thin",
-    },
-    {
-      path: "../../public/fonts/GT-walsheim/GT-Walsheim-Ultra-Light.otf",
-      weight: "200",
-      style: "ultra-light",
-    },
-    {
-      path: "../../public/fonts/GT-walsheim/GT-Walsheim-Light.otf",
-      weight: "300",
-      style: "light",
-    },
-    {
-      path: "../../public/fonts/GT-walsheim/GT-Walsheim-Regular.otf",
+      path: "../../public/fonts/Google_Sans/static/GoogleSans-Regular.ttf",
       weight: "400",
-      style: "regular",
+      style: "normal",
     },
     {
-      path: "../../public/fonts/GT-walsheim/GT-Walsheim-Medium.otf",
+      path: "../../public/fonts/Google_Sans/static/GoogleSans-Italic.ttf",
+      weight: "400",
+      style: "italic",
+    },
+
+    // Medium
+    {
+      path: "../../public/fonts/Google_Sans/static/GoogleSans-Medium.ttf",
       weight: "500",
-      style: "medium",
+      style: "normal",
     },
     {
-      path: "../../public/fonts/GT-walsheim/GT-Walsheim-Bold.otf",
+      path: "../../public/fonts/Google_Sans/static/GoogleSans-MediumItalic.ttf",
+      weight: "500",
+      style: "italic",
+    },
+
+    // SemiBold
+    {
+      path: "../../public/fonts/Google_Sans/static/GoogleSans-SemiBold.ttf",
+      weight: "600",
+      style: "normal",
+    },
+    {
+      path: "../../public/fonts/Google_Sans/static/GoogleSans-SemiBoldItalic.ttf",
+      weight: "600",
+      style: "italic",
+    },
+
+    // Bold
+    {
+      path: "../../public/fonts/Google_Sans/static/GoogleSans-Bold.ttf",
       weight: "700",
-      style: "bold",
+      style: "normal",
     },
     {
-      path: "../../public/fonts/GT-walsheim/GT-Walsheim-Ultra-Bold.otf",
-      weight: "800",
-      style: "ultra-bold",
-    },
-    {
-      path: "../../public/fonts/GT-walsheim/GT-Walsheim-Black.otf",
-      weight: "900",
-      style: "black",
+      path: "../../public/fonts/Google_Sans/static/GoogleSans-BoldItalic.ttf",
+      weight: "700",
+      style: "italic",
     },
   ],
-  variable: "--font-gtwalsheim",
+  variable: "--font-sans",
   display: "swap",
 });
 
@@ -75,7 +81,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={gtWalsheimFont.className}>
+    <html lang="en" className={googleSans.variable}>
       <head>
         <meta name="color-scheme" content="light dark" />
         {/* Favicon for light mode */}
@@ -108,7 +114,7 @@ export default function RootLayout({
           `}
         </Script>
       </head>
-      <body className="antialiased font-sans">
+      <body className="antialiased font-sans min-h-screen">
         <AttendanceProvider>{children}</AttendanceProvider>
         <Toaster duration={2000} />
       </body>
