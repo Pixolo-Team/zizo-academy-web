@@ -12,9 +12,13 @@ import Image from "next/image";
 
 // UTILS //
 import { validatePhoneNumber } from "@/app/utils/validation";
+import { useRouter } from "next/navigation";
 
 /** Login Page */
 export default function LoginPage() {
+  // Define Navigation
+  const router = useRouter();
+
   // States
   const [phoneNumber, setPhoneNumber] = useState<string>("");
   const [phoneNumberErrorMessage, setPhoneNumberErrorMessage] =
@@ -33,6 +37,9 @@ export default function LoginPage() {
     // Clear error message if phone number is valid
     else {
       setPhoneNumberErrorMessage("");
+      // Proceed with form submission logic here
+      // Example: Navigate to the next page or perform authentication
+      router.push("/auth/verify-otp");
     }
   };
 
