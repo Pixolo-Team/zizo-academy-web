@@ -133,6 +133,7 @@ export default function LoginPage() {
           width={1920}
           height={95}
           className="w-full object-cover"
+          loading="eager"
         />
       </div>
     </div>
