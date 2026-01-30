@@ -27,9 +27,13 @@ const RESEND_INTERVAL = 30; // seconds
 
 /** Verify OTP Page */
 const VerifyOtpPage = () => {
-  // State
+  // State to store entered OTP value
   const [otpValue, setOtpValue] = useState<string>("");
+
+  // State to store OTP validation error
   const [otpErrorMessage, setOtpErrorMessage] = useState<string>("");
+
+  // Countdown timer
   const [resendSeconds, setResendSeconds] = useState<number>(0);
 
   /** Function to handle OTP submission */
@@ -48,32 +52,39 @@ const VerifyOtpPage = () => {
     }
   }
 
-  /** Starts / resets otp and resends countdown */
-  function setResetOtp() {
+  /** Starts resets otp and resends countdown */
+  const setResetOtp = () => {
     const availableAt = Date.now() + RESEND_INTERVAL * 1000;
     localStorage.setItem(
       LocalStorageKeys.OTP_RESEND_AVAILABLE_AT,
       availableAt.toString(),
     );
     setResendSeconds(RESEND_INTERVAL);
-  }
+  };
 
-  function getOtp() {
+  /** Triggers resend OTP */
+  const getOtp = () => {
     // 🔁 Call resend OTP API here
     setResetOtp();
-  }
+  };
 
   // Use Effects
+
+  /** Countdown timer */
   useEffect(() => {
+    // If countdown is already finished
     if (resendSeconds <= 0) return;
 
+    // Timer that runs after every second
     const timer = setInterval(() => {
       setResendSeconds((prev) => {
         if (prev <= 1) {
           localStorage.removeItem("otp_resend_available_at");
+          // Stop the timer
           clearInterval(timer);
           return 0;
         }
+        // Decrease countdown by 1 second
         return prev - 1;
       });
     }, 1000);
@@ -81,13 +92,17 @@ const VerifyOtpPage = () => {
     return () => clearInterval(timer);
   }, [resendSeconds]);
 
+  // Restores resend timer on page refresh from local storage
   useEffect(() => {
+    // Getting stored resend availability time from localStorage
     const storedTime = localStorage.getItem(
       LocalStorageKeys.OTP_RESEND_AVAILABLE_AT,
     );
 
     if (storedTime) {
+      // Convert stored value to number
       const availableAt = Number(storedTime);
+      // Calculating remaining seconds
       const remaining = Math.ceil((availableAt - Date.now()) / 1000);
 
       if (remaining > 0) {
@@ -101,10 +116,12 @@ const VerifyOtpPage = () => {
       <PageHeader />
       <div className="container flex flex-col gap-20 sm:gap-24">
         {/* Brand logo container */}
+
         {/* Main Content */}
         <div className="flex flex-col gap-10 items-center">
           {/* Logo */}
           <BrandLogo size={90} />
+
           {/* Login Form */}
           <div className="flex flex-col gap-10 items-center">
             {/* Text Container */}
@@ -116,6 +133,7 @@ const VerifyOtpPage = () => {
                 Code sent to your mobile number
               </p>
             </div>
+
             {/* Form Container */}
             <div className="flex flex-col gap-10 items-center">
               <div className="flex flex-col gap-1.5">
