@@ -41,7 +41,7 @@ export default function LoginPage() {
       {/* Main Content */}
       <div className="flex flex-col gap-10 items-center">
         {/* Logo */}
-        <BrandLogo size={90} />
+        <BrandLogo size={90} showText={true} />
         {/* Login Form */}
         <div className="flex flex-col gap-10 items-center">
           {/* Text Container */}
@@ -62,7 +62,10 @@ export default function LoginPage() {
                   +91
                 </span>
                 <Input
-                  type="number"
+                  type="tel"
+                  inputMode="numeric"
+                  pattern="[0-9]*"
+                  maxLength={10}
                   placeholder=""
                   value={phoneNumber}
                   onChange={(e) => {
@@ -102,7 +105,12 @@ export default function LoginPage() {
             </div>
 
             {/* Login Button */}
-            <Button onClick={handleSubmit} disabled={phoneNumber === ""}>
+            <Button
+              variant="secondary"
+              onClick={handleSubmit}
+              disabled={phoneNumber === ""}
+              className="h-[62px] w-full rounded-full py-4 px-6 gap-4 bg-n-900 text-xl font-bold text-n-50 hover:bg-n-850 hover:scale-102 ease-in-out transition-all"
+            >
               Get Started
             </Button>
           </div>
