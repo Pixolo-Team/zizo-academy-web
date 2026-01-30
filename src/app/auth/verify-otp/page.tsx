@@ -3,6 +3,9 @@
 // REACT //
 import { useEffect, useState } from "react";
 
+// ENUMS //
+import { LocalStorageKeys } from "@/enums/local-storage.enum";
+
 // COMPONENTS //
 import BrandLogo from "@/app/components/brand-logo/BrandLogo";
 import {
@@ -45,12 +48,19 @@ const VerifyOtpPage = () => {
     }
   }
 
-  /** Resend Otp */
-  function handleResendOtp() {
-    // 🔁 Call resend OTP API here
+  /** Starts / resets otp and resends countdown */
+  function setResetOtp() {
     const availableAt = Date.now() + RESEND_INTERVAL * 1000;
-    localStorage.setItem("otp_resend_available_at", availableAt.toString());
+    localStorage.setItem(
+      LocalStorageKeys.OTP_RESEND_AVAILABLE_AT,
+      availableAt.toString(),
+    );
     setResendSeconds(RESEND_INTERVAL);
+  }
+
+  function getOtp() {
+    // 🔁 Call resend OTP API here
+    setResetOtp();
   }
 
   // Use Effects
@@ -72,7 +82,9 @@ const VerifyOtpPage = () => {
   }, [resendSeconds]);
 
   useEffect(() => {
-    const storedTime = localStorage.getItem("otp_resend_available_at");
+    const storedTime = localStorage.getItem(
+      LocalStorageKeys.OTP_RESEND_AVAILABLE_AT,
+    );
 
     if (storedTime) {
       const availableAt = Number(storedTime);
@@ -81,8 +93,6 @@ const VerifyOtpPage = () => {
       if (remaining > 0) {
         setResendSeconds(remaining);
       }
-    } else {
-      handleResendOtp();
     }
   }, []);
 
@@ -177,7 +187,7 @@ const VerifyOtpPage = () => {
                   </p>
                 ) : (
                   <button
-                    onClick={handleResendOtp}
+                    onClick={getOtp}
                     className="font-bold text-xs px-3 py-2 rounded-4xl bg-n-200 text-n-900"
                   >
                     Resend Code

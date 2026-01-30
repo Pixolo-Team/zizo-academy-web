@@ -4,12 +4,7 @@ import React from "react";
 // TYPES //
 import { IconComponent } from "@/types/icon";
 
-const LineArrowRight1: IconComponent = ({
-  primaryColor,
-  secondaryColor,
-  tertiaryColor,
-  ...props
-}) => (
+const LineArrowRight1: IconComponent = ({ primaryColor, ...props }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width={28}

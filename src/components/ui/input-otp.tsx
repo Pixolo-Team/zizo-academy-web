@@ -1,9 +1,11 @@
 "use client";
 
+// REACT //
 import * as React from "react";
-import { OTPInput, OTPInputContext } from "input-otp";
 import { MinusIcon } from "lucide-react";
 
+// OTHERS //
+import { OTPInput, OTPInputContext } from "input-otp";
 import { cn } from "@/lib/utils";
 
 function InputOTP({
@@ -53,7 +55,7 @@ function InputOTPSlot({
       data-slot="input-otp-slot"
       data-active={isActive}
       className={cn(
-        "relative flex h-9 w-9 items-center justify-center border-y-2 border-r-2 text-sm  transition-all outline-none first:rounded-l-md first:border-l-2 last:rounded-r-md size-15 text-n-900 rounded-xl border-n-300",
+        "relative flex h-9 w-9 items-center justify-center border-y-2 border-r-2 text-sm transition-all outline-none first:rounded-l-md first:border-l-2 last:rounded-r-md text-n-900 border-n-300",
         className,
       )}
       {...props}
