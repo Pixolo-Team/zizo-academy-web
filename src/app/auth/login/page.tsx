@@ -15,6 +15,7 @@ import { validatePhoneNumber } from "@/app/utils/validation";
 
 /** Login Page */
 export default function LoginPage() {
+
   // States
   const [phoneNumber, setPhoneNumber] = useState<string>("");
   const [phoneNumberErrorMessage, setPhoneNumberErrorMessage] =
@@ -38,12 +39,15 @@ export default function LoginPage() {
 
   return (
     <div className="container min-h-screen py-16 px-5 flex flex-col gap-24 relative">
+
       {/* Main Content */}
       <div className="flex flex-col gap-10 items-center">
+
         {/* Logo */}
         <BrandLogo size={90} showText={true} />
-        {/* Login Form */}
+
         <div className="flex flex-col gap-10 items-center">
+
           {/* Text Container */}
           <div className="flex flex-col gap-1 items-center">
             <p className="font-bold text-2xl leading-light text-n-900">
@@ -53,10 +57,12 @@ export default function LoginPage() {
               using your phone number
             </p>
           </div>
+
           {/* Form Container */}
           <div className="flex flex-col gap-10 items-center">
             <div className="flex flex-col gap-1.5">
               <div className="flex gap-2 items-end">
+
                 {/* Country Code */}
                 <span className="text-3xl text-n-400 border-b-2 border-n-400 pb-2">
                   +91
@@ -75,24 +81,24 @@ export default function LoginPage() {
                     }
                   }}
                   className={`
-          border-0
-          border-b-2
-          border-b-n-600
-          rounded-none
-          focus-visible:ring-0 
-          focus-visible:ring-offset-0
-          focus:border-b-n-600
-          shadow-none
-          text-5xl 
-          text-n-800
-          font-normal
-          leading-none
-          placeholder:text-n-400
-           placeholder:text-xl
-          p-0
-          h-[60px]
-          ${phoneNumberErrorMessage ? "border-b-red-500" : ""}
-        `}
+                              border-0
+                              border-b-2
+                              border-b-n-600
+                              rounded-none
+                              focus-visible:ring-0 
+                              focus-visible:ring-offset-0
+                              focus:border-b-n-600
+                              shadow-none
+                              text-5xl 
+                              text-n-800
+                              font-normal
+                              leading-none
+                              placeholder:text-n-400
+                              placeholder:text-xl
+                              p-0
+                              h-[60px]
+                              ${phoneNumberErrorMessage ? "border-b-red-500" : ""}
+                            `}
                 />
               </div>
 
@@ -116,6 +122,7 @@ export default function LoginPage() {
           </div>
         </div>
       </div>
+
       {/* Bottom Content */}
       <div className="flex flex-col items-center gap-3">
         <p className="text-lg text-n-800">Having trouble logging in?</p>
@@ -126,10 +133,11 @@ export default function LoginPage() {
           Reach Us
         </Link>
       </div>
+
       {/* Bottom Image */}
       <div className="absolute bottom-0 w-full left-0 -z-1">
         <Image
-          src="/images/login-bottom-image.png"
+          src="/images/auth/login-bottom-image.png"
           alt="Illustration"
           width={1920}
           height={95}
