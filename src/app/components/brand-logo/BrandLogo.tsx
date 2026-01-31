@@ -1,8 +1,10 @@
 // REACT //
 import React from "react";
 
-// NEXTJS //
+// COMPONENTS //
 import Image from "next/image";
+
+// NEXTJS //
 
 // Interface for the BrandLogo component */
 interface BrandLogoProps {
@@ -24,7 +26,7 @@ type Variant =
 const BrandLogo: React.FC<BrandLogoProps> = ({
   variant = "color",
   size = 120,
-  showText = true,
+  showText = false,
 }) => {
   // The path to the SVG logo image
   const imagePath = `/brand-logo/${variant}.svg`;

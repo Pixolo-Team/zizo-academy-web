@@ -47,10 +47,12 @@ export default function LoginPage() {
     <div className="container min-h-screen py-16 px-5 flex flex-col gap-20 sm:gap-24 relative">
       {/* Main Content */}
       <div className="flex flex-col gap-10 items-center">
+
         {/* Logo */}
-        <BrandLogo size={90} />
-        {/* Login Form */}
+        <BrandLogo size={90} showText={true} />
+
         <div className="flex flex-col gap-10 items-center">
+
           {/* Text Container */}
           <div className="flex flex-col gap-1 items-center">
             <p className="font-bold text-2xl leading-light text-n-900">
@@ -60,16 +62,21 @@ export default function LoginPage() {
               using your phone number
             </p>
           </div>
+
           {/* Form Container */}
           <div className="flex flex-col gap-10 items-center">
             <div className="flex flex-col gap-1.5">
               <div className="flex gap-2 items-end">
+
                 {/* Country Code */}
                 <span className="text-3xl text-n-400 border-b-2 border-n-400 pb-2">
                   +91
                 </span>
                 <Input
-                  type="number"
+                  type="tel"
+                  inputMode="numeric"
+                  pattern="[0-9]*"
+                  maxLength={10}
                   placeholder=""
                   value={phoneNumber}
                   onChange={(e) => {
@@ -79,24 +86,24 @@ export default function LoginPage() {
                     }
                   }}
                   className={`
-          border-0
-          border-b-2
-          border-b-n-600
-          rounded-none
-          focus-visible:ring-0 
-          focus-visible:ring-offset-0
-          focus:border-b-n-600
-          shadow-none
-          text-5xl 
-          text-n-800
-          font-normal
-          leading-none
-          placeholder:text-n-400
-           placeholder:text-xl
-          p-0
-          h-[60px]
-          ${phoneNumberErrorMessage ? "border-b-red-500" : ""}
-        `}
+                              border-0
+                              border-b-2
+                              border-b-n-600
+                              rounded-none
+                              focus-visible:ring-0 
+                              focus-visible:ring-offset-0
+                              focus:border-b-n-600
+                              shadow-none
+                              text-5xl 
+                              text-n-800
+                              font-normal
+                              leading-none
+                              placeholder:text-n-400
+                              placeholder:text-xl
+                              p-0
+                              h-[60px]
+                              ${phoneNumberErrorMessage ? "border-b-red-500" : ""}
+                            `}
                 />
               </div>
 
@@ -109,12 +116,18 @@ export default function LoginPage() {
             </div>
 
             {/* Login Button */}
-            <Button onClick={handleSubmit} disabled={phoneNumber === ""}>
+            <Button
+              variant="secondary"
+              onClick={handleSubmit}
+              disabled={phoneNumber === ""}
+              className="h-[62px] w-full rounded-full py-4 px-6 gap-4 bg-n-900 text-xl font-bold text-n-50 hover:bg-n-850 hover:scale-102 ease-in-out transition-all"
+            >
               Get Started
             </Button>
           </div>
         </div>
       </div>
+
       {/* Bottom Content */}
       <div className="flex flex-col items-center gap-3">
         <p className="text-lg text-n-800">Having trouble logging in?</p>
@@ -125,10 +138,11 @@ export default function LoginPage() {
           Reach Us
         </Link>
       </div>
+
       {/* Bottom Image */}
       <div className="absolute bottom-0 w-full left-0 -z-1">
         <Image
-          src="/images/login-bottom-image.png"
+          src="/images/auth/login-bottom-image.png"
           alt="Illustration"
           width={1920}
           height={95}

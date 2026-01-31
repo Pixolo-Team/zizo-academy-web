@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 export default function Home() {
   // Define Navigation
   const router = useRouter();
+
   return (
     <div className=" flex flex-col items-center justify-center gap-4 mt-18">
       <h1 className="text-2xl font-bold">Welcome to the Academy App</h1>
