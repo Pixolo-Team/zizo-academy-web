@@ -27,6 +27,8 @@ const BrandLogo: React.FC<BrandLogoProps> = ({
   // The path to the SVG logo image
   const imagePath = `/brand-logo/${variant}.svg`;
 
+  // Testing Husky
+
   return <Image src={imagePath} alt="Brand Logo" width={size} height={size} />;
 };
 
