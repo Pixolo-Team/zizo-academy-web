@@ -8,12 +8,14 @@ import BrandLogo from "@/app/components/brand-logo/BrandLogo";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
+import Image from "next/image";
 
 // UTILS //
 import { validatePhoneNumber } from "@/app/utils/validation";
 
 /** Login Page */
 export default function LoginPage() {
+
   // States
   const [phoneNumber, setPhoneNumber] = useState<string>("");
   const [phoneNumberErrorMessage, setPhoneNumberErrorMessage] =
@@ -27,7 +29,7 @@ export default function LoginPage() {
     }
     // Check if phone number is invalid
     else if (!validatePhoneNumber(phoneNumber)) {
-      setPhoneNumberErrorMessage("Phone number is invalid");
+      setPhoneNumberErrorMessage("Enter a valid 10-digit mobile number");
     }
     // Clear error message if phone number is valid
     else {
@@ -36,69 +38,111 @@ export default function LoginPage() {
   };
 
   return (
-    // Main container
-    <div
-      className="h-screen  bg-n-50 flex flex-col gap-[58px] px-14 py-24 justify-start items-center
-    max-md:px-5 max-md:py-14 max-md:gap-11 m-auto"
-    >
-      {/* Logo container */}
-      <div className="flex flex-col justify-start items-center">
-        {/* Brand logo */}
-        <BrandLogo variant="color-icon" size={111} />
+    <div className="container min-h-screen py-16 px-5 flex flex-col gap-24 relative">
+
+      {/* Main Content */}
+      <div className="flex flex-col gap-10 items-center">
+
+        {/* Logo */}
+        <BrandLogo size={90} showText={true} />
+
+        <div className="flex flex-col gap-10 items-center">
+
+          {/* Text Container */}
+          <div className="flex flex-col gap-1 items-center">
+            <p className="font-bold text-2xl leading-light text-n-900">
+              Sign In
+            </p>
+            <p className="text-lg text-n-500 leading-tight">
+              using your phone number
+            </p>
+          </div>
+
+          {/* Form Container */}
+          <div className="flex flex-col gap-10 items-center">
+            <div className="flex flex-col gap-1.5">
+              <div className="flex gap-2 items-end">
+
+                {/* Country Code */}
+                <span className="text-3xl text-n-400 border-b-2 border-n-400 pb-2">
+                  +91
+                </span>
+                <Input
+                  type="tel"
+                  inputMode="numeric"
+                  pattern="[0-9]*"
+                  maxLength={10}
+                  placeholder=""
+                  value={phoneNumber}
+                  onChange={(e) => {
+                    setPhoneNumber(e.target.value);
+                    if (phoneNumberErrorMessage) {
+                      setPhoneNumberErrorMessage("");
+                    }
+                  }}
+                  className={`
+                              border-0
+                              border-b-2
+                              border-b-n-600
+                              rounded-none
+                              focus-visible:ring-0 
+                              focus-visible:ring-offset-0
+                              focus:border-b-n-600
+                              shadow-none
+                              text-5xl 
+                              text-n-800
+                              font-normal
+                              leading-none
+                              placeholder:text-n-400
+                              placeholder:text-xl
+                              p-0
+                              h-[60px]
+                              ${phoneNumberErrorMessage ? "border-b-red-500" : ""}
+                            `}
+                />
+              </div>
+
+              {/* Error Message */}
+              {phoneNumberErrorMessage && (
+                <p className="text-red-500 text-sm text-center">
+                  {phoneNumberErrorMessage}
+                </p>
+              )}
+            </div>
+
+            {/* Login Button */}
+            <Button
+              variant="secondary"
+              onClick={handleSubmit}
+              disabled={phoneNumber === ""}
+              className="h-[62px] w-full rounded-full py-4 px-6 gap-4 bg-n-900 text-xl font-bold text-n-50 hover:bg-n-850 hover:scale-102 ease-in-out transition-all"
+            >
+              Get Started
+            </Button>
+          </div>
+        </div>
       </div>
 
-      {/* Form container */}
-      <div className="flex flex-col gap-6 justify-center items-center w-full">
-        {/* Form header */}
-        <div className="flex flex-col justify-center items-center">
-          <p className="text-2xl font-bold text-n-900">Kick off your journey</p>
-          <p className="text-base font-normal text-n-700">
-            Enter your phone number to get in the game
-          </p>
-        </div>
+      {/* Bottom Content */}
+      <div className="flex flex-col items-center gap-3">
+        <p className="text-lg text-n-800">Having trouble logging in?</p>
+        <Link
+          href="#"
+          className="font-bold text-sm px-4 py-3 rounded-4xl bg-n-200 text-n-900"
+        >
+          Reach Us
+        </Link>
+      </div>
 
-        {/* Form body */}
-        <div className="w-[450px] max-sm:w-full flex flex-col justify-center items-center">
-          <div className="w-full mb-5 flex flex-col gap-1">
-            {/* Phone number input */}
-            <Input
-              id="phone"
-              type="tel"
-              placeholder="Enter Phone Number"
-              className={`py-6 border-n-300 text-lg placeholder:text-n-400 ${
-                phoneNumberErrorMessage ? "border-red-500" : ""
-              }`}
-              value={phoneNumber}
-              onChange={(e) => setPhoneNumber(e.target.value)}
-            />
-
-            {/* Phone Number Error Message  */}
-            {phoneNumberErrorMessage !== "" && (
-              <p className="text-sm text-red-500">{phoneNumberErrorMessage}</p>
-            )}
-          </div>
-          {/* Lets Play button and sign up link container */}
-          <div className="w-full flex flex-col gap-10 justify-center items-center">
-            {/* Lets Play button */}
-            <Button
-              className="w-full h-15 rounded-full text-lg font-medium bg-n-900 text-n-50 cursor-pointer hover:bg-n-700"
-              type="submit"
-              onClick={handleSubmit}
-            >
-              Lets Play
-            </Button>
-            {/* Sign up link */}
-            <div className="flex gap-1 justify-start items-center">
-              <p className="text-base font-normal text-n-900">Not a member?</p>
-              <Link
-                href="/auth/signup"
-                className="text-base font-bold text-n-900"
-              >
-                Sign Up
-              </Link>
-            </div>
-          </div>
-        </div>
+      {/* Bottom Image */}
+      <div className="absolute bottom-0 w-full left-0 -z-1">
+        <Image
+          src="/images/auth/login-bottom-image.png"
+          alt="Illustration"
+          width={1920}
+          height={95}
+          className="w-full object-cover"
+        />
       </div>
     </div>
   );

@@ -1,13 +1,16 @@
 // REACT //
 import React from "react";
 
-// NEXTJS //
+// COMPONENTS //
 import Image from "next/image";
+
+// NEXTJS //
 
 // Interface for the BrandLogo component */
 interface BrandLogoProps {
   variant?: Variant;
   size?: number;
+  showText?: boolean;
 }
 
 // Type for the variant prop
@@ -23,13 +26,21 @@ type Variant =
 const BrandLogo: React.FC<BrandLogoProps> = ({
   variant = "color",
   size = 120,
+  showText = false,
 }) => {
   // The path to the SVG logo image
   const imagePath = `/brand-logo/${variant}.svg`;
 
-  // Testing Husky
-
-  return <Image src={imagePath} alt="Brand Logo" width={size} height={size} />;
+  return (
+    <div className="flex flex-col items-center gap-2">
+      <Image src={imagePath} alt="Brand Logo" width={size} height={size} />
+      {showText && variant !== "text-logo" && variant !== "text-logo-white" && (
+        <span className="text-lg font-medium text-n-700 leading-none">
+          ACADEMY
+        </span>
+      )}
+    </div>
+  );
 };
 
 export default BrandLogo;
