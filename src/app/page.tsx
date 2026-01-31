@@ -12,6 +12,8 @@ export default function Home() {
 
   // Eslint check
 
+  // hello world
+
   return (
     <div className=" flex flex-col items-center justify-center gap-4 mt-18">
       <h1 className="text-2xl font-bold">Welcome to the Academy App</h1>
