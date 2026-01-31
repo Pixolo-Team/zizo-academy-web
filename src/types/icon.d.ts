@@ -1,5 +1,12 @@
-export interface IconComponent {
-  primary_color?: string;
-  secondary_color?: string;
-  tertiary_color?: string;
+import { FunctionComponent, SVGProps } from "react";
+
+export interface IconProps {
+  primaryColor?: string;
+  secondaryColor?: string;
+  tertiaryColor?: string;
+  className?: string;
 }
+
+export type IconComponent = FunctionComponent<
+  IconProps & SVGProps<SVGSVGElement>
+>;

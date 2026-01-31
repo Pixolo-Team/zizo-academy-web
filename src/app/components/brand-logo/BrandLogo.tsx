@@ -33,8 +33,14 @@ const BrandLogo: React.FC<BrandLogoProps> = ({
 
   return (
     <div className="flex flex-col items-center gap-2">
-      <Image src={imagePath} alt="Brand Logo" width={size} height={size} />
-      {showText && variant !== "text-logo" && variant !== "text-logo-white" && (
+      <Image
+        src={imagePath}
+        alt="Zizo Brand Logo"
+        width={size}
+        height={size}
+        loading="eager"
+      />
+      {showText && (
         <span className="text-lg font-medium text-n-700 leading-none">
           ACADEMY
         </span>

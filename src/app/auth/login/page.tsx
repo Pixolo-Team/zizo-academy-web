@@ -2,6 +2,7 @@
 
 // REACT //
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 // COMPONENTS //
 import BrandLogo from "@/app/components/brand-logo/BrandLogo";
@@ -15,6 +16,8 @@ import { validatePhoneNumber } from "@/app/utils/validation";
 
 /** Login Page */
 export default function LoginPage() {
+  // Define Navigation
+  const router = useRouter();
 
   // States
   const [phoneNumber, setPhoneNumber] = useState<string>("");
@@ -34,12 +37,14 @@ export default function LoginPage() {
     // Clear error message if phone number is valid
     else {
       setPhoneNumberErrorMessage("");
+      // Proceed with form submission logic here
+      // Example: Navigate to the next page or perform authentication
+      router.push("/auth/verify-otp");
     }
   };
 
   return (
-    <div className="container min-h-screen py-16 px-5 flex flex-col gap-24 relative">
-
+    <div className="container min-h-screen py-16 px-5 flex flex-col gap-20 sm:gap-24 relative">
       {/* Main Content */}
       <div className="flex flex-col gap-10 items-center">
 
@@ -142,6 +147,7 @@ export default function LoginPage() {
           width={1920}
           height={95}
           className="w-full object-cover"
+          loading="eager"
         />
       </div>
     </div>
