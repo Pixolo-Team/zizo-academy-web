@@ -53,19 +53,13 @@ const VerifyOtpPage = () => {
   }
 
   /** Starts resets otp and resends countdown */
-  const setResetOtp = () => {
+  const sendResetOtp = () => {
     const availableAt = Date.now() + RESEND_INTERVAL * 1000;
     localStorage.setItem(
       LocalStorageKeys.OTP_RESEND_AVAILABLE_AT,
       availableAt.toString(),
     );
     setResendSeconds(RESEND_INTERVAL);
-  };
-
-  /** Triggers resend OTP */
-  const getOtp = () => {
-    // 🔁 Call resend OTP API here
-    setResetOtp();
   };
 
   // Use Effects
@@ -99,15 +93,19 @@ const VerifyOtpPage = () => {
       LocalStorageKeys.OTP_RESEND_AVAILABLE_AT,
     );
 
+    let nextResendSeconds = 0;
+
     if (storedTime) {
       // Convert stored value to number
       const availableAt = Number(storedTime);
       // Calculating remaining seconds
-      const remaining = Math.ceil((availableAt - Date.now()) / 1000);
+      nextResendSeconds = Math.ceil((availableAt - Date.now()) / 1000);
 
-      if (remaining > 0) {
-        setResendSeconds(remaining);
+      if (nextResendSeconds > 0) {
+        setResendSeconds(nextResendSeconds);
       }
+    } else {
+      sendResetOtp();
     }
   }, []);
 
@@ -205,7 +203,7 @@ const VerifyOtpPage = () => {
                   </p>
                 ) : (
                   <button
-                    onClick={getOtp}
+                    onClick={sendResetOtp}
                     className="font-bold text-xs px-3 py-2 rounded-4xl bg-n-200 text-n-900"
                   >
                     Resend Code
