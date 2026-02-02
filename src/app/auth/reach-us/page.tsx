@@ -20,6 +20,7 @@ import { validatePhoneNumber } from "@/utils/validation";
 
 // OTHERS //
 import { toast } from "sonner";
+import { cn } from "@/lib/utils";
 
 const ReachUsPage = () => {
   // Define States
@@ -34,8 +35,6 @@ const ReachUsPage = () => {
     phoneNumber: "",
     message: "",
   });
-
-  const [isSubmitDisabled, setIsSubmitDisabled] = useState(false);
 
   // Define Helper Functions
   /** Handles input changes for the form fields */
@@ -54,8 +53,6 @@ const ReachUsPage = () => {
       ...prev,
       [name]: "",
     }));
-
-    setIsSubmitDisabled(false);
   };
 
   /** Handles form validation */
@@ -66,6 +63,9 @@ const ReachUsPage = () => {
     // Validate Name
     if (!reachUsInputs.name.trim()) {
       newErrors.name = "Name is required";
+      isValid = false;
+    } else if (/\d/.test(reachUsInputs.name)) {
+      newErrors.name = "Name cannot contain numbers";
       isValid = false;
     }
 
@@ -84,9 +84,6 @@ const ReachUsPage = () => {
       isValid = false;
     }
     setErrors(newErrors);
-
-    setIsSubmitDisabled(!isValid);
-
     return isValid;
   };
 
@@ -114,6 +111,11 @@ const ReachUsPage = () => {
     }
   };
 
+  const isFormFilled =
+    reachUsInputs.name.trim() !== "" &&
+    reachUsInputs.phoneNumber.trim() !== "" &&
+    reachUsInputs.message.trim() !== "";
+
   // Define Use Effects
 
   return (
@@ -130,12 +132,15 @@ const ReachUsPage = () => {
           </p>
         </div>
         {/* Need help form */}
-        <form className="flex flex-col gap-6">
+        <form
+          className="flex flex-col gap-6"
+          onSubmit={(event) => event.preventDefault()}
+        >
           <div className="flex flex-col gap-4">
             {/* Name Input */}
             <Input
               type="text"
-              placeholder="Enter your name"
+              placeholder="Your Name"
               required
               label="Your Name"
               error={errors.name}
@@ -145,8 +150,9 @@ const ReachUsPage = () => {
             />
             <Input
               type="text"
-              placeholder="Enter your Phone Number"
+              placeholder="Your Phone Number"
               required
+              prefix="+91"
               label="Phone Number"
               error={errors.phoneNumber}
               onChange={handleInputChange}
@@ -164,12 +170,7 @@ const ReachUsPage = () => {
             />
           </div>
           {/* Raise Request Button */}
-          <Button
-            variant="secondary"
-            onClick={handleSubmit}
-            disabled={isSubmitDisabled}
-            className="h-[52px] w-full rounded-full py-4 px-6 gap-4 bg-n-900 text-base font-medium leading-none text-n-50 hover:bg-n-850 hover:scale-102 ease-in-out transition-all"
-          >
+          <Button type="button" onClick={handleSubmit} disabled={!isFormFilled}>
             Raise Request
           </Button>
         </form>
