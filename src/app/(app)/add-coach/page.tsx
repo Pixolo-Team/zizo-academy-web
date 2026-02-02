@@ -18,6 +18,7 @@ import { validateEmail, validatePhoneNumber } from "@/utils/validation";
 
 // OTHERS //
 import { toast } from "sonner";
+import ImageUpload from "@/components/ui/ImageUpload";
 
 const AddCoachPage = () => {
   // Define States
@@ -114,6 +115,12 @@ const AddCoachPage = () => {
           onChange={handleInputChange}
         />
       </div>
+      <ImageUpload
+        onImageCropped={(base64Image) => {
+          setAddCoachInputs((prev) => ({ ...prev, imageUrl: base64Image }));
+        }}
+        imageUrl={addCoachInputs.imageUrl}
+      />
     </div>
   );
 };
