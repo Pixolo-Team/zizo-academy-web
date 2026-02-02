@@ -56,8 +56,10 @@ const AddCoachPage = () => {
     if (!addCoachInputs.name.trim()) {
       newErrors.name = "Name is required";
       isValid = false;
+    } else if (/\d/.test(addCoachInputs.name)) {
+      newErrors.name = "Name cannot contain numbers";
+      isValid = false;
     }
-
     // Validate Email
     if (!addCoachInputs.email.trim()) {
       newErrors.email = "Email is required";
@@ -153,13 +155,14 @@ const AddCoachPage = () => {
           {/* Phone number */}
           <Input
             type="tel"
-            placeholder="+91"
+            placeholder=""
             required
             label="Phone Number"
             error={errors.phone}
             name="phone"
             value={addCoachInputs.phone}
             onChange={handleInputChange}
+            prefix="+91"
           />
         </div>
 
