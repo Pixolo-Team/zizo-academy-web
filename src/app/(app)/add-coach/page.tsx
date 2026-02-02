@@ -104,6 +104,10 @@ const AddCoachPage = () => {
         });
     }
   };
+  const isFormFilled =
+    addCoachInputs.name.trim() !== "" &&
+    addCoachInputs.phone.trim() !== "" &&
+    addCoachInputs.email.trim() !== "";
 
   return (
     <div className="flex flex-col gap-6 px-5 pb-6 min-h-screen relative">
@@ -131,7 +135,7 @@ const AddCoachPage = () => {
           {/* Name */}
           <Input
             type="text"
-            placeholder="Enter your name"
+            placeholder="Your name"
             required
             label="Full Name"
             error={errors.name}
@@ -143,7 +147,7 @@ const AddCoachPage = () => {
           {/* Email */}
           <Input
             type="text"
-            placeholder="Enter your email"
+            placeholder="Your email"
             required
             label="Email"
             error={errors.email}
@@ -163,11 +167,16 @@ const AddCoachPage = () => {
             value={addCoachInputs.phone}
             onChange={handleInputChange}
             prefix="+91"
+            inputMode="numeric"
+            pattern="[0-9]*"
+            maxLength={10}
           />
         </div>
 
         {/* Add Coach Button  */}
-        <Button onClick={handleSubmit}>Add Coach</Button>
+        <Button onClick={handleSubmit} disabled={!isFormFilled}>
+          Add Coach
+        </Button>
       </div>
     </div>
   );
