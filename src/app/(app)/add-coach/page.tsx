@@ -6,6 +6,8 @@ import { useState } from "react";
 // COMPONENTS //
 import PageHeader from "@/app/components/layout/Header";
 import { Input } from "@/components/ui/input";
+import ImageUpload from "@/components/ui/ImageUpload";
+import { Button } from "@/components/ui/button";
 
 // API SERVICES //
 import {
@@ -18,8 +20,6 @@ import { validateEmail, validatePhoneNumber } from "@/utils/validation";
 
 // OTHERS //
 import { toast } from "sonner";
-import ImageUpload from "@/components/ui/ImageUpload";
-import { Button } from "@/components/ui/button";
 
 const AddCoachPage = () => {
   // Define States
@@ -75,6 +75,7 @@ const AddCoachPage = () => {
       newErrors.phone = "Phone Number is invalid";
       isValid = false;
     }
+    // Update error state to show validation messages
     setErrors(newErrors);
     return isValid;
   };
@@ -122,7 +123,10 @@ const AddCoachPage = () => {
               imageUrl={addCoachInputs.imageUrl}
             />
           </div>
+
           {/* Input Fields */}
+
+          {/* Name */}
           <Input
             type="text"
             placeholder="Enter your name"
@@ -133,6 +137,8 @@ const AddCoachPage = () => {
             value={addCoachInputs.name}
             onChange={handleInputChange}
           />
+
+          {/* Email */}
           <Input
             type="text"
             placeholder="Enter your email"
@@ -143,6 +149,8 @@ const AddCoachPage = () => {
             value={addCoachInputs.email}
             onChange={handleInputChange}
           />
+
+          {/* Phone number */}
           <Input
             type="tel"
             placeholder="+91"
@@ -154,6 +162,8 @@ const AddCoachPage = () => {
             onChange={handleInputChange}
           />
         </div>
+
+        {/* Add Coach Button  */}
         <Button onClick={handleSubmit}>Add Coach</Button>
       </div>
     </div>
