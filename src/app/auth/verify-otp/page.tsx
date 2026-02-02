@@ -18,6 +18,12 @@ import Link from "next/link";
 import Image from "next/image";
 import PageHeader from "@/app/components/layout/Header";
 
+// API SERVICES //
+import { verifyOtpRequest } from "@/services/api/authentication.api.service";
+
+// CONTEXTS //
+import { useAuth } from "@/contexts/AuthContext";
+
 // UTILS //
 import { validateOtp } from "@/app/utils/validation";
 
@@ -27,6 +33,9 @@ const RESEND_INTERVAL = 30; // seconds
 
 /** Verify OTP Page */
 const VerifyOtpPage = () => {
+  // Define Contexts
+  const { phoneNumber } = useAuth();
+
   // State to store entered OTP value
   const [otpValue, setOtpValue] = useState<string>("");
 
@@ -49,6 +58,17 @@ const VerifyOtpPage = () => {
     // Otherwise, clear the error message
     else {
       setOtpErrorMessage("");
+      // Proceed with OTP verification logic here
+      // Make API call to verify OTP
+      // verifyOtpRequest(phoneNumber, otpValue).then((res) => {
+      //   if (res.status) {
+      //     // OTP verified successfully
+      //     // Proceed with further actions (e.g., navigate to dashboard)
+      //   } else {
+      //     // OTP verification failed, show error message
+      //     setOtpErrorMessage(res.message || "Failed to verify OTP");
+      //   }
+      // });
     }
   }
 
@@ -128,7 +148,7 @@ const VerifyOtpPage = () => {
                 Verify
               </p>
               <p className="text-lg text-n-500 leading-tight">
-                Code sent to your mobile number
+                Code sent to +91 {phoneNumber}
               </p>
             </div>
 

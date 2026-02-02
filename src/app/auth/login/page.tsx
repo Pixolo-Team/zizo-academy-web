@@ -13,14 +13,18 @@ import Image from "next/image";
 
 // UTILS //
 import { validatePhoneNumber } from "@/app/utils/validation";
+import { sendOtpRequest } from "@/services/api/authentication.api.service";
+import { toast } from "sonner";
+import { useAuth } from "@/contexts/AuthContext";
 
 /** Login Page */
 export default function LoginPage() {
   // Define Navigation
   const router = useRouter();
 
+  const { phoneNumber, setPhoneNumber } = useAuth();
+
   // States
-  const [phoneNumber, setPhoneNumber] = useState<string>("");
   const [phoneNumberErrorMessage, setPhoneNumberErrorMessage] =
     useState<string>("");
 
@@ -38,7 +42,13 @@ export default function LoginPage() {
     else {
       setPhoneNumberErrorMessage("");
       // Proceed with form submission logic here
-      // Example: Navigate to the next page or perform authentication
+      // Make API call to send OTP
+      // sendOtpRequest(phoneNumber).then((res) => {
+      //   if (res.status) {
+      //   } else {
+      //     toast.error(res.message || "Failed to send OTP");
+      //   }
+      // });
       router.push("/auth/verify-otp");
     }
   };

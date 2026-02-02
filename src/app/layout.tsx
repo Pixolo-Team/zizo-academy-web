@@ -13,6 +13,7 @@ import { Toaster } from "@/components/ui/sonner";
 
 // DATA //
 import type { Metadata } from "next";
+import { AuthProvider } from "@/contexts/AuthContext";
 
 const googleSans = localFont({
   src: [
@@ -115,7 +116,9 @@ export default function RootLayout({
         </Script>
       </head>
       <body className="antialiased font-sans min-h-screen">
-        <AttendanceProvider>{children}</AttendanceProvider>
+        <AuthProvider>
+          <AttendanceProvider>{children}</AttendanceProvider>
+        </AuthProvider>
         <Toaster duration={2000} />
       </body>
     </html>
