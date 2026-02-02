@@ -9,7 +9,7 @@ import { CONSTANTS } from "@/constants";
 
 export interface ReachOutInputData {
   name: string;
-  email: string;
+  phoneNumber: string;
   message: string;
 }
 
