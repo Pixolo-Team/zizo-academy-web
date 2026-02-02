@@ -218,7 +218,7 @@ const VerifyOtpPage = () => {
         <div className="flex flex-col items-center gap-3">
           <p className="text-lg text-n-800">Having trouble logging in?</p>
           <Link
-            href="#"
+            href="/auth/reach-us"
             className="font-bold text-sm px-4 py-3 rounded-4xl bg-n-200 text-n-900"
           >
             Reach Us
@@ -228,7 +228,7 @@ const VerifyOtpPage = () => {
         {/* Bottom Image */}
         <div className="absolute bottom-0 w-full left-0 -z-1">
           <Image
-            src="/images/login-bottom-image.png"
+            src="/images/auth/login-bottom-image.png"
             alt="Illustration"
             width={1920}
             height={95}

@@ -47,12 +47,10 @@ export default function LoginPage() {
     <div className="container min-h-screen py-16 px-5 flex flex-col gap-20 sm:gap-24 relative">
       {/* Main Content */}
       <div className="flex flex-col gap-10 items-center">
-
         {/* Logo */}
         <BrandLogo size={90} showText={true} />
 
         <div className="flex flex-col gap-10 items-center">
-
           {/* Text Container */}
           <div className="flex flex-col gap-1 items-center">
             <p className="font-bold text-2xl leading-light text-n-900">
@@ -67,7 +65,6 @@ export default function LoginPage() {
           <div className="flex flex-col gap-10 items-center">
             <div className="flex flex-col gap-1.5">
               <div className="flex gap-2 items-end">
-
                 {/* Country Code */}
                 <span className="text-3xl text-n-400 border-b-2 border-n-400 pb-2">
                   +91
@@ -132,7 +129,7 @@ export default function LoginPage() {
       <div className="flex flex-col items-center gap-3">
         <p className="text-lg text-n-800">Having trouble logging in?</p>
         <Link
-          href="#"
+          href="/auth/reach-us"
           className="font-bold text-sm px-4 py-3 rounded-4xl bg-n-200 text-n-900"
         >
           Reach Us
