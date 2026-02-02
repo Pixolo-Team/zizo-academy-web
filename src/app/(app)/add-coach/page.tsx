@@ -19,6 +19,7 @@ import { validateEmail, validatePhoneNumber } from "@/utils/validation";
 // OTHERS //
 import { toast } from "sonner";
 import ImageUpload from "@/components/ui/ImageUpload";
+import { Button } from "@/components/ui/button";
 
 const AddCoachPage = () => {
   // Define States
@@ -70,7 +71,11 @@ const AddCoachPage = () => {
     if (!addCoachInputs.phone.trim()) {
       newErrors.phone = "Phone is required";
       isValid = false;
-    } else if (!validatePhoneNumber) setErrors(newErrors);
+    } else if (!validatePhoneNumber(addCoachInputs.phone)) {
+      newErrors.phone = "Phone Number is invalid";
+      isValid = false;
+    }
+    setErrors(newErrors);
     return isValid;
   };
 
@@ -102,25 +107,55 @@ const AddCoachPage = () => {
       {/* Page Header */}
       <PageHeader text="Add Coach" />
       {/* Main Content */}
-      <div className="container flex flex-col gap-20 sm:gap-24">
-        {/* Example Input */}
-        <Input
-          type="text"
-          placeholder="Enter Full Name"
-          required
-          label="Full Name"
-          error={errors.name}
-          name="name"
-          value={addCoachInputs.name}
-          onChange={handleInputChange}
-        />
+      <div className="container w-full flex flex-col gap-6 sm:gap-8">
+        {/* Input */}
+        <div className="flex flex-col gap-4 sm:gap-6">
+          {/* Coach Image */}
+          <div className="self-center">
+            <ImageUpload
+              onImageCropped={(base64Image) => {
+                setAddCoachInputs((prev) => ({
+                  ...prev,
+                  imageUrl: base64Image,
+                }));
+              }}
+              imageUrl={addCoachInputs.imageUrl}
+            />
+          </div>
+          {/* Input Fields */}
+          <Input
+            type="text"
+            placeholder="Enter your name"
+            required
+            label="Full Name"
+            error={errors.name}
+            name="name"
+            value={addCoachInputs.name}
+            onChange={handleInputChange}
+          />
+          <Input
+            type="text"
+            placeholder="Enter your email"
+            required
+            label="Email"
+            error={errors.email}
+            name="email"
+            value={addCoachInputs.email}
+            onChange={handleInputChange}
+          />
+          <Input
+            type="tel"
+            placeholder="+91"
+            required
+            label="Phone Number"
+            error={errors.phone}
+            name="phone"
+            value={addCoachInputs.phone}
+            onChange={handleInputChange}
+          />
+        </div>
+        <Button onClick={handleSubmit}>Add Coach</Button>
       </div>
-      <ImageUpload
-        onImageCropped={(base64Image) => {
-          setAddCoachInputs((prev) => ({ ...prev, imageUrl: base64Image }));
-        }}
-        imageUrl={addCoachInputs.imageUrl}
-      />
     </div>
   );
 };
