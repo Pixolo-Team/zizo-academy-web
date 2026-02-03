@@ -42,7 +42,7 @@ const VerifyOtpPage = () => {
   const router = useRouter();
 
   // Define Contexts
-  const { phoneNumber, setUser } = useAuth();
+  const { phoneNumber, setUser, setPhoneNumber } = useAuth();
 
   // State to store entered OTP value
   const [otpValue, setOtpValue] = useState<string>("");
@@ -87,6 +87,8 @@ const VerifyOtpPage = () => {
           // Proceed with further actions (e.g., navigate to dashboard)
           toast.success("OTP verified successfully");
           setUser && setUser(res.data as UserData);
+          // Clear phone number from context
+          setPhoneNumber("");
           router.push("/");
         } else {
           // OTP verification failed, show error message
