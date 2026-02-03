@@ -1,20 +1,45 @@
 "use client";
 
+// REACT //
+import { useEffect, useMemo, useState } from "react";
+
 // COMPONENTS //
 import CircleClock from "@/components/icons/neevo-icons/CircleClock";
 import LocationPin from "@/components/icons/neevo-icons/LocationPin";
 import TimerStopwatchQuickFastExpress from "@/components/icons/neevo-icons/TimerStopwatchQuickFastExpress";
-import VerticalMenu from "@/components/icons/neevo-icons/VerticalMenu";
+
+// OTHERS //
 import { Button } from "../button";
 
 // Interface Props
 interface SessionCardProps {
   sessionName: string;
-  fromTime: string;
-  toTime: string;
+  fromTime: string; // timestamp
+  toTime: string; // timestamp
   location: string;
-  reportingTime: string;
-  checkedInTime?: string;
+  reportingTime: string; // timestamp
+  checkedInTime?: string; // timestamp
+}
+
+/**
+ * Format timestamp → readable time
+ */
+export function formatTime(ts: string) {
+  // Create date object from timestamp
+  const date = new Date(ts);
+
+  // Extract hours and minutes
+  let hours = date.getHours();
+  const minutes = date.getMinutes();
+
+  // Determine AM/PM
+  const ampm = hours >= 12 ? "PM" : "AM";
+
+  // Convert to 12-hour format
+  hours = hours % 12 || 12;
+
+  // Format time string in HH:MM AM/PM
+  return `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")} ${ampm}`;
 }
 
 /** SessionCard Component */
@@ -26,41 +51,69 @@ export default function SessionCard({
   reportingTime,
   checkedInTime,
 }: SessionCardProps) {
-  // Define Navigation
+  const [now, setNow] = useState<number | null>(null);
 
-  // Define Context
+  // Determine session status and lateness
+  const { status, isLate } = useMemo(() => {
+    // Get current time
+    if (!now) return { status: "upcoming", isLate: false };
 
-  // Define States
+    // Convert session times to timestampss
+    const start = new Date(fromTime).getTime();
+    const end = new Date(toTime).getTime();
 
-  // Define Refs
+    // Determine session status
+    let sessionStatus: "upcoming" | "ongoing" | "completed";
 
-  // Helper Functions
+    // Session is upcoming if current time is before start, ongoing if between start and end, completed if after end
+    if (now < start) sessionStatus = "upcoming";
+    else if (now <= end) sessionStatus = "ongoing";
+    else sessionStatus = "completed";
 
-  // Use Effects
+    // Determine lateness (only relevant if checked in)
+    let late = false;
+
+    // If there's a checked-in time, compare it to reporting time
+    if (checkedInTime) {
+      late =
+        new Date(checkedInTime).getTime() > new Date(reportingTime).getTime();
+    }
+
+    // Return status and lateness
+    return { status: sessionStatus, isLate: late };
+  }, [fromTime, toTime, reportingTime, checkedInTime]);
+
+  useEffect(() => {
+    setNow(Date.now());
+  }, []);
+
   return (
-    <div className="p-5 border border-n-200 rounded-2xl bg-n-50 flex flex-col gap-4">
+    <div
+      className={`p-5 rounded-2xl bg-n-50 flex flex-col gap-4 border
+        ${status === "ongoing" ? "border-2 border-n-600" : "border border-n-200"}
+      `}
+    >
       {/* Session Details */}
       <div className="flex flex-col gap-3">
-        {/* Session Name  */}
+        {/* Session Name */}
         <div className="flex justify-between items-center">
           <p className="font-semibold text-lg text-n-900">{sessionName}</p>
-          <VerticalMenu
-            className="size-4.5 text-n-400 cursor-pointer"
-            primaryColor="var(--color-n-800)"
-          />
         </div>
 
-        {/* Time and Location  */}
+        {/* Session Time & Location */}
         <div className="flex flex-col gap-1">
+          {/* Session Time */}
           <div className="flex items-center gap-2">
             <CircleClock
               className="size-3 text-n-400"
               primaryColor="var(--color-n-700)"
             />
             <p className="text-n-700 text-sm">
-              Session Time: {fromTime} - {toTime}
+              Session Time: {formatTime(fromTime)} - {formatTime(toTime)}
             </p>
           </div>
+
+          {/* Session Location  */}
           <div className="flex items-center gap-2">
             <LocationPin
               className="size-3 text-n-400"
@@ -71,27 +124,44 @@ export default function SessionCard({
         </div>
       </div>
 
-      {/* Reporting and Checked-in Time */}
+      {/* Reporting Section */}
       <div
-        className={`pt-2 flex-col flex gap-1.5 bg-green-50 border border-green-200 rounded-3xl`}
+        className={`pt-2 flex-col flex gap-1.5 rounded-3xl ${
+          checkedInTime
+            ? isLate
+              ? "bg-amber-50 border-amber-200"
+              : "bg-green-50 border-green-200"
+            : "bg-n-100 border-n-200"
+        }`}
       >
-        {/* Reporting Time */}
+        {/* Reporting Time & Check-in Button */}
         <div className="flex gap-2 items-center justify-center">
           <TimerStopwatchQuickFastExpress
             primaryColor="var(--color-n-800)"
             className="size-3.5"
           />
           <p className="text-n-800 text-xs font-bold text-center">
-            Reporting Time: {reportingTime}
+            Reporting Time: {formatTime(reportingTime)}
           </p>
         </div>
 
-        <Button className="w-full px-6 py-3 rounded-3xl text-sm font-bold bg-green-200 text-green-600 h-[42px]">
-          {status === "ongoing"
+        {/* Check in Button */}
+        <Button
+          className={`w-full px-6 py-3 rounded-3xl text-sm font-bold h-[42px]
+            ${
+              checkedInTime
+                ? isLate
+                  ? "bg-amber-200 text-amber-600"
+                  : "bg-green-200 text-green-600"
+                : "bg-n-900 text-n-50"
+            }
+          `}
+        >
+          {!checkedInTime
             ? "Check-in Now"
-            : status === "completed"
-              ? `Checked-in at ${checkedInTime}`
-              : "Upcoming Session"}
+            : isLate
+              ? `Checked-in (Late) - ${formatTime(checkedInTime)}`
+              : `Checked-in - ${formatTime(checkedInTime)}`}
         </Button>
       </div>
     </div>
