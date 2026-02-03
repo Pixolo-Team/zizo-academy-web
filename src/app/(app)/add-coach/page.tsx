@@ -27,15 +27,24 @@ const AddCoachPage = () => {
     name: "",
     email: "",
     phone: "",
-    imageUrl: "",
+    imageUrl: "/images/defaults/default-coach.png",
   });
-  const [errors, setErrors] = useState({
-    name: "",
-    email: "",
-    phone: "",
-  });
+  const [errors, setErrors] = useState<Record<keyof AddCoachInputData, string>>(
+    {
+      name: "",
+      email: "",
+      phone: "",
+      imageUrl: "",
+    },
+  );
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
   // Define Helper Functions
+  // Check if all form fields are filled
+  const isFormValid =
+    Object.values(errors).every((error) => !error) &&
+    Object.values(addCoachInputs).every((value) => value.trim() !== "");
+
   /** Handles input changes for the form fields */
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -84,6 +93,7 @@ const AddCoachPage = () => {
 
   /** Handles form submission */
   const handleSubmit = () => {
+    setIsSubmitting(true);
     // Validate the form inputs
     if (validateForm()) {
       // Make API call to submit the form
@@ -101,13 +111,12 @@ const AddCoachPage = () => {
         .catch((error) => {
           console.error("Error adding coach:", error);
           toast.error("An error occurred. Please try again later.");
+        })
+        .finally(() => {
+          setIsSubmitting(false);
         });
     }
   };
-  const isFormFilled =
-    addCoachInputs.name.trim() !== "" &&
-    addCoachInputs.phone.trim() !== "" &&
-    addCoachInputs.email.trim() !== "";
 
   return (
     <div className="flex flex-col gap-6 px-5 pb-6 min-h-screen relative">
@@ -131,7 +140,6 @@ const AddCoachPage = () => {
           </div>
 
           {/* Input Fields */}
-
           {/* Name */}
           <Input
             type="text"
@@ -174,8 +182,8 @@ const AddCoachPage = () => {
         </div>
 
         {/* Add Coach Button  */}
-        <Button onClick={handleSubmit} disabled={!isFormFilled}>
-          Add Coach
+        <Button onClick={handleSubmit} disabled={!isFormValid || isSubmitting}>
+          {isSubmitting ? "Adding Coach..." : "Add Coach"}
         </Button>
       </div>
     </div>
