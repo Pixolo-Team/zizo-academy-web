@@ -27,7 +27,7 @@ const AddCoachPage = () => {
     name: "",
     email: "",
     phone: "",
-    imageUrl: "/images/defaults/default-coach.png",
+    imageUrl: "",
   });
   const [errors, setErrors] = useState<Record<keyof AddCoachInputData, string>>(
     {
@@ -41,9 +41,7 @@ const AddCoachPage = () => {
 
   // Define Helper Functions
   // Check if all form fields are filled
-  const isFormValid =
-    Object.values(errors).every((error) => !error) &&
-    Object.values(addCoachInputs).every((value) => value.trim() !== "");
+  const isFormValid = Object.values(errors).every((error) => !error);
 
   /** Handles input changes for the form fields */
   const handleInputChange = (
