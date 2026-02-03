@@ -5,7 +5,7 @@ export const validateEmail = (email: string) => {
 };
 
 /** Validates phone number format */
-export const validatePhoneNumber = (phone: string) => {
-  const phoneRegex = /^\+?[\d\s\-\(\)]{10,}$/;
-  return phoneRegex.test(phone);
+export const validatePhoneNumber = (phoneNumber: string): boolean => {
+  const regex = /^[0-9]{10}$/;
+  return regex.test(phoneNumber);
 };
