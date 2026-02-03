@@ -1,6 +1,9 @@
 "use client";
-import Link from "next/link";
+// REACT //
 import React from "react";
+
+// COMPONENTS //
+import Link from "next/link";
 
 interface ProfileOptionsProps {
   // We use React.ElementType so you can pass the component name itself
