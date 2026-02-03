@@ -2,6 +2,7 @@
 
 // REACT //
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
 // ENUMS //
 import { LocalStorageKeys } from "@/enums/local-storage.enum";
@@ -29,8 +30,9 @@ import { useAuth, UserData } from "@/contexts/AuthContext";
 
 // UTILS //
 import { validateOtp } from "@/app/utils/validation";
+
+// OTHERS //
 import { toast } from "sonner";
-import { useRouter } from "next/navigation";
 
 // NEXT //
 

@@ -11,20 +11,27 @@ import { Input } from "@/components/ui/input";
 import Link from "next/link";
 import Image from "next/image";
 
+// API SERVICES //
+import { sendOtpRequest } from "@/services/api/authentication.api.service";
+
+// CONTEXTS //
+import { useAuth } from "@/contexts/AuthContext";
+
 // UTILS //
 import { validatePhoneNumber } from "@/app/utils/validation";
-import { sendOtpRequest } from "@/services/api/authentication.api.service";
+
+// OTHERS //
 import { toast } from "sonner";
-import { useAuth } from "@/contexts/AuthContext";
 
 /** Login Page */
 export default function LoginPage() {
   // Define Navigation
   const router = useRouter();
 
+  // Define Contexts
   const { phoneNumber, setPhoneNumber } = useAuth();
 
-  // States
+  // Define States
   const [phoneNumberErrorMessage, setPhoneNumberErrorMessage] =
     useState<string>("");
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
