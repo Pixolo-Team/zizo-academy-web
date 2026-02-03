@@ -27,9 +27,13 @@ export default function LoginPage() {
   // States
   const [phoneNumberErrorMessage, setPhoneNumberErrorMessage] =
     useState<string>("");
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
   /** Function to handle form submission */
   const handleSubmit = () => {
+    // Start submission process
+    setIsSubmitting(true);
+
     // Check if phone number is empty
     if (phoneNumber === "") {
       setPhoneNumberErrorMessage("Phone number is required");
@@ -43,14 +47,25 @@ export default function LoginPage() {
       setPhoneNumberErrorMessage("");
       // Proceed with form submission logic here
       // Make API call to send OTP
-      // sendOtpRequest(phoneNumber).then((res) => {
-      //   if (res.status) {
-      //   } else {
-      //     toast.error(res.message || "Failed to send OTP");
-      //   }
-      // });
-      router.push("/auth/verify-otp");
+      sendOtpRequest(phoneNumber)
+        .then((res) => {
+          if (res.status) {
+            toast.success("OTP sent successfully");
+            router.push("/auth/verify-otp");
+          } else {
+            toast.error(res.message || "Failed to send OTP");
+          }
+        })
+        .catch((error) => {
+          toast.error("An unexpected error occurred");
+        })
+        .finally(() => {
+          setIsSubmitting(false);
+        });
+      return; // Exit the function to avoid setting isSubmitting to false again
     }
+    // End submission process
+    setIsSubmitting(false);
   };
 
   return (
@@ -126,10 +141,10 @@ export default function LoginPage() {
             <Button
               variant="secondary"
               onClick={handleSubmit}
-              disabled={phoneNumber === ""}
+              disabled={phoneNumber === "" || isSubmitting}
               className="h-[62px] w-full rounded-full py-4 px-6 gap-4 bg-n-900 text-xl font-bold text-n-50 hover:bg-n-850 hover:scale-102 ease-in-out transition-all"
             >
-              Get Started
+              {isSubmitting ? "Sending OTP..." : "Get Started"}
             </Button>
           </div>
         </div>

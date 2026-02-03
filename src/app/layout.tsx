@@ -115,11 +115,22 @@ export default function RootLayout({
           `}
         </Script>
       </head>
-      <body className="antialiased font-sans min-h-screen">
+      <body className="antialiased font-sans min-h-screen ">
         <AuthProvider>
           <AttendanceProvider>{children}</AttendanceProvider>
         </AuthProvider>
-        <Toaster duration={2000} />
+        <Toaster
+          duration={2000}
+          toastOptions={{
+            classNames: {
+              toast:
+                "rounded-2xl text-base! font-bold! text-center! justify-center! px-5! py-4!",
+              success: "bg-green-100! border-green-500! text-green-600!",
+              info: "bg-n-100! border-n-800! text-n-800!",
+              error: "bg-red-100! border-red-500! text-red-600!",
+            },
+          }}
+        />
       </body>
     </html>
   );

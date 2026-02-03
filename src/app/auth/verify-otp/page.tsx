@@ -19,13 +19,18 @@ import Image from "next/image";
 import PageHeader from "@/app/components/layout/Header";
 
 // API SERVICES //
-import { verifyOtpRequest } from "@/services/api/authentication.api.service";
+import {
+  verifyOtpRequest,
+  sendOtpRequest,
+} from "@/services/api/authentication.api.service";
 
 // CONTEXTS //
-import { useAuth } from "@/contexts/AuthContext";
+import { useAuth, UserData } from "@/contexts/AuthContext";
 
 // UTILS //
 import { validateOtp } from "@/app/utils/validation";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 // NEXT //
 
@@ -33,11 +38,15 @@ const RESEND_INTERVAL = 30; // seconds
 
 /** Verify OTP Page */
 const VerifyOtpPage = () => {
+  // Define Navigation
+  const router = useRouter();
+
   // Define Contexts
-  const { phoneNumber } = useAuth();
+  const { phoneNumber, setUser } = useAuth();
 
   // State to store entered OTP value
   const [otpValue, setOtpValue] = useState<string>("");
+  const [isVerifying, setIsVerifying] = useState<boolean>(false);
 
   // State to store OTP validation error
   const [otpErrorMessage, setOtpErrorMessage] = useState<string>("");
@@ -47,6 +56,9 @@ const VerifyOtpPage = () => {
 
   /** Function to handle OTP submission */
   function handleSubmit() {
+    // Start verifying process
+    setIsVerifying(true);
+
     // Check OTP length and set error message if invalid
     if (!otpValue.length) {
       setOtpErrorMessage("Please enter OTP");
@@ -60,26 +72,50 @@ const VerifyOtpPage = () => {
       setOtpErrorMessage("");
       // Proceed with OTP verification logic here
       // Make API call to verify OTP
-      // verifyOtpRequest(phoneNumber, otpValue).then((res) => {
-      //   if (res.status) {
-      //     // OTP verified successfully
-      //     // Proceed with further actions (e.g., navigate to dashboard)
-      //   } else {
-      //     // OTP verification failed, show error message
-      //     setOtpErrorMessage(res.message || "Failed to verify OTP");
-      //   }
-      // });
+      verifyOtp();
     }
+    // End verifying process
+    setIsVerifying(false);
   }
+
+  /** Verify OTP Request */
+  const verifyOtp = async () => {
+    verifyOtpRequest(phoneNumber, otpValue)
+      .then((res) => {
+        if (res.status) {
+          // OTP verified successfully
+          // Proceed with further actions (e.g., navigate to dashboard)
+          toast.success("OTP verified successfully");
+          setUser && setUser(res.data as UserData);
+          router.push("/");
+        } else {
+          // OTP verification failed, show error message
+          setOtpErrorMessage(res.message || "Failed to verify OTP");
+        }
+      })
+      .finally(() => {
+        // End verifying process
+        setIsVerifying(false);
+        return;
+      });
+  };
 
   /** Starts resets otp and resends countdown */
   const sendResetOtp = () => {
-    const availableAt = Date.now() + RESEND_INTERVAL * 1000;
-    localStorage.setItem(
-      LocalStorageKeys.OTP_RESEND_AVAILABLE_AT,
-      availableAt.toString(),
-    );
-    setResendSeconds(RESEND_INTERVAL);
+    sendOtpRequest(phoneNumber).then((res) => {
+      if (res.status) {
+        toast.success("OTP resent successfully");
+        // Set resend availability time in local storage
+        const availableAt = Date.now() + RESEND_INTERVAL * 1000;
+        localStorage.setItem(
+          LocalStorageKeys.OTP_RESEND_AVAILABLE_AT,
+          availableAt.toString(),
+        );
+        setResendSeconds(RESEND_INTERVAL);
+      } else {
+        toast.error(res.message || "Failed to resend OTP");
+      }
+    });
   };
 
   // Use Effects
@@ -108,6 +144,10 @@ const VerifyOtpPage = () => {
 
   // Restores resend timer on page refresh from local storage
   useEffect(() => {
+    if (!phoneNumber) {
+      router.push("/auth/login");
+      return;
+    }
     // Getting stored resend availability time from localStorage
     const storedTime = localStorage.getItem(
       LocalStorageKeys.OTP_RESEND_AVAILABLE_AT,
@@ -157,7 +197,7 @@ const VerifyOtpPage = () => {
               <div className="flex flex-col gap-1.5">
                 {/* OTP input */}
                 <InputOTP
-                  maxLength={5}
+                  maxLength={6}
                   onChange={(e) => {
                     setOtpValue(e);
                     setOtpErrorMessage("");
@@ -194,6 +234,12 @@ const VerifyOtpPage = () => {
                       className={`${otpErrorMessage ? "border-red-500" : ""}`}
                     />
                   </InputOTPGroup>
+                  <InputOTPGroup>
+                    <InputOTPSlot
+                      index={5}
+                      className={`${otpErrorMessage ? "border-red-500" : ""}`}
+                    />
+                  </InputOTPGroup>
                 </InputOTP>
 
                 {/* Error Message */}
@@ -209,9 +255,9 @@ const VerifyOtpPage = () => {
                 <Button
                   onClick={handleSubmit}
                   className="w-full"
-                  disabled={otpValue === ""}
+                  disabled={otpValue === "" || isVerifying}
                 >
-                  Confirm
+                  {isVerifying ? "Verifying..." : "Confirm"}
                 </Button>
 
                 {resendSeconds > 0 ? (

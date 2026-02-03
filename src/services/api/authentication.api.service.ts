@@ -7,6 +7,8 @@ import { ApiResponseData } from "@/types/api";
 // CONSTANTS //
 import { CONSTANTS } from "@/constants";
 import { supabase } from "../supabase";
+import { UserData } from "@/contexts/AuthContext";
+import { AuthResponse, Session, User } from "@supabase/supabase-js";
 
 export interface ReachOutInputData {
   name: string;
@@ -19,7 +21,7 @@ export const sendOtpRequest = async (
   phone: string,
 ): Promise<ApiResponseData<boolean>> => {
   const { error } = await supabase.auth.signInWithOtp({
-    phone,
+    phone: "+91" + phone,
   });
 
   if (error) {
@@ -43,9 +45,9 @@ export const sendOtpRequest = async (
 export const verifyOtpRequest = async (
   phone: string,
   otp: string,
-): Promise<ApiResponseData<boolean>> => {
-  const { error } = await supabase.auth.verifyOtp({
-    phone,
+): Promise<ApiResponseData<UserData>> => {
+  const { data, error } = await supabase.auth.verifyOtp({
+    phone: "+91" + phone,
     token: otp,
     type: "sms",
   });
@@ -53,7 +55,7 @@ export const verifyOtpRequest = async (
   if (error) {
     return {
       status: false,
-      data: false,
+      data: data,
       message: error.message,
       status_code: error.status || 500,
     };
@@ -61,7 +63,7 @@ export const verifyOtpRequest = async (
 
   return {
     status: true,
-    data: true,
+    data: data,
     message: "OTP verified successfully",
     status_code: 200,
   };
