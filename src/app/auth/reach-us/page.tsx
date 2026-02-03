@@ -20,7 +20,6 @@ import { validatePhoneNumber } from "@/utils/validation";
 
 // OTHERS //
 import { toast } from "sonner";
-import { cn } from "@/lib/utils";
 
 const ReachUsPage = () => {
   // Define States
@@ -30,13 +29,20 @@ const ReachUsPage = () => {
     message: "",
   });
 
-  const [errors, setErrors] = useState({
-    name: "",
-    phoneNumber: "",
-    message: "",
-  });
+  const [errors, setErrors] = useState<Record<keyof ReachOutInputData, string>>(
+    {
+      name: "",
+      phoneNumber: "",
+      message: "",
+    },
+  );
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
   // Define Helper Functions
+  const isFormValid =
+    Object.values(errors).every((error) => !error) &&
+    Object.values(reachUsInputs).every((value) => value.trim() !== "");
+  //
   /** Handles input changes for the form fields */
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -89,7 +95,10 @@ const ReachUsPage = () => {
 
   /** Handles form submission */
   const handleSubmit = (e: React.FormEvent) => {
+    // Prevent default form submission behavior
     e.preventDefault();
+    // Set submitting state
+    setIsSubmitting(true);
     // Validate form before submission
     if (validateForm()) {
       // Make API call
@@ -107,14 +116,12 @@ const ReachUsPage = () => {
         .catch((error) => {
           console.error("Error sending reach out request:", error);
           toast.error("An error occurred. Please try again later.");
+        })
+        .finally(() => {
+          setIsSubmitting(false);
         });
     }
   };
-
-  const isFormFilled =
-    reachUsInputs.name.trim() !== "" &&
-    reachUsInputs.phoneNumber.trim() !== "" &&
-    reachUsInputs.message.trim() !== "";
 
   // Define Use Effects
 
@@ -148,6 +155,8 @@ const ReachUsPage = () => {
               name="name"
               value={reachUsInputs.name}
             />
+
+            {/* Phone Number Input */}
             <Input
               type="text"
               placeholder="Your Phone Number"
@@ -159,6 +168,8 @@ const ReachUsPage = () => {
               name="phoneNumber"
               value={reachUsInputs.phoneNumber}
             />
+
+            {/* Message Textarea */}
             <Textarea
               placeholder="Briefly describe the issue you’re facing"
               required
@@ -170,8 +181,12 @@ const ReachUsPage = () => {
             />
           </div>
           {/* Raise Request Button */}
-          <Button type="button" onClick={handleSubmit} disabled={!isFormFilled}>
-            Raise Request
+          <Button
+            type="button"
+            onClick={handleSubmit}
+            disabled={!isFormValid || isSubmitting}
+          >
+            {isSubmitting ? "Submitting..." : "Raise Request"}
           </Button>
         </form>
       </div>
