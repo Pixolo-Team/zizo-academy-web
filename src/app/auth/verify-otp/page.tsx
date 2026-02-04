@@ -26,15 +26,13 @@ import {
 } from "@/services/api/authentication.api.service";
 
 // CONTEXTS //
-import { useAuth, UserData } from "@/contexts/AuthContext";
+import { useAuth } from "@/contexts/AuthContext";
 
 // UTILS //
 import { validateOtp } from "@/app/utils/validation";
 
 // OTHERS //
 import { toast } from "sonner";
-
-// NEXT //
 
 const RESEND_INTERVAL = 30; // seconds
 
@@ -44,7 +42,7 @@ const VerifyOtpPage = () => {
   const router = useRouter();
 
   // Define Contexts
-  const { phoneNumber, setUser, setPhoneNumber } = useAuth();
+  const { phoneNumber, setSession, setPhoneNumber } = useAuth();
 
   // State to store entered OTP value
   const [otpValue, setOtpValue] = useState<string>("");
@@ -88,9 +86,7 @@ const VerifyOtpPage = () => {
           // OTP verified successfully
           // Proceed with further actions (e.g., navigate to dashboard)
           toast.success("OTP verified successfully");
-          setUser && setUser(res.data as UserData);
-          // Clear phone number from context
-          setPhoneNumber("");
+          setSession && setSession(res.data);
           router.push("/");
         } else {
           // OTP verification failed, show error message
@@ -98,28 +94,37 @@ const VerifyOtpPage = () => {
         }
       })
       .finally(() => {
+        // Clear phone number from context
+        setPhoneNumber("");
+
         // End verifying process
         setIsVerifying(false);
-        return;
       });
   };
 
   /** Starts resets otp and resends countdown */
   const sendResetOtp = () => {
-    sendOtpRequest(phoneNumber).then((res) => {
-      if (res.status) {
-        toast.success("OTP resent successfully");
-        // Set resend availability time in local storage
-        const availableAt = Date.now() + RESEND_INTERVAL * 1000;
-        localStorage.setItem(
-          LocalStorageKeys.OTP_RESEND_AVAILABLE_AT,
-          availableAt.toString(),
+    sendOtpRequest(phoneNumber)
+      .then((res) => {
+        if (res.status) {
+          toast.success("OTP resent successfully");
+          // Set resend availability time in local storage
+          const availableAt = Date.now() + RESEND_INTERVAL * 1000;
+          localStorage.setItem(
+            LocalStorageKeys.OTP_RESEND_AVAILABLE_AT,
+            availableAt.toString(),
+          );
+          setResendSeconds(RESEND_INTERVAL);
+        } else {
+          toast.error(res.message || "Failed to resend OTP");
+        }
+      })
+      .catch((error) => {
+        console.error("Error while resending OTP:", error);
+        toast.error(
+          "An unexpected error occurred while resending OTP. Please try again.",
         );
-        setResendSeconds(RESEND_INTERVAL);
-      } else {
-        toast.error(res.message || "Failed to resend OTP");
-      }
-    });
+      });
   };
 
   // Use Effects
