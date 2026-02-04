@@ -43,7 +43,7 @@ const attendanceData = [
 
 const AttendancePage = () => {
   return (
-    <div className="flex flex-col gap-6 px-5">
+    <div className="flex flex-col gap-6 px-5 pb-5">
       {/* Page Header */}
       <PageHeader text="Attendance" />
 
