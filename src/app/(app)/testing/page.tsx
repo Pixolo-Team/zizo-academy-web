@@ -13,7 +13,7 @@ export function generateSessionTestData() {
     // Upcoming session (no check-in)
     {
       sessionName: "Morning Yoga",
-      fromTime: minutes(30),
+      fromTime: minutes(-20),
       toTime: minutes(90),
       location: "Studio A",
       reportingTime: minutes(20),

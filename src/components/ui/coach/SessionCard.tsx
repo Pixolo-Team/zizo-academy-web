@@ -89,7 +89,7 @@ export default function SessionCard({
 
   return (
     <div
-      className={`p-5 rounded-2xl bg-n-50 flex flex-col gap-4 border
+      className={`p-5 rounded-2xl bg-n-50 flex flex-col gap-4 border relative
         ${status === "ongoing" ? "border-2 border-n-600" : "border border-n-200"}
       `}
     >
@@ -158,12 +158,19 @@ export default function SessionCard({
           `}
         >
           {!checkedInTime
-            ? "Check-in Now"
+            ? "Check-in"
             : isLate
-              ? `Checked-in (Late) - ${formatTime(checkedInTime)}`
-              : `Checked-in - ${formatTime(checkedInTime)}`}
+              ? `Checked in (Late) • ${formatTime(checkedInTime)}`
+              : `Checked in • ${formatTime(checkedInTime)}`}
         </Button>
       </div>
+
+      {/* Ongoing  */}
+      {status === "ongoing" && (
+        <div className="py-1 px-4 rounded-[9px] bg-n-800 text-n-50 font-medium text-[9px] absolute -top-3">
+          Ongoing Session
+        </div>
+      )}
     </div>
   );
 }
