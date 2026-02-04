@@ -1,5 +1,7 @@
 // REACT //
 import { ReactNode } from "react";
+
+// COMPONENTS //
 import BrandLogo from "../components/brand-logo/BrandLogo";
 
 export default function AppLayout({ children }: { children: ReactNode }) {
