@@ -11,6 +11,7 @@ interface BrandLogoProps {
   variant?: Variant;
   size?: number;
   showText?: boolean;
+  className?: string;
 }
 
 // Type for the variant prop
@@ -27,6 +28,7 @@ const BrandLogo: React.FC<BrandLogoProps> = ({
   variant = "color",
   size = 120,
   showText = false,
+  className,
 }) => {
   // The path to the SVG logo image
   const imagePath = `/brand-logo/${variant}.svg`;
@@ -38,6 +40,7 @@ const BrandLogo: React.FC<BrandLogoProps> = ({
         alt="Zizo Brand Logo"
         width={size}
         height={size}
+        className={className}
         loading="eager"
       />
       {showText && (

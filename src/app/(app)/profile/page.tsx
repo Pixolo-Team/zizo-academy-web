@@ -3,26 +3,34 @@
 import React from "react";
 
 // COMPONENTS //
-import LineArrowRight1 from "@/components/icons/neevo-icons/LineArrowRight1";
-import ProfileActions from "@/app/components/profile/ProfileActions";
+import ProfileActionButton from "@/app/components/profile/ProfileActionButton";
 import ProfileHeader from "@/app/components/profile/ProfileHeader";
 import PageHeader from "@/app/components/layout/Header";
+import UserFullBodyFollowers from "@/components/icons/neevo-icons/UserFullBodyFollowers";
+import Sprint from "@/components/icons/neevo-icons/Sprint";
+import HelpChat2 from "@/components/icons/neevo-icons/HelpChat2";
+import Logout3 from "@/components/icons/neevo-icons/Logout3";
 
 const ProfileActionsData = [
   {
-    icon: LineArrowRight1,
+    icon: (
+      <UserFullBodyFollowers
+        primaryColor="var(--color-n-800)"
+        className="size-3.5"
+      />
+    ),
     text: "View attendance history",
   },
   {
-    icon: LineArrowRight1,
+    icon: <Sprint primaryColor="var(--color-n-800)" className="size-3.5" />,
     text: "My sessions",
   },
   {
-    icon: LineArrowRight1,
+    icon: <HelpChat2 primaryColor="var(--color-n-800)" className="size-3.5" />,
     text: "Need help?",
   },
   {
-    icon: LineArrowRight1,
+    icon: <Logout3 primaryColor="var(--color-n-800)" className="size-3.5" />,
     text: "Log out",
   },
 ];
@@ -35,14 +43,18 @@ export default function Profile() {
         <ProfileHeader name="Shubham Pandit" position="Assistant Coach · U16" />
         {/* Profile Options */}
         <div className="flex flex-col gap-2">
-          {ProfileActionsData.map((profileActionItem, index) => (
-            <React.Fragment key={index}>
-              <ProfileActions
-                icon={profileActionItem.icon}
-                text={profileActionItem.text}
-              />
-            </React.Fragment>
-          ))}
+          {ProfileActionsData.map(
+            (profileActionItem, profileActionItemIndex) => (
+              <React.Fragment
+                key={profileActionItem.text + profileActionItemIndex}
+              >
+                <ProfileActionButton
+                  icon={profileActionItem.icon}
+                  text={profileActionItem.text}
+                />
+              </React.Fragment>
+            ),
+          )}
         </div>
       </div>
     </div>
