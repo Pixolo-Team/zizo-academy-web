@@ -126,7 +126,7 @@ export default function SessionCard({
 
       {/* Reporting Section */}
       <div
-        className={`pt-2 flex-col flex gap-1.5 rounded-3xl ${
+        className={`pt-2 flex-col flex gap-1.5 rounded-3xl border ${
           checkedInTime
             ? isLate
               ? "bg-amber-50 border-amber-200"
