@@ -7,7 +7,7 @@ import BrandLogo from "../components/brand-logo/BrandLogo";
 export default function AppLayout({ children }: { children: ReactNode }) {
   return (
     <div className="min-h-screen bg-n-100 relative">
-      <div className="fixed -top-20.25 -right-30 opacity-6">
+      <div className="fixed -top-20.25 -right-30 opacity-6 z-0">
         <BrandLogo
           variant="color-icon"
           size={340}
@@ -19,7 +19,7 @@ export default function AppLayout({ children }: { children: ReactNode }) {
           className="block dark-mode-hidden lg:hidden!"
         />
       </div>
-      <div className="w-full">{children}</div>
+      <div className="w-full relative z-10">{children}</div>
     </div>
   );
 }
