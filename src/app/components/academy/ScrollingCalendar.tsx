@@ -23,9 +23,9 @@ const ScrollingCalendar: React.FC<ScrollingCalendarProps> = ({
   const [selectedDate, setSelectedDate] = useState<Date>(
     externalSelectedDate
       ? new Date(
-          externalSelectedDate.split("/").reverse().join("-") // Convert DD/MM/YYYY → YYYY-MM-DD
+          externalSelectedDate.split("/").reverse().join("-"), // Convert DD/MM/YYYY → YYYY-MM-DD
         )
-      : new Date()
+      : new Date(),
   );
   const [days, setDays] = useState<DayProps[]>([]);
 
@@ -124,9 +124,6 @@ const ScrollingCalendar: React.FC<ScrollingCalendarProps> = ({
 
   return (
     <div className="flex flex-col gap-4">
-      {/* Month Title */}
-      <h2 className="text-lg text-n-100 font-bold">{monthTitle}</h2>
-
       {/* Scrollable days */}
       <div
         ref={scrollRef}
@@ -140,11 +137,11 @@ const ScrollingCalendar: React.FC<ScrollingCalendarProps> = ({
             <div
               key={index}
               onClick={() => handleSelect(day)}
-              className={`flex flex-col items-center p-3 gap-2.5 rounded-full cursor-pointer min-w-[48px]
+              className={`flex flex-col items-center px-2.5 py-2 gap-2.5 rounded-[12px] cursor-pointer
                 ${
                   isSelected
-                    ? "bg-n-50 text-n-900 font-medium"
-                    : "text-n-50 font-normal"
+                    ? "bg-n-900 text-n-50 font-normal"
+                    : " text-n-900 font-normal"
                 }
               `}
             >
