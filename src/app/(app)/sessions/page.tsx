@@ -62,7 +62,7 @@ export function generateSessionTestData() {
   ];
 }
 
-export default function MySession() {
+export default function Sessions() {
   // Define States
   const [selectedMonth, setSelectedMonth] = useState<Date>(new Date());
   const sessions = generateSessionTestData();
