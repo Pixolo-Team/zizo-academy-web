@@ -10,10 +10,11 @@ import SessionCard from "@/components/ui/coach/SessionCard";
 import Image from "next/image";
 
 // OTHERS //
-import { slideInUp } from "@/lib/animations";
+import { fadeIn, slideInUp } from "@/lib/animations";
 import SearchInput from "@/components/ui/SearchInput";
 import { PlayerAttendanceCard } from "@/app/components/academy/PlayerAttendanceCard";
 import { AttendanceStatus } from "@/enums/attendance.enum";
+import AttendanceSummary from "@/app/components/academy/AttendanceSummary";
 
 // Temporary
 export function generateSessionTestData() {
@@ -128,6 +129,41 @@ export default function SessionDetails() {
             </Motion>
           ))}
         </div>
+
+        {/* Attendance Summary & Confirm Button */}
+        {players && players.length > 0 && (
+          <Motion variants={fadeIn} delay={0.6}>
+            <AttendanceSummary
+              attendanceSummary={[
+                {
+                  label: "Present",
+                  count: players.filter(
+                    (player) =>
+                      attendanceMap[player.id] === AttendanceStatus.PRESENT,
+                  ).length,
+                },
+                {
+                  label: "Absent",
+                  count: players.filter(
+                    (player) =>
+                      attendanceMap[player.id] === AttendanceStatus.ABSENT,
+                  ).length,
+                },
+                {
+                  label: "Pending",
+                  count: players.filter(
+                    (player) => attendanceMap[player.id] === null,
+                  ).length,
+                },
+                {
+                  label: "Total",
+                  count: players.length,
+                },
+              ]}
+              onConfirm={() => console.log("Confirmed attendance")}
+            />
+          </Motion>
+        )}
       </div>
     </div>
   );
