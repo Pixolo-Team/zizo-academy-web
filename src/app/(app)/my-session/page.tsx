@@ -70,7 +70,7 @@ export default function MySession() {
     <div className="flex flex-col gap-6 px-5 pb-5">
       {/* Page Header */}
       <PageHeader text="My Sessions">
-        <div className="size-8 rounded-full border border-n-200 overflow-hidden">
+        <div className="size-8 rounded-full border border-n-500 overflow-hidden">
           <Image
             src={"/images/defaults/default-player.png"}
             width={32}
