@@ -45,13 +45,6 @@ const ScrollingCalendar: React.FC<ScrollingCalendarProps> = ({
     // Use currentMonth if provided, otherwise use selectedDate's month
     const monthToShow = currentMonth || selectedDate;
 
-    // Get the first day of the month
-    const firstDay = new Date(
-      monthToShow.getFullYear(),
-      monthToShow.getMonth(),
-      1,
-    );
-
     // Get the last day of the month
     const lastDay = new Date(
       monthToShow.getFullYear(),
@@ -117,7 +110,7 @@ const ScrollingCalendar: React.FC<ScrollingCalendarProps> = ({
     const dateString = formatDate(selectedDate);
 
     onDateSelect(dateString);
-  }, [days, onDateSelect, selectedDate, externalSelectedDate]);
+  }, [days, onDateSelect]);
 
   /**
    * Scrolls the currently selected date into center view.
@@ -171,7 +164,7 @@ const ScrollingCalendar: React.FC<ScrollingCalendarProps> = ({
                 ${
                   isSelected
                     ? "bg-n-900 text-n-50 font-normal"
-                    : " text-n-900 font-normal"
+                    : "text-n-900 font-normal"
                 }
               `}
             >

@@ -51,14 +51,14 @@ export default function SessionCard({
   reportingTime,
   checkedInTime,
 }: SessionCardProps) {
-  const [now, setNow] = useState<number | null>(null);
+  const [now, setNow] = useState<number>(() => Date.now());
 
   // Determine session status and lateness
   const { status, isLate } = useMemo(() => {
     // Get current time
     if (!now) return { status: "upcoming", isLate: false };
 
-    // Convert session times to timestampss
+    // Convert session times to timestamps
     const start = new Date(fromTime).getTime();
     const end = new Date(toTime).getTime();
 
@@ -81,11 +81,7 @@ export default function SessionCard({
 
     // Return status and lateness
     return { status: sessionStatus, isLate: late };
-  }, [fromTime, toTime, reportingTime, checkedInTime]);
-
-  useEffect(() => {
-    setNow(Date.now());
-  }, []);
+  }, [fromTime, toTime, reportingTime, checkedInTime, now]);
 
   return (
     <div

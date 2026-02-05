@@ -94,7 +94,7 @@ export default function MySession() {
       </div>
 
       <Motion variants={slideInUp} delay={0.2}>
-        <div className="flex flex-col gap-3">
+        <div className="flex flex-col gap-4">
           {/* Session Details */}
           {sessions.map((s, i) => (
             <SessionCard key={i} {...s} />
