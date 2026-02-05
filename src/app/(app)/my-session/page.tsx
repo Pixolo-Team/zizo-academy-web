@@ -1,11 +1,17 @@
 "use client";
 
+// REACT //
+import { useState } from "react";
+
 // COMPONENTS //
 import ScrollingCalendar from "@/app/components/academy/ScrollingCalendar";
 import PageHeader from "@/app/components/layout/Header";
 import Motion from "@/components/animations/Motion";
 import { MonthCalendar } from "@/components/attendance/MonthCalendar";
 import SessionCard from "@/components/ui/coach/SessionCard";
+import Image from "next/image";
+
+// OTHERS //
 import { slideInUp } from "@/lib/animations";
 
 // Temporary
@@ -57,20 +63,35 @@ export function generateSessionTestData() {
 }
 
 export default function MySession() {
+  // Define States
+  const [selectedMonth, setSelectedMonth] = useState<Date>(new Date());
   const sessions = generateSessionTestData();
   return (
     <div className="flex flex-col gap-6 px-5 pb-5">
       {/* Page Header */}
-      <PageHeader text="My Session" />
+      <PageHeader text="My Sessions">
+        <div className="size-8 rounded-full border border-n-200 overflow-hidden">
+          <Image
+            src={"/images/defaults/default-player.png"}
+            width={32}
+            height={32}
+            alt="Coach Image"
+          />
+        </div>
+      </PageHeader>
 
-      {/* Month Calendar */}
-      <MonthCalendar />
+      <div className="flex flex-col gap-3">
+        {/* Month Calendar */}
+        <MonthCalendar
+          onMonthChange={(date) => setSelectedMonth(date)}
+          initialDate={selectedMonth}
+        />
 
-      <ScrollingCalendar
-        onDateSelect={(dateString: string) => {
-          console.log(dateString);
-        }}
-      />
+        <ScrollingCalendar
+          currentMonth={selectedMonth}
+          onDateSelect={() => {}}
+        />
+      </div>
 
       <Motion variants={slideInUp} delay={0.2}>
         <div className="flex flex-col gap-3">
