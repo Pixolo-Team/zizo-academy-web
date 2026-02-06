@@ -81,6 +81,7 @@ const CreateBatch = () => {
             value={createBatchInputs.batchName}
             onChange={handleInputChange}
           />
+          {/* Select Primary Coach */}
           <Dropdown
             title=""
             options={["Coach A", "Coach B", "Coach C"]}
@@ -92,7 +93,7 @@ const CreateBatch = () => {
               setErrors((prev) => ({ ...prev, primaryCoach: "" }));
             }}
             selectedOption={createBatchInputs.primaryCoach}
-            label="Select Option"
+            label="Primary Coach"
             required
             error={errors.primaryCoach}
             placeholder="Choose Coach"
