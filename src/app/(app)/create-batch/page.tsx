@@ -11,7 +11,7 @@ import Dropdown from "@/components/ui/Dropdown";
 
 const CreateBatch = () => {
   // Define States
-  const [createBatchInputs, setcreateBatchInputs] = useState({
+  const [createBatchInputs, setCreateBatchInputs] = useState({
     batchName: "",
     primaryCoach: "",
   });
@@ -29,7 +29,7 @@ const CreateBatch = () => {
   ) => {
     const { name, value } = e.target;
     // Update the corresponding field in state
-    setcreateBatchInputs((prev) => ({ ...prev, [name]: value }));
+    setCreateBatchInputs((prev) => ({ ...prev, [name]: value }));
     // Clear error message for the field being edited
     setErrors((prev) => ({ ...prev, [name]: "" }));
   };
@@ -60,6 +60,8 @@ const CreateBatch = () => {
 
     setIsSubmitting(true);
 
+    // TODO: ADD API SERVICES
+
     setIsSubmitting(false);
   };
 
@@ -83,12 +85,15 @@ const CreateBatch = () => {
           />
           {/* Select Primary Coach */}
           <Dropdown
-            title=""
-            options={["Coach A", "Coach B", "Coach C"]}
-            onChange={(value) => {
-              setcreateBatchInputs((prev) => ({
+            options={[
+              { label: "Coach A", value: "123" },
+              { label: "Coach B", value: "456" },
+              { label: "Coach C", value: "789" },
+            ]}
+            onChange={(coach) => {
+              setCreateBatchInputs((prev) => ({
                 ...prev,
-                primaryCoach: value,
+                primaryCoach: coach,
               }));
               setErrors((prev) => ({ ...prev, primaryCoach: "" }));
             }}

@@ -12,8 +12,7 @@ import { cn } from "@/lib/utils";
 
 // Interface Props
 interface FilterDropdownProps {
-  title: string;
-  options: string[];
+  options: { label: string; value: string }[];
   onChange: (value: string) => void;
   selectedOption: string;
   className?: string;
@@ -24,8 +23,7 @@ interface FilterDropdownProps {
 }
 
 /** Filter Component */
-export default function FilterDropdown({
-  title = "",
+export default function Dropdown({
   options = [],
   onChange,
   selectedOption,
@@ -76,8 +74,12 @@ export default function FilterDropdown({
           {/* Select Content */}
           <SelectContent className="bg-n-50">
             {options.map((option) => (
-              <SelectItem key={option} value={option} className="text-n-950">
-                {option}
+              <SelectItem
+                key={option.label}
+                value={option.value}
+                className="text-n-950"
+              >
+                {option.label}
               </SelectItem>
             ))}
           </SelectContent>
