@@ -120,7 +120,7 @@ const AddVenuePage = () => {
   };
 
   return (
-    <div className="flex flex-col gap-6 px-5 pb-5 bg-n-50">
+    <div className="flex flex-col gap-6 px-5 pb-5 bg-n-50 min-h-screen">
       {/* Page Header */}
       <PageHeader text="Add Venue" />
       {/* Add Venue Form */}
