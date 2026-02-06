@@ -4,16 +4,19 @@ import * as React from "react";
 
 // OTHERS //
 import { cn } from "@/lib/utils";
+import { IconComponent } from "@/types/icon";
 
 interface InputProps extends React.ComponentProps<"input"> {
   label?: string;
   error?: string;
+  rightIcon?: IconComponent;
 }
 
 function Input({
   className,
   type,
   label,
+  rightIcon,
   error,
   required,
   ...props
@@ -30,7 +33,7 @@ function Input({
           </label>
         )}
       </div>
-      <div className="flex flex-col gap-0.5">
+      <div className="flex flex-col gap-0.5 relative">
         <input
           type={type}
           data-slot="input"
@@ -42,6 +45,15 @@ function Input({
           )}
           {...props}
         />
+        {rightIcon && (
+          <span className="absolute right-5 top-4 cursor-pointer">
+            {React.createElement(rightIcon, {
+              primaryColor: "#9CA3AF",
+              width: 25,
+              height: 25,
+            })}
+          </span>
+        )}
         {error && <span className="text-xs text-red-500">{error}</span>}
       </div>
     </div>
