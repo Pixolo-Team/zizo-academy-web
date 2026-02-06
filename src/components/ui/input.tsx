@@ -48,6 +48,7 @@ function Input({
           )}
           {...props}
         />
+        {/* Optional right-side action button (ex: copy-paste).*/}
         {rightIcon && (
           <button
             type="button"

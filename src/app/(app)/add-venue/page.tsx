@@ -20,7 +20,7 @@ type AddVenueInputData = {
   googleMapsLink: string;
 };
 
-type AddVenueErrors = Partial<Record<keyof AddVenueInputData, string>>;
+type AddVenueErrorsData = Partial<Record<keyof AddVenueInputData, string>>;
 
 const AddVenuePage = () => {
   // Define States
@@ -31,14 +31,14 @@ const AddVenuePage = () => {
     googleMapsLink: "",
   });
 
-  const [errors, setErrors] = useState<AddVenueErrors>({});
+  // Holds validation error messages for each input field
+  const [errors, setErrors] = useState<AddVenueErrorsData>({});
 
+  //  Checks API Submission state to prevent duplicate requests
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   /** Handles input changes for the form fields */
-  const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-  ) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     // Extract name and value from the event target
     const { name, value } = e.target;
     // Update the corresponding field in state
@@ -56,7 +56,7 @@ const AddVenuePage = () => {
 
   /** Handles form validation */
   const validateForm = () => {
-    const newErrors: AddVenueErrors = {};
+    const newErrors: AddVenueErrorsData = {};
     let isValid = true;
 
     // Validate Venue Name
@@ -86,17 +86,21 @@ const AddVenuePage = () => {
     return isValid;
   };
 
+  /** Handles form submission */
   const handleSubmit = async (e?: React.FormEvent) => {
     e?.preventDefault();
 
+    // Validate form before submission
     if (!validateForm()) return;
 
     try {
       setIsSubmitting(true);
 
+      // Make API call
       const response = await addVenueRequest(addVenueInputs);
 
       if (response.status) {
+        // Show toast and reset form
         toast.success("Venue added");
 
         // Reset form
@@ -109,6 +113,7 @@ const AddVenuePage = () => {
 
         setErrors({});
       } else {
+        // Handle API error and show toast
         toast.error("Couldn't add venue");
       }
     } catch (error) {
@@ -129,6 +134,7 @@ const AddVenuePage = () => {
         onSubmit={(event) => event.preventDefault()}
       >
         <div className="flex flex-col gap-4">
+          {/* Venue Name */}
           <Input
             type="text"
             placeholder="Venue name"
@@ -139,6 +145,8 @@ const AddVenuePage = () => {
             name="venueName"
             value={addVenueInputs.venueName}
           />
+
+          {/* Full Address Input */}
           <Input
             type="text"
             placeholder="Full address"
@@ -149,6 +157,8 @@ const AddVenuePage = () => {
             name="address"
             value={addVenueInputs.address}
           />
+
+          {/* Area / Locality Name Input */}
           <Input
             type="text"
             placeholder="Area/Locality Name"
@@ -159,6 +169,8 @@ const AddVenuePage = () => {
             name="area"
             value={addVenueInputs.area}
           />
+
+          {/* Google Maps Link Input */}
           <Input
             type="text"
             placeholder="Paste maps link"
@@ -171,6 +183,8 @@ const AddVenuePage = () => {
             value={addVenueInputs.googleMapsLink}
           />
         </div>
+
+        {/* Submit Button */}
         <Button type="button" disabled={isSubmitting} onClick={handleSubmit}>
           {isSubmitting ? "Creating Venue..." : "Create Venue"}
         </Button>
