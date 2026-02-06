@@ -11,7 +11,7 @@ import {
 import { cn } from "@/lib/utils";
 
 // Interface Props
-interface FilterDropdownProps {
+interface DropdownProps {
   options: { label: string; value: string }[];
   onChange: (value: string) => void;
   selectedOption: string;
@@ -32,7 +32,7 @@ export default function Dropdown({
   label,
   required,
   placeholder,
-}: FilterDropdownProps) {
+}: DropdownProps) {
   // Define Navigation
 
   // Define Context

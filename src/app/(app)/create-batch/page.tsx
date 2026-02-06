@@ -24,9 +24,7 @@ const CreateBatch = () => {
   // Define Helper Functions
 
   /** Handles input changes for the form fields */
-  const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-  ) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     // Update the corresponding field in state
     setCreateBatchInputs((prev) => ({ ...prev, [name]: value }));
