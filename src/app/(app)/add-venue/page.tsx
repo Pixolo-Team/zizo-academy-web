@@ -9,14 +9,20 @@ import PageHeader from "@/app/components/layout/Header";
 import { Button } from "@/components/ui/button";
 import CopyPaste from "@/components/icons/neevo-icons/CopyPaste";
 
+// OTHERS //
+import { toast } from "sonner";
+
+// Defining the type
+type AddVenueInputData = {
+  venueName: string;
+  address: string;
+  area: string;
+  googleMapsLink: string;
+};
+
+type AddVenueErrors = Partial<Record<keyof AddVenueInputData, string>>;
+
 const AddVenuePage = () => {
-  // Defining the type
-  type AddVenueInputData = {
-    venueName: string;
-    address: string;
-    area: string;
-    googleMapsLink: string;
-  };
   // Define States
   const [addVenueInputs, setAddVenueInputs] = useState<AddVenueInputData>({
     venueName: "",
@@ -24,6 +30,10 @@ const AddVenuePage = () => {
     area: "",
     googleMapsLink: "",
   });
+
+  const [errors, setErrors] = useState<AddVenueErrors>({});
+
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   /** Handles input changes for the form fields */
   const handleInputChange = (
@@ -36,21 +46,95 @@ const AddVenuePage = () => {
       ...prev,
       [name]: value,
     }));
+
+    // Clear error message for the field being edited
+    setErrors((prev) => ({
+      ...prev,
+      [name]: "",
+    }));
+  };
+
+  /** Handles form validation */
+  const validateForm = () => {
+    const newErrors: AddVenueErrors = {};
+    let isValid = true;
+
+    // Validate Venue Name
+    if (!addVenueInputs.venueName.trim()) {
+      newErrors.venueName = "Venue Name is required";
+      isValid = false;
+    }
+
+    // Validate Address
+    if (!addVenueInputs.address.trim()) {
+      newErrors.address = "Full address is required";
+      isValid = false;
+    }
+
+    // Validate Area
+    if (!addVenueInputs.area.trim()) {
+      newErrors.area = "Area is required";
+      isValid = false;
+    }
+
+    // Validate Link
+    if (!addVenueInputs.googleMapsLink.trim()) {
+      newErrors.googleMapsLink = "Google maps link is required";
+      isValid = false;
+    }
+    setErrors(newErrors);
+    return isValid;
+  };
+
+  const handleSubmit = async (e?: React.FormEvent) => {
+    e?.preventDefault();
+
+    if (!validateForm()) return;
+
+    try {
+      setIsSubmitting(true);
+
+      const response = await addVenueRequest(addVenueInputs);
+
+      if (response.status) {
+        toast.success("Venue added");
+
+        // Reset form
+        setAddVenueInputs({
+          venueName: "",
+          address: "",
+          area: "",
+          googleMapsLink: "",
+        });
+
+        setErrors({});
+      } else {
+        toast.error("Couldn't add venue");
+      }
+    } catch (error) {
+      console.error("Error adding venue:", error);
+      toast.error("Something went wrong.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
-    <div className="flex flex-col gap-6 px-5 pb-5">
+    <div className="flex flex-col gap-6 px-5 pb-5 bg-n-50">
       {/* Page Header */}
       <PageHeader text="Add Venue" />
       {/* Add Venue Form */}
-      <div className="flex flex-col gap-6">
+      <form
+        className="flex flex-col gap-6"
+        onSubmit={(event) => event.preventDefault()}
+      >
         <div className="flex flex-col gap-4">
           <Input
             type="text"
             placeholder="Venue name"
             required
             label="Venue Name"
-            // error={errors.venueName}
+            error={errors.venueName}
             onChange={handleInputChange}
             name="venueName"
             value={addVenueInputs.venueName}
@@ -60,7 +144,7 @@ const AddVenuePage = () => {
             placeholder="Full address"
             required
             label="Full Address"
-            // error={errors.address}
+            error={errors.address}
             onChange={handleInputChange}
             name="address"
             value={addVenueInputs.address}
@@ -70,7 +154,7 @@ const AddVenuePage = () => {
             placeholder="Area/Locality Name"
             required
             label="Area/Locality Name"
-            // error={errors.area}
+            error={errors.area}
             onChange={handleInputChange}
             name="area"
             value={addVenueInputs.area}
@@ -81,14 +165,16 @@ const AddVenuePage = () => {
             required
             label="Google Maps Link"
             rightIcon={CopyPaste}
-            // error={errors.googleMapsLink}
+            error={errors.googleMapsLink}
             onChange={handleInputChange}
-            name="area"
-            value={addVenueInputs.area}
+            name="googleMapsLink"
+            value={addVenueInputs.googleMapsLink}
           />
         </div>
-        <Button type="button">Create Venue</Button>
-      </div>
+        <Button type="button" disabled={isSubmitting} onClick={handleSubmit}>
+          {isSubmitting ? "Creating Venue..." : "Create Venue"}
+        </Button>
+      </form>
     </div>
   );
 };
