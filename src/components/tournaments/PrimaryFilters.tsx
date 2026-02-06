@@ -7,7 +7,7 @@ import { TournamentFiltersData } from "@/types/tournament";
 import { CityFilter, MatchFormatFilter } from "@/enums/tournament-filter.enum";
 
 // COMPONENTS //
-import FilterDropdown from "@/components/ui/FilterDropdown";
+import FilterDropdown from "@/components/ui/Dropdown";
 
 interface PrimaryFiltersProps {
   filters: TournamentFiltersData;

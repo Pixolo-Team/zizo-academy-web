@@ -11,9 +11,8 @@ import {
 import { cn } from "@/lib/utils";
 
 // Interface Props
-interface FilterDropdownProps {
-  title: string;
-  options: string[];
+interface DropdownProps {
+  options: { label: string; value: string }[];
   onChange: (value: string) => void;
   selectedOption: string;
   className?: string;
@@ -21,11 +20,12 @@ interface FilterDropdownProps {
   label?: string;
   required?: boolean;
   placeholder?: string;
+  leftChild?: React.ReactNode;
+  rightChild?: React.ReactNode;
 }
 
 /** Filter Component */
-export default function FilterDropdown({
-  title = "",
+export default function Dropdown({
   options = [],
   onChange,
   selectedOption,
@@ -34,7 +34,9 @@ export default function FilterDropdown({
   label,
   required,
   placeholder,
-}: FilterDropdownProps) {
+  leftChild,
+  rightChild,
+}: DropdownProps) {
   // Define Navigation
 
   // Define Context
@@ -47,7 +49,7 @@ export default function FilterDropdown({
 
   // Use Effects
   return (
-    <div className="flex flex-col gap-1.5">
+    <div className="flex flex-col gap-1.5 h-full">
       {/* Label */}
       <div className="relative flex">
         {label && (
@@ -65,19 +67,29 @@ export default function FilterDropdown({
           <SelectTrigger
             isSelected={Boolean(selectedOption)}
             className={
-              `h-[52px] text-n-950 flex w-full min-w-0 rounded-4xl border bg-n-50 placeholder:text-n-400 transition-[color,box-shadow] outline-none file:inline-flex file:h-7 file:border-0 file:bg-transparent file:text-sm file:font-medium disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 border-n-200 text-base p-4 ${error && "border-red-500"}` +
+              `h-[52px] text-n-950 flex w-full min-w-0 rounded-4xl border bg-n-50 placeholder:text-n-400 transition-[color,box-shadow] outline-none file:inline-flex file:h-7 file:border-0 file:bg-transparent file:text-sm file:font-medium disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 border-n-200 text-base px-4 py-1.5 ${leftChild && "pl-1.5"} ${error && "border-red-500"}` +
               " " +
               className
             }
           >
-            <SelectValue placeholder={placeholder} />
+            <div className="flex items-center gap-2 w-2/3">
+              {leftChild && <div className="flex-1">{leftChild}</div>}
+              <SelectValue
+                placeholder={placeholder}
+                className="placeholder:text-n-400 w-full"
+              />
+            </div>
           </SelectTrigger>
 
           {/* Select Content */}
           <SelectContent className="bg-n-50">
             {options.map((option) => (
-              <SelectItem key={option} value={option} className="text-n-950">
-                {option}
+              <SelectItem
+                key={option.label}
+                value={option.value}
+                className="text-n-950"
+              >
+                {option.label}
               </SelectItem>
             ))}
           </SelectContent>

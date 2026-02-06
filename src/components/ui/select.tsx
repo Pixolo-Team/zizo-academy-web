@@ -44,7 +44,7 @@ function SelectTrigger({
       )}
       {...props}
     >
-      {children}
+      <div className="w-2/3">{children}</div>
       <SelectPrimitive.Icon asChild>
         <svg
           xmlns="http://www.w3.org/2000/svg"

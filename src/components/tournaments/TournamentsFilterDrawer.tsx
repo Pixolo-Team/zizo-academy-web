@@ -15,7 +15,7 @@ import {
 
 // COMPONENTS //
 import FilterDrawer from "@/components/FilterDrawer";
-import FilterDropdown from "@/components/ui/FilterDropdown";
+import FilterDropdown from "@/components/ui/Dropdown";
 import { DatePicker } from "@/components/ui/DatePicker";
 import { Button } from "@/components/ui/button";
 

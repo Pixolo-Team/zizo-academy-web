@@ -10,7 +10,7 @@ import UserFullBodyFollowers from "@/components/icons/neevo-icons/UserFullBodyFo
 import Sprint from "@/components/icons/neevo-icons/Sprint";
 import HelpChat2 from "@/components/icons/neevo-icons/HelpChat2";
 import Logout3 from "@/components/icons/neevo-icons/Logout3";
-import FilterDropdown from "@/components/ui/FilterDropdown";
+import FilterDropdown from "@/components/ui/Dropdown";
 
 const ProfileActionsData = [
   {
@@ -57,17 +57,6 @@ export default function Profile() {
             ),
           )}
         </div>
-
-        <FilterDropdown
-          title=""
-          options={["All", "Present", "Absent"]}
-          onChange={(value) => console.log(value)}
-          selectedOption=""
-          label="Select Option"
-          required
-          error="Please select an option"
-          placeholder="Hello"
-        />
       </div>
     </div>
   );
