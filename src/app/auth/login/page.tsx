@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
 import Image from "next/image";
+import { toast } from "sonner";
 
 // API SERVICES //
 import {
@@ -17,14 +18,11 @@ import {
   sendOtpRequest,
 } from "@/services/api/authentication.api.service";
 
-// CONTEXTS //
-import { useAuth } from "@/contexts/AuthContext";
-
 // UTILS //
 import { validatePhoneNumber } from "@/app/utils/validation";
 
-// OTHERS //
-import { toast } from "sonner";
+// CONSTANTS //
+import { ROUTES } from "@/app/constants/routes";
 
 /** Login Page */
 export default function LoginPage() {
@@ -32,27 +30,22 @@ export default function LoginPage() {
   const router = useRouter();
 
   // Define Contexts
-  const { phoneNumber, setPhoneNumber } = useAuth();
 
   // Define States
+  const [phoneNumber, setPhoneNumber] = useState<string>("");
   const [phoneNumberErrorMessage, setPhoneNumberErrorMessage] =
     useState<string>("");
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
   /** Function to handle form submission */
   const handleSubmit = async () => {
+    // Add country code
+    const fullPhoneNumber = "+91" + phoneNumber;
     // Start submission process
     setIsSubmitting(true);
 
-    // Check if phone number is empty
-    if (phoneNumber === "") {
-      setPhoneNumberErrorMessage("Phone number is required");
-      setIsSubmitting(false);
-      return;
-    }
-
     // Check if phone number is invalid
-    if (!validatePhoneNumber(phoneNumber)) {
+    if (!validatePhoneNumber(fullPhoneNumber)) {
       setPhoneNumberErrorMessage("Enter a valid 10-digit mobile number");
       setIsSubmitting(false);
       return;
@@ -63,30 +56,39 @@ export default function LoginPage() {
 
     try {
       // Check if phone number exists
-      const checkRes = await checkPhoneExistsRequest(phoneNumber);
+      const checkPhoneResponse = await checkPhoneExistsRequest(fullPhoneNumber);
 
-      if (!checkRes.status) {
-        toast.error(checkRes.message || "Failed to verify phone number");
+      // If status is false, show error message
+      if (!checkPhoneResponse.status) {
+        toast.error(
+          checkPhoneResponse.message || "Failed to verify phone number",
+        );
+        setIsSubmitting(false);
         return;
       }
 
-      if (!checkRes.data) {
+      // If data is false, show error message
+      if (!checkPhoneResponse.data) {
         toast.error("Phone number not registered. Please sign up first.");
+        setIsSubmitting(false);
         return;
       }
 
       // Phone exists, send OTP
-      const otpRes = await sendOtpRequest(phoneNumber);
+      const otpResponse = await sendOtpRequest(fullPhoneNumber);
 
-      if (otpRes.status) {
+      // If status is true, show success message
+      if (otpResponse.status) {
         toast.success("OTP sent successfully");
-        router.push("/auth/verify-otp");
+        // Store in localStorage
+        localStorage.setItem("phoneNumber", fullPhoneNumber);
+        router.push(ROUTES.VERIFY_OTP);
       } else {
-        toast.error(otpRes.message || "Failed to send OTP");
+        toast.error("Well… that didn’t work. OTP not sent");
       }
     } catch (error) {
       console.error(error);
-      toast.error("An unexpected error occurred");
+      toast.error("Oops! That one’s on us. OTP failed");
     } finally {
       setIsSubmitting(false);
     }

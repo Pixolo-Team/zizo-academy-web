@@ -6,14 +6,16 @@ import { ApiResponseData } from "@/types/api";
 // OTHERS //
 import { createClient } from "@/lib/supabase/server";
 import { Session } from "@supabase/supabase-js";
-import { supabase } from "../supabase";
+
+// SERVICES //
+import { supabase } from "@/services/supabase";
 
 /** Send OTP to phone */
 export async function sendOtpRequest(
   phone: string,
 ): Promise<ApiResponseData<boolean>> {
   const { error } = await supabase.auth.signInWithOtp({
-    phone: "+91" + phone,
+    phone,
   });
 
   if (error) {
@@ -41,7 +43,7 @@ export async function verifyOtpRequest(
   const supabase = await createClient();
 
   const { data, error } = await supabase.auth.verifyOtp({
-    phone: "+91" + phone,
+    phone,
     token: otp,
     type: "sms",
   });

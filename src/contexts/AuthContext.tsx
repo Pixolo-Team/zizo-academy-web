@@ -24,11 +24,8 @@ export interface AppUser {
 
 /** Auth context shape */
 interface AuthContextType {
-  phoneNumber: string;
-  setPhoneNumber: (phone: string) => void;
-
   session: Session | null;
-  setSession?: (session: Session | null) => void;
+  setSession: (session: Session | null) => void;
 
   user: AppUser | null;
   isLoading: boolean;
@@ -37,7 +34,6 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const [phoneNumber, setPhoneNumber] = useState("");
   const [session, setSession] = useState<Session | null>(null);
   const [user, setUser] = useState<AppUser | null>(null); // future API
   const [isLoading, setIsLoading] = useState(true);
@@ -71,8 +67,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     const { data: authListener } = supabase.auth.onAuthStateChange(
       (_event, session) => {
         if (!isMounted) return;
-        console.log("Auth event:", _event);
-
         setSession(session);
       },
     );
@@ -89,8 +83,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   return (
     <AuthContext.Provider
       value={{
-        phoneNumber,
-        setPhoneNumber,
         session,
         setSession,
         user, // always null for now

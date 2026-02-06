@@ -34,6 +34,9 @@ import { validateOtp } from "@/app/utils/validation";
 // OTHERS //
 import { toast } from "sonner";
 
+// CONSTANTS //
+import { ROUTES } from "@/app/constants/routes";
+
 const RESEND_INTERVAL = 30; // seconds
 
 /** Verify OTP Page */
@@ -42,11 +45,12 @@ const VerifyOtpPage = () => {
   const router = useRouter();
 
   // Define Contexts
-  const { phoneNumber, setSession, setPhoneNumber } = useAuth();
+  const { setSession } = useAuth();
 
   // State to store entered OTP value
   const [otpValue, setOtpValue] = useState<string>("");
-  const [isVerifying, setIsVerifying] = useState<boolean>(false);
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+  const [phoneNumber, setPhoneNumber] = useState<string>("");
 
   // State to store OTP validation error
   const [otpErrorMessage, setOtpErrorMessage] = useState<string>("");
@@ -57,7 +61,7 @@ const VerifyOtpPage = () => {
   /** Function to handle OTP submission */
   function handleSubmit() {
     // Start verifying process
-    setIsVerifying(true);
+    setIsSubmitting(true);
 
     // Check OTP length and set error message if invalid
     if (!otpValue.length) {
@@ -74,12 +78,14 @@ const VerifyOtpPage = () => {
       // Make API call to verify OTP
       verifyOtp();
     }
-    // End verifying process
-    setIsVerifying(false);
   }
 
   /** Verify OTP Request */
   const verifyOtp = async () => {
+    if (!phoneNumber) {
+      toast.error("Phone number is required");
+      return;
+    }
     verifyOtpRequest(phoneNumber, otpValue)
       .then((res) => {
         if (res.status) {
@@ -93,17 +99,25 @@ const VerifyOtpPage = () => {
           setOtpErrorMessage(res.message || "Failed to verify OTP");
         }
       })
+      .catch((error) => {
+        console.error("Error while verifying OTP:", error);
+        toast.error("We were unable to verify your OTP. Please try again.");
+      })
       .finally(() => {
         // Clear phone number from context
-        setPhoneNumber("");
+        localStorage.removeItem("phoneNumber");
 
         // End verifying process
-        setIsVerifying(false);
+        setIsSubmitting(false);
       });
   };
 
   /** Starts resets otp and resends countdown */
   const sendResetOtp = () => {
+    if (!phoneNumber) {
+      toast.error("Phone number is required");
+      return;
+    }
     sendOtpRequest(phoneNumber)
       .then((res) => {
         if (res.status) {
@@ -153,10 +167,18 @@ const VerifyOtpPage = () => {
 
   // Restores resend timer on page refresh from local storage
   useEffect(() => {
-    if (!phoneNumber) {
-      router.push("/auth/login");
+    // Get phone number from localStorage
+    const storedPhoneNumber = localStorage.getItem("phoneNumber");
+    if (storedPhoneNumber) {
+      setPhoneNumber(storedPhoneNumber);
+    }
+
+    // If phone number is not found, redirect to login page
+    if (!storedPhoneNumber) {
+      router.push(ROUTES.LOGIN);
       return;
     }
+
     // Getting stored resend availability time from localStorage
     const storedTime = localStorage.getItem(
       LocalStorageKeys.OTP_RESEND_AVAILABLE_AT,
@@ -197,7 +219,7 @@ const VerifyOtpPage = () => {
                 Verify
               </p>
               <p className="text-lg text-n-500 leading-tight">
-                Code sent to +91 {phoneNumber}
+                Code sent to {phoneNumber}
               </p>
             </div>
 
@@ -264,9 +286,9 @@ const VerifyOtpPage = () => {
                 <Button
                   onClick={handleSubmit}
                   className="w-full"
-                  disabled={otpValue === "" || isVerifying}
+                  disabled={otpValue === "" || isSubmitting}
                 >
-                  {isVerifying ? "Verifying..." : "Confirm"}
+                  {isSubmitting ? "Verifying..." : "Confirm"}
                 </Button>
 
                 {resendSeconds > 0 ? (

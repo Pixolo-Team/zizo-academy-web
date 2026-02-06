@@ -115,7 +115,7 @@ export default function RootLayout({
           `}
         </Script>
       </head>
-      <body className="antialiased font-sans min-h-screen ">
+      <body className="antialiased font-sans min-h-screen">
         <AuthProvider>
           <AttendanceProvider>{children}</AttendanceProvider>
         </AuthProvider>
