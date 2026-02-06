@@ -9,13 +9,21 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import Dropdown from "@/components/ui/Dropdown";
 
+interface CreateBatchInputData {
+  batchName: string;
+  primaryCoach: string;
+}
+
 const CreateBatch = () => {
   // Define States
-  const [createBatchInputs, setCreateBatchInputs] = useState({
-    batchName: "",
-    primaryCoach: "",
-  });
-  const [errors, setErrors] = useState({
+  const [createBatchInputs, setCreateBatchInputs] =
+    useState<CreateBatchInputData>({
+      batchName: "",
+      primaryCoach: "",
+    });
+  const [errors, setErrors] = useState<
+    Record<keyof CreateBatchInputData, string>
+  >({
     batchName: "",
     primaryCoach: "",
   });
