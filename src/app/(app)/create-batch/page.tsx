@@ -72,7 +72,7 @@ const CreateBatch = () => {
   };
 
   return (
-    <div className="flex flex-col gap-6 px-5">
+    <div className="flex flex-col gap-6 px-5 bg-n-50">
       <PageHeader text="Create batch" />
       {/* Create batch form */}
       <form className="flex flex-col gap-6">
