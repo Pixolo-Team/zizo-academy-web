@@ -121,8 +121,7 @@ export default function RootLayout({
           duration={2000}
           toastOptions={{
             classNames: {
-              toast:
-                "rounded-2xl text-base! font-bold! text-center! justify-center! px-5! py-4!",
+              toast: "rounded-2xl text-base! font-bold! px-5! py-4!",
               success: "bg-green-100! border-green-500! text-green-600!",
               info: "bg-n-100! border-n-800! text-n-800!",
               error: "bg-red-100! border-red-500! text-red-600!",
