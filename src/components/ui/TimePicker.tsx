@@ -29,11 +29,14 @@ export default function TimePicker({
   required?: boolean;
   error?: string;
 }) {
+  const [open, setOpen] = useState(false);
   const [time, setTime] = useState({
     hour: "9",
     minute: "41",
     period: "AM",
   });
+
+  console.log(time);
 
   return (
     <div className="flex flex-col gap-1.5">
@@ -48,7 +51,7 @@ export default function TimePicker({
           </label>
         </div>
       )}
-      <Popover>
+      <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>
           <div className="flex flex-col gap-0.5">
             <Button
@@ -137,8 +140,15 @@ export default function TimePicker({
             </Picker>
 
             <div className="flex justify-end gap-4 mt-4 w-full text-blue-600 font-medium">
-              <button>CANCEL</button>
-              <button>OK</button>
+              <button onClick={() => setOpen(false)}>CANCEL</button>
+              <button
+                onClick={() => {
+                  onChange(`${time.hour}:${time.minute} ${time.period}`);
+                  setOpen(false);
+                }}
+              >
+                OK
+              </button>
             </div>
           </div>
         </PopoverContent>
