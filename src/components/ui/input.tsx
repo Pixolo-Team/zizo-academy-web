@@ -19,23 +19,23 @@ function Input({
   ...props
 }: InputProps) {
   return (
-    <div className="flex flex-col gap-1.5">
-      <div className="relative flex">
-        {label && (
+    <div className="flex flex-col gap-1.5 w-full">
+      {label && (
+        <div className="relative flex">
           <label className="text-sm text-n-700">
             {label}
             {required && (
               <span className="absolute top-0 ml-0.5 text-red-500">*</span>
             )}
           </label>
-        )}
-      </div>
+        </div>
+      )}
       <div className="flex flex-col gap-0.5">
         <input
           type={type}
           data-slot="input"
           className={cn(
-            "flex w-full min-w-0 rounded-4xl border bg-n-50 placeholder:text-n-400 transition-[color,box-shadow] outline-none file:inline-flex file:h-7 file:border-0 file:bg-transparent file:text-sm file:font-medium disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 border-n-200 text-base p-4",
+            "flex w-full min-w-0 rounded-[12px] border bg-n-50 placeholder:text-n-400 transition-[color,box-shadow] outline-none file:inline-flex file:h-7 file:border-0 file:bg-transparent file:text-sm file:font-medium disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 border-n-200 text-base p-4",
             error && "border-red-500",
             "",
             className,

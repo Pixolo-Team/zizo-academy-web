@@ -13,6 +13,7 @@ import Image from "next/image";
 
 // OTHERS //
 import { slideInUp } from "@/lib/animations";
+import Link from "next/link";
 
 // Temporary
 export function generateSessionTestData() {
@@ -96,8 +97,10 @@ export default function Sessions() {
       <Motion variants={slideInUp} delay={0.2}>
         <div className="flex flex-col gap-4">
           {/* Session Details */}
-          {sessions.map((s, i) => (
-            <SessionCard key={i} {...s} />
+          {sessions.map((session, sessionIndex) => (
+            <Link href={`/sessions/${session.sessionName}`} key={sessionIndex}>
+              <SessionCard {...session} />
+            </Link>
           ))}
         </div>
       </Motion>
