@@ -8,8 +8,6 @@ import { Input } from "@/components/ui/input";
 import PageHeader from "@/app/components/layout/Header";
 import { Button } from "@/components/ui/button";
 import CopyPaste from "@/components/icons/neevo-icons/CopyPaste";
-
-// OTHERS //
 import { toast } from "sonner";
 
 // Defining the type
@@ -131,7 +129,9 @@ const AddVenuePage = () => {
   /** Paste Google Maps Link */
   const handlePasteGoogleMapsLink = async () => {
     try {
+      // Read text from clipboard
       const text = await navigator.clipboard.readText();
+      // Update the googleMapsLink field
       setAddVenueInputs((prev) => ({
         ...prev,
         googleMapsLink: text,
