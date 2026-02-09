@@ -98,7 +98,7 @@ export default function Sessions() {
         <div className="flex flex-col gap-4">
           {/* Session Details */}
           {sessions.map((session, sessionIndex) => (
-            <Link href={`/sessions/${sessionIndex}`} key={sessionIndex}>
+            <Link href={`/sessions/${session.sessionName}`} key={sessionIndex}>
               <SessionCard {...session} />
             </Link>
           ))}

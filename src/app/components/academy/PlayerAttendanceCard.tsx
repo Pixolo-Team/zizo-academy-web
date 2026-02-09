@@ -1,6 +1,6 @@
 // REACT //
 import React from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence } from "motion/react";
 
 // COMPONENTS //
 import { Button } from "@/components/ui/button";
@@ -88,6 +88,7 @@ export const PlayerAttendanceCard: React.FC<PlayerAttendanceProps> = ({
                 `}
                 variant="outline"
                 size="lg"
+                aria-label="Absent"
                 onClick={onAbsent}
               >
                 Absent
@@ -115,6 +116,7 @@ export const PlayerAttendanceCard: React.FC<PlayerAttendanceProps> = ({
                 variant="outline"
                 size="lg"
                 onClick={onPresent}
+                aria-label="Present"
               >
                 Present
               </Button>
@@ -127,6 +129,7 @@ export const PlayerAttendanceCard: React.FC<PlayerAttendanceProps> = ({
               <Button
                 className="p-3 bg-n-100 rounded-4xl flex items-center justify-center w-[55px] h-[42px]"
                 onClick={onUndo}
+                aria-label="Undo Attendance"
               >
                 <DeleteRecentlyDeletedCross
                   primaryColor="var(--color-n-800)"

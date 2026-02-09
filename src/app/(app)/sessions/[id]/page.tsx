@@ -17,7 +17,7 @@ import { AttendanceStatus } from "@/enums/attendance.enum";
 import AttendanceSummary from "@/app/components/academy/AttendanceSummary";
 
 // Temporary
-export function generateSessionTestData() {
+export function generateSessionDetailTestData() {
   const now = Date.now();
 
   const minutes = (m: number) => new Date(now + m * 60 * 1000).toISOString();
@@ -39,8 +39,8 @@ type Player = {
   imageUrl: string;
 };
 
-export default function SessionDetails() {
-  const sessions = generateSessionTestData();
+export default function SessionDetails({ params }: { params: { id: string } }) {
+  const sessionDetail = generateSessionDetailTestData();
 
   // Define States
   const [playerSearchInput, setPlayerSearchInput] = useState<string>("");
@@ -51,7 +51,7 @@ export default function SessionDetails() {
   >({});
 
   // Sample players data
-  const players: Player[] = [1].map((num) => ({
+  const players: Player[] = [1, 2, 3].map((num) => ({
     id: `SUFA0000${num}`,
     name: `Player ${num}`,
     imageUrl: `/images/defaults/default-player.png`,
@@ -100,7 +100,7 @@ export default function SessionDetails() {
         <Motion variants={slideInUp} delay={0.2}>
           <div className="flex flex-col gap-4">
             {/* Session Card */}
-            <SessionCard {...sessions} />
+            <SessionCard {...sessionDetail} />
           </div>
         </Motion>
 

@@ -42,9 +42,7 @@ export default function SearchInput({
   // Use Effects
 
   return (
-    <div
-      className={`flex relative items-center gap-2 w-full ${className ?? ""}`}
-    >
+    <div className={`flex relative items-center gap-2 w-full`}>
       {/* Left Search Icon */}
       <div className="absolute top-1/2 -translate-y-1/2 left-5">
         <MagnifyingGlass primaryColor="var(--color-n-700)" className="size-5" />
