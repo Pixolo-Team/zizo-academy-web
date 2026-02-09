@@ -3,7 +3,9 @@ import { OTP_LENGTH } from "@/app/constants";
 
 /** Function to validate phone number */
 export function validatePhoneNumber(phoneNumber: string): boolean {
-  const regex = /^[0-9]{10}$/;
+  if (!phoneNumber) return false;
+  // Validates +91 followed by 10 digits
+  const regex = /^\+91[6-9][0-9]{9}$/;
   return regex.test(phoneNumber);
 }
 
