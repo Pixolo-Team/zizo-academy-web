@@ -173,7 +173,9 @@ const VerifyOtpPage = () => {
   // Restores resend timer on page refresh from local storage
   useEffect(() => {
     // Get phone number from localStorage
-    const storedPhoneNumber = localStorage.getItem("phoneNumber");
+    const storedPhoneNumber = localStorage.getItem(
+      LocalStorageKeys.PHONE_NUMBER,
+    );
     if (storedPhoneNumber) {
       setPhoneNumber(storedPhoneNumber);
     }
@@ -200,8 +202,6 @@ const VerifyOtpPage = () => {
       if (nextResendSeconds > 0) {
         setResendSeconds(nextResendSeconds);
       }
-    } else {
-      sendResetOtp();
     }
   }, []);
 
