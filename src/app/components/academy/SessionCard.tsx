@@ -3,7 +3,6 @@ import React from "react";
 
 // ENUMS //
 import { SessionStatus } from "@/enums/schedule.enum";
-import { on } from "events";
 
 // TYPES
 const statusColors = {

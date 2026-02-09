@@ -12,6 +12,7 @@ interface InputProps extends React.ComponentProps<"input"> {
   label?: string;
   error?: string;
   rightIcon?: IconComponent;
+  onRightIconClick?: () => void;
 }
 
 function Input({
@@ -21,6 +22,7 @@ function Input({
   rightIcon,
   error,
   required,
+  onRightIconClick,
   ...props
 }: InputProps) {
   return (
@@ -54,6 +56,7 @@ function Input({
             type="button"
             className="absolute right-5 top-4 cursor-pointer"
             aria-label="Input action"
+            onClick={onRightIconClick}
           >
             {React.createElement(rightIcon, {
               primaryColor: "var(--color-n-400)",

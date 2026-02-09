@@ -1,7 +1,7 @@
 "use client";
 
 // REACT //
-import { useState } from "react";
+import React, { useState } from "react";
 
 // COMPONENTS //
 import { Input } from "@/components/ui/input";
@@ -97,7 +97,11 @@ const AddVenuePage = () => {
       setIsSubmitting(true);
 
       // Make API call
-      const response = await addVenueRequest(addVenueInputs);
+      // const response = await addVenueRequest(addVenueInputs);
+      // Remove this after API integration
+      const response = {
+        status: true,
+      };
 
       if (response.status) {
         // Show toast and reset form
@@ -124,6 +128,20 @@ const AddVenuePage = () => {
     }
   };
 
+  /** Paste Google Maps Link */
+  const handlePasteGoogleMapsLink = async () => {
+    try {
+      const text = await navigator.clipboard.readText();
+      setAddVenueInputs((prev) => ({
+        ...prev,
+        googleMapsLink: text,
+      }));
+    } catch (error) {
+      console.error("Error pasting Google Maps link:", error);
+      toast.error("Failed to paste Google Maps link");
+    }
+  };
+
   return (
     <div className="flex flex-col gap-6 px-5 pb-5 bg-n-50 min-h-screen">
       {/* Page Header */}
@@ -131,7 +149,10 @@ const AddVenuePage = () => {
       {/* Add Venue Form */}
       <form
         className="flex flex-col gap-6"
-        onSubmit={(event) => event.preventDefault()}
+        onSubmit={(event) => {
+          handleSubmit();
+          event.preventDefault();
+        }}
       >
         <div className="flex flex-col gap-4">
           {/* Venue Name */}
@@ -177,6 +198,7 @@ const AddVenuePage = () => {
             required
             label="Google Maps Link"
             rightIcon={CopyPaste}
+            onRightIconClick={handlePasteGoogleMapsLink}
             error={errors.googleMapsLink}
             onChange={handleInputChange}
             name="googleMapsLink"
@@ -185,7 +207,7 @@ const AddVenuePage = () => {
         </div>
 
         {/* Submit Button */}
-        <Button type="button" disabled={isSubmitting} onClick={handleSubmit}>
+        <Button type="submit" disabled={isSubmitting}>
           {isSubmitting ? "Creating Venue..." : "Create Venue"}
         </Button>
       </form>
