@@ -8,15 +8,17 @@ import Link from "next/link";
 interface ProfileActionButtonProps {
   icon: React.ReactNode;
   text: string;
+  href: string;
 }
 
 export default function ProfileActionButton({
   icon,
   text,
+  href,
 }: ProfileActionButtonProps) {
   return (
     <Link
-      href={"/profile"}
+      href={href}
       className="flex flex-row items-center gap-4 px-6 py-3 bg-n-50 border border-n-200 rounded-[12px] hover:bg-n-100 cursor-pointer transition-all"
     >
       {icon}

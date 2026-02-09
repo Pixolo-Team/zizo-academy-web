@@ -1,7 +1,7 @@
 "use client";
 
 // REACT //
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 
 // COMPONENTS //
 import CircleClock from "@/components/icons/neevo-icons/CircleClock";

@@ -10,7 +10,6 @@ import UserFullBodyFollowers from "@/components/icons/neevo-icons/UserFullBodyFo
 import Sprint from "@/components/icons/neevo-icons/Sprint";
 import HelpChat2 from "@/components/icons/neevo-icons/HelpChat2";
 import Logout3 from "@/components/icons/neevo-icons/Logout3";
-import FilterDropdown from "@/components/ui/FilterDropdown";
 
 const ProfileActionsData = [
   {
@@ -21,18 +20,22 @@ const ProfileActionsData = [
       />
     ),
     text: "View attendance history",
+    href: "/attendance",
   },
   {
     icon: <Sprint primaryColor="var(--color-n-800)" className="size-3.5" />,
     text: "My sessions",
+    href: "/sessions",
   },
   {
     icon: <HelpChat2 primaryColor="var(--color-n-800)" className="size-3.5" />,
     text: "Need help?",
+    href: "/help",
   },
   {
     icon: <Logout3 primaryColor="var(--color-n-800)" className="size-3.5" />,
     text: "Log out",
+    href: "/logout",
   },
 ];
 
@@ -46,28 +49,15 @@ export default function Profile() {
         <div className="flex flex-col gap-2">
           {ProfileActionsData.map(
             (profileActionItem, profileActionItemIndex) => (
-              <React.Fragment
+              <ProfileActionButton
                 key={profileActionItem.text + profileActionItemIndex}
-              >
-                <ProfileActionButton
-                  icon={profileActionItem.icon}
-                  text={profileActionItem.text}
-                />
-              </React.Fragment>
+                icon={profileActionItem.icon}
+                text={profileActionItem.text}
+                href={profileActionItem.href}
+              />
             ),
           )}
         </div>
-
-        <FilterDropdown
-          title=""
-          options={["All", "Present", "Absent"]}
-          onChange={(value) => console.log(value)}
-          selectedOption=""
-          label="Select Option"
-          required
-          error="Please select an option"
-          placeholder="Hello"
-        />
       </div>
     </div>
   );
