@@ -11,8 +11,10 @@ export default function Home() {
   const router = useRouter();
 
   return (
-    <div className=" flex flex-col items-center justify-center gap-4 mt-18">
-      <h1 className="text-2xl font-bold">Welcome to the Academy App</h1>
+    <div className=" flex flex-col items-center justify-center gap-4 mt-18 px-5">
+      <h1 className="text-2xl font-bold text-center">
+        Welcome to the Academy App
+      </h1>
       <Button onClick={() => router.push("schedule")}>
         Check Today&apos;s Schedule
       </Button>
