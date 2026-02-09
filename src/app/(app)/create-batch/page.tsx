@@ -8,6 +8,7 @@ import PageHeader from "@/app/components/layout/Header";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import Dropdown from "@/components/ui/Dropdown";
+import { toast } from "sonner";
 
 interface CreateBatchInputData {
   batchName: string;
@@ -64,20 +65,56 @@ const CreateBatch = () => {
   const handleSubmit = () => {
     if (!validateForm()) return;
 
-    setIsSubmitting(true);
+    try {
+      setIsSubmitting(true);
 
-    // TODO: ADD API SERVICES
+      // Make API call
+      // const response = await createBatchRequest(createBatchInputs);
+      // Remove this after API integration
+      const response = {
+        status: true,
+      };
 
-    setIsSubmitting(false);
+      if (response.status) {
+        // Show toast and reset form
+        toast.success("Batch created");
+
+        // Reset form
+        setCreateBatchInputs({
+          batchName: "",
+          primaryCoach: "",
+        });
+
+        setErrors({
+          batchName: "",
+          primaryCoach: "",
+        });
+      } else {
+        // Handle API error and show toast
+        toast.error("Couldn't create batch");
+      }
+    } catch (error) {
+      console.error("Error creating batch:", error);
+      toast.error("Something went wrong.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
     <div className="flex flex-col min-h-screen gap-6 px-5 bg-n-50">
       <PageHeader text="Create batch" />
       {/* Create batch form */}
-      <form className="flex flex-col gap-6">
+      <form
+        className="flex flex-col gap-6"
+        onSubmit={(e) => {
+          e.preventDefault();
+          handleSubmit();
+        }}
+      >
         <div className="flex flex-col gap-4">
           {/* Input Fields */}
+
           {/* Batch Name */}
           <Input
             type="text"
@@ -89,6 +126,7 @@ const CreateBatch = () => {
             value={createBatchInputs.batchName}
             onChange={handleInputChange}
           />
+
           {/* Select Primary Coach */}
           <Dropdown
             options={[
@@ -110,8 +148,9 @@ const CreateBatch = () => {
             placeholder="Choose Coach"
           />
         </div>
+
         {/* Create Batch Button */}
-        <Button type="button" onClick={handleSubmit}>
+        <Button type="submit" disabled={isSubmitting}>
           {isSubmitting ? "Creating Batch..." : "Create Batch"}
         </Button>
       </form>
