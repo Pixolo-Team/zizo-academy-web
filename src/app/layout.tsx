@@ -4,16 +4,14 @@ import "./globals.css";
 // COMPONENTS //
 import Script from "next/script";
 import localFont from "next/font/local";
+import { Toaster } from "@/components/ui/sonner";
 
 // CONTEXTS //
 import { AttendanceProvider } from "@/contexts/AttendanceContext";
-
-// OTHERS //
-import { Toaster } from "@/components/ui/sonner";
+import { AuthProvider } from "@/contexts/AuthContext";
 
 // DATA //
 import type { Metadata } from "next";
-import { AuthProvider } from "@/contexts/AuthContext";
 
 const googleSans = localFont({
   src: [

@@ -24,6 +24,9 @@ import { validatePhoneNumber } from "@/app/utils/validation";
 // CONSTANTS //
 import { ROUTES } from "@/app/constants/routes";
 
+// ENUMS //
+import { LocalStorageKeys } from "@/enums/local-storage.enum";
+
 /** Login Page */
 export default function LoginPage() {
   // Define Navigation
@@ -81,7 +84,7 @@ export default function LoginPage() {
       if (otpResponse.status) {
         toast.success("OTP sent successfully");
         // Store in localStorage
-        localStorage.setItem("phoneNumber", fullPhoneNumber);
+        localStorage.setItem(LocalStorageKeys.PHONE_NUMBER, fullPhoneNumber);
         router.push(ROUTES.VERIFY_OTP);
       } else {
         toast.error("Well… that didn’t work. OTP not sent");

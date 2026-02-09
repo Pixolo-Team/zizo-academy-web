@@ -10,12 +10,22 @@ import { Session } from "@supabase/supabase-js";
 // SERVICES //
 import { supabase } from "@/services/supabase";
 
+// API SERVICES //
+import axios, { AxiosRequestConfig } from "axios";
+
+// CONSTANTS //
+import { CONSTANTS } from "@/constants";
+
 /** Send OTP to phone */
 export async function sendOtpRequest(
   phone: string,
 ): Promise<ApiResponseData<boolean>> {
+  // Send OTP to phone using Supabase
   const { error } = await supabase.auth.signInWithOtp({
     phone,
+    options: {
+      shouldCreateUser: false,
+    },
   });
 
   if (error) {
@@ -40,9 +50,11 @@ export async function verifyOtpRequest(
   phone: string,
   otp: string,
 ): Promise<ApiResponseData<Session | null>> {
-  const supabase = await createClient();
+  // Create a new server-side Supabase client
+  const serverSupabase = await createClient();
 
-  const { data, error } = await supabase.auth.verifyOtp({
+  // Verify OTP using Supabase
+  const { data, error } = await serverSupabase.auth.verifyOtp({
     phone,
     token: otp,
     type: "sms",
@@ -84,4 +96,26 @@ export async function checkPhoneExistsRequest(
     message: "Phone number exists",
     status_code: 200,
   };
+}
+
+export interface ReachOutInputData {
+  name: string;
+  email: string;
+  message: string;
+}
+
+/** Reach out to us API Request */
+export async function reachOutRequest(
+  data: ReachOutInputData,
+): Promise<ApiResponseData<boolean>> {
+  // Prepare the API Call
+  const config: AxiosRequestConfig = {
+    method: "post",
+    url: `${CONSTANTS.API_URL}reach-out.php`,
+    headers: { "Content-Type": "application/json" },
+    data: JSON.stringify(data),
+  };
+  // Make the API Call and return Data
+  const response = await axios.request<ApiResponseData<boolean>>(config);
+  return response.data;
 }

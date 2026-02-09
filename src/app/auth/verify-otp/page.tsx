@@ -84,16 +84,21 @@ const VerifyOtpPage = () => {
   const verifyOtp = async () => {
     if (!phoneNumber) {
       toast.error("Phone number is required");
+      // End verifying process
+      setIsSubmitting(false);
       return;
     }
+
+    // Make API call to verify OTP
     verifyOtpRequest(phoneNumber, otpValue)
       .then((res) => {
         if (res.status) {
           // OTP verified successfully
           // Proceed with further actions (e.g., navigate to dashboard)
-          toast.success("OTP verified successfully");
-          setSession && setSession(res.data);
+          setSession(res.data);
           router.push("/");
+          // Clear phone number from context
+          localStorage.removeItem(LocalStorageKeys.PHONE_NUMBER);
         } else {
           // OTP verification failed, show error message
           setOtpErrorMessage(res.message || "Failed to verify OTP");
@@ -104,9 +109,6 @@ const VerifyOtpPage = () => {
         toast.error("We were unable to verify your OTP. Please try again.");
       })
       .finally(() => {
-        // Clear phone number from context
-        localStorage.removeItem("phoneNumber");
-
         // End verifying process
         setIsSubmitting(false);
       });
@@ -114,10 +116,13 @@ const VerifyOtpPage = () => {
 
   /** Starts resets otp and resends countdown */
   const sendResetOtp = () => {
+    // Check if phone number is stored
     if (!phoneNumber) {
       toast.error("Phone number is required");
       return;
     }
+
+    // Make API call to send OTP
     sendOtpRequest(phoneNumber)
       .then((res) => {
         if (res.status) {

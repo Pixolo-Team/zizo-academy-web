@@ -35,7 +35,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [session, setSession] = useState<Session | null>(null);
-  const [user, setUser] = useState<AppUser | null>(null); // future API
+  const [user] = useState<AppUser | null>(null); // future API
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -45,10 +45,13 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
      * 1️⃣ Restore session on refresh
      */
     const restoreSession = async () => {
+      // Get session from supabase
       const { data, error } = await supabase.auth.getSession();
 
+      // If component is unmounted, return
       if (!isMounted) return;
 
+      // If there is an error, log it and set session to null
       if (error) {
         console.error("Error restoring session:", error);
         setSession(null);
@@ -56,9 +59,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         setSession(data.session ?? null);
       }
 
+      // Set loading to false
       setIsLoading(false);
     };
 
+    // Restore session on mount
     restoreSession();
 
     /**
