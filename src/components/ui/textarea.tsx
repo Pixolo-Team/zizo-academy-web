@@ -1,5 +1,7 @@
+// REACT //
 import * as React from "react";
 
+// OTHERS //
 import { cn } from "@/lib/utils";
 
 interface InputProps extends React.ComponentProps<"textarea"> {
@@ -23,7 +25,7 @@ function Textarea({ className, label, error, ...props }: InputProps) {
       <textarea
         data-slot="textarea"
         className={cn(
-          "flex w-full min-w-0 rounded-3xl border bg-n-50 placeholder:text-n-400 transition-[color,box-shadow] outline-none file:inline-flex file:h-7 file:border-0 file:bg-transparent file:text-sm file:font-medium disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 border-n-200 text-base p-4",
+          "flex w-full min-w-0 rounded-3xl border bg-n-50 placeholder:text-n-400 transition-[color,box-shadow] outline-none file:inline-flex file:h-7 file:border-0 file:bg-transparent file:text-sm file:font-medium disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 border-n-200 text-base p-4 resize-none max-h-[150px]",
           error && "border-red-500",
           className,
         )}

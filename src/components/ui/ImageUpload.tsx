@@ -132,7 +132,7 @@ export default function ImageUpload({
 
       {/* Crop Modal */}
       {image && (
-        <div className="fixed inset-0 bg-black/70 flex flex-col items-center justify-center gap-4">
+        <div className="fixed inset-0 bg-black/70 z-1 flex flex-col items-center justify-center gap-4">
           <div className="relative w-[90vw] h-[60vh] bg-black">
             <Cropper
               image={image}
