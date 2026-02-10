@@ -8,7 +8,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { cn } from "@/lib/utils";
 import Image from "next/image";
 
 // Interface Props
@@ -22,7 +21,6 @@ interface CoachDropdownProps {
   required?: boolean;
   placeholder?: string;
   leftChild?: React.ReactNode;
-  rightChild?: React.ReactNode;
 }
 
 /** Filter Component */
@@ -36,7 +34,6 @@ export default function CoachDropdown({
   required,
   placeholder,
   leftChild,
-  rightChild,
 }: CoachDropdownProps) {
   // Define Navigation
 
@@ -74,7 +71,6 @@ export default function CoachDropdown({
             }
           >
             <div className="flex items-center gap-2 w-2/3">
-              {leftChild && <div className="flex-1">{leftChild}</div>}
               <SelectValue
                 placeholder={placeholder}
                 className="placeholder:text-n-400 w-full"
@@ -100,15 +96,11 @@ export default function CoachDropdown({
                       className="rounded-full border-n-200 border"
                     />
                   </div>
-                  <div className="flex flex-col gap-0.5">
+                  <div className="flex flex-col">
                     <p className=" text-n-900">{option.label}</p>
                     <p className="text-xs text-n-500">{option.value}</p>
                   </div>
                 </div>
-                {/* Border Bottom */}
-                {options.length !== index + 1 && (
-                  <div className="border-b border-n-200"></div>
-                )}
               </SelectItem>
             ))}
           </SelectContent>

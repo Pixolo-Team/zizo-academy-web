@@ -36,8 +36,6 @@ export default function TimePicker({
     period: "AM",
   });
 
-  console.log(time);
-
   return (
     <div className="flex flex-col gap-1.5">
       {/* Label */}
